@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0; /* pastikan ga ada padding */
+    font-family: 'Poppins', sans-serif;
+    background: rgb(240, 240, 240);
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+
+header {
+    height: 110px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+    
+}
+
+/* .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+} */
+
+.logo-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-header img {
+    height: 50px;
+    border-radius: 8px;
+}
+
+.logo-header h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navigasi-header a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+}
+
+
+/* body {
+
+    font-family: sans-serif;
+    background: rgb(240, 240, 240);
+    padding: 20px;
+    
+} */
+
+
+/* .logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+} */
+
+/* .nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+} */
+
+/* .search-container input {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 250px;
+} */
+
+.auth-buttons a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #0073aa;
+    font-weight: 500;
+}
+
+.container-form{
+    max-width: 700px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input,
+button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #aaa;
+    padding: 8px;
+    text-align: left;
+}
+
+footer {
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 60px;
+    background-color: #f5f5f5;
+    font-size: 14px;
+    color: #777;
+}
+
+@media (max-width: 600px) {
+
+    table,
+    tr,
+    td,
+    th {
+        display: block;
+    }
+}
