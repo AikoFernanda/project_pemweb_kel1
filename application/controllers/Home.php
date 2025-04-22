@@ -34,6 +34,7 @@ class Home extends CI_Controller
     }
 
     public function profil() {
+		// untuk meload view profil_page.php
         $this->load->view('profil_page');
     }
 }
