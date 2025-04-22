@@ -54,7 +54,6 @@
             </script>
             <div class="flash-error" style="color: red;"><?= $this->session->flashdata('login_error'); ?></div>
         <?php endif; ?>
-
         <section id="profil-company">
             <div class="container profil-company">
                 <div class="row">

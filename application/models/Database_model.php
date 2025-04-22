@@ -33,29 +33,39 @@ class Database_model extends CI_Model
     public function insertDataAkun($email, $username_akun, $password_akun)
     {
         $dataAkun = [
-            'id_akun' => '',
             'email' => $email,
             'username_akun' => $username_akun,
             'password_akun' => $password_akun,
-            'role' => '',
-            'status_akun' => '',
-            'tanggal_daftar' => ''
         ];
-        $insertAkunSukses = $this->db->insert('akun', $dataAkun);
 
-        return $insertAkunSukses;
+        // Nonaktifkan sementara debug error
+        $this->db->db_debug = false;
+
+        $insert = $this->db->insert('akun', $dataAkun);
+        $error = $this->db->error(); // ambil error MySQL kalau ada, biasanya mengembalikan angka. Misal error code = 1062, memiliki arti duplicate data pada colom unique
+
+        // Aktifkan kembali debug
+        $this->db->db_debug = true;
+
+        // Tangkap error duplicate
+        if (!$insert && $error['code'] == 1062) {
+            return 'duplicate';
+        } else {
+            return $insert;
+            // Di CodeIgniter 3, tidak perlu pakai prepared statement manual, karena: CI3 sudah otomatis melindungi dari SQL Injection. Tanpa harus nulis prepare() dan bind_param() manual seperti di PHP native.
+            // Saat kamu secara eksplisit mengisi kolom default (misalnya role, status_akun, tanggal_daftar) dengan string kosong (''), MySQL tidak akan menjalankan default-nya. Yang terjadi:
+            // 1. 'role' => '' → dianggap "masukkan string kosong", bukan NULL → default "user" tidak dijalankan
+            // 2. 'status_akun' => '' → kalau tipenya INT, string kosong dikonversi ke 0
+            // 3. 'tanggal_daftar' => '' → dianggap datetime kosong → jadi 0000-00-00 00:00:00 kalau ALLOW_INVALID_DATES aktif
+            // cukup masukkan data yang dibutuhkan saja yang tidak boleh null dan tidak memiliki nilai default ketika insert data.
+        }
     }
 
     public function InsertDataUser($id_akun, $no_hp)
     {
         $dataUser = [
-            'id_user' => '',
             'id_akun' => $id_akun,
-            'nama_lengkap' => '',
-            'jenis_kelamin' => '',
-            'alamat' => '',
             'no_hp' => $no_hp,
-            'tanggal_lahir' => ''
         ];
         $insertUserSukses = $this->db->insert('user', $dataUser);
         return $insertUserSukses;
@@ -72,8 +82,9 @@ class Database_model extends CI_Model
         //dan mengembalikan value id tersebut sebagai value function getLastId
     }
 
-    public function getAkunByUsername($username_akun) {
-        $query = $this->db->get_where('akun',['username_akun' => $username_akun]);
+    public function getAkunByUsername($username_akun)
+    {
+        $query = $this->db->get_where('akun', ['username_akun' => $username_akun]);
         return $query->row_array();
 
         // row_array() Mengembalikan satu baris hasil query dalam bentuk array asosiatif. Kalau result() array of object
@@ -86,8 +97,27 @@ class Database_model extends CI_Model
         $query = $this->db->get('akun');
         return $query->num_row() > 0;
     }
+
+    public function isEmailUsed($email)
+    {
+        // Mengecek apakah email telah digunakan atau ada dalam database
+        return $this->db->where('email', $email)->get('akun')->num_rows() > 0;
+        // Mengecek apakah query menghasilkan baris data. Jika hasilnya lebih dari 0, maka berarti ada email atau username yang sudah terpakai. Jika ada tidak lebih dari 0, berarti username atau email belum digunakan
+        // Karena where() tidak langsung menjalankan query,
+        // Dia hanya menyimpan kondisi, dan nanti saat get('akun'), CodeIgniter akan menggabungkan semuanya dan membentuk SQL-nya dengan benar.
+        // Urutan di CodeIgniter itu method chaining, bukan urutan SQL. where() dulu boleh dan benar, karena get() lah yang baru mengeksekusi query-nya dan menyatukan semua kondisi yang sebelumnya sudah ditentukan.
+    }
+
+    public function isUsernameUsed($username_akun)
+    {
+        // Mengecek apakah email telah digunakan atau ada dalam database
+        return $this->db->where('username_akun', $username_akun)->get('akun')->num_rows() > 0;
+        // Mengecek apakah query menghasilkan baris data. Jika hasilnya lebih dari 0, maka berarti ada email atau username yang sudah terpakai. Jika ada tidak lebih dari 0, berarti username atau email belum digunakan
+        // Karena where() tidak langsung menjalankan query,
+        // Dia hanya menyimpan kondisi, dan nanti saat get('akun'), CodeIgniter akan menggabungkan semuanya dan membentuk SQL-nya dengan benar.
+        // Urutan di CodeIgniter itu method chaining, bukan urutan SQL. where() dulu boleh dan benar, karena get() lah yang baru mengeksekusi query-nya dan menyatukan semua kondisi yang sebelumnya sudah ditentukan.
+    }
 }
 // return pada model itu mengembalikan hasil dari operasi ke controller, jadi controller bisa tahu:
 // 1.Apakah operasi berhasil/gagal (biasanya true/false),
 // 2.Atau mengembalikan data penting (seperti insert_id() atau hasil query database).
-?>

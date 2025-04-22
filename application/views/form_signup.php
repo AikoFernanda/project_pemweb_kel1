@@ -27,7 +27,18 @@
             <div class="container-form">
                 <div class="form-box">
 
-                    <h1>Daftar dengan email</h1>
+                    <h1>Daftar</h1>
+                    <?php if ($error = $this->session->flashdata('username_used')) : ?>
+                        <div class="error-massage">
+                            <h3><?= $error; ?></h3>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($error = $this->session->flashdata('email_used')) : ?>
+                        <div class="error-massage">
+                            <h3><?= $error; ?></h3>
+                        </div>
+                    <?php endif; ?>
                     <form id="form-data" action="<?= base_url("index.php/Signup_login_control/signup"); ?>" method="POST">
 
                         <label for="username">Username:</label> <br> <!--for pada label berfungsi untuk menghubungkan atau mengikat antara label dan input, for='username' berarti label milik input dengan id='nama'.-->
@@ -37,10 +48,10 @@
                         <input id="email" type="text" name="email" required> <!--name lebih baik diisini sesuai field pada database agar mempermudah dalam CRUD-->
 
                         <label for="telepon">Nomor Telepon:</label> <br>
-                        <input id="telepon" type="number" name="no_hp" required>
+                        <input id="telepon" type="tel" name="no_hp" pattern="\d{9,11}" maxlength="11" required title="Masukkan nomor telepon dengan benar">
 
                         <label for="password">Password:</label> <br>
-                        <input id="password" type="text" name="password_akun" required> <!--type = "password" agar ketika user menginput input-box password karakternya tampil bulet2 item, jadi tidak bisa dilihat  dan dibaca orang lain pada layar/UI-->
+                        <input id="password" type="password" name="password_akun" required> <!--type = "password" agar ketika user menginput input-box password karakternya tampil bulet2 item, jadi tidak bisa dilihat  dan dibaca orang lain pada layar/UI-->
 
                         <button type="submit" name="submit">Kirim Data</button>
                         <br>
