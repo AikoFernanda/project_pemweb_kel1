@@ -18,3 +18,16 @@ CREATE TABLE `user` (
     tanggal_lahir DATE,
     FOREIGN KEY (id_akun) REFERENCES akun(id_akun) ON DELETE CASCADE
 );
+
+create table produk
+(
+	id_produk int auto_increment primary key,
+    nama_produk varchar(100) not null,
+    kategori varchar(100) not null,
+    stok INT default 0,
+    harga INT not null,
+    persentase_diskon INT default 0,
+    gambar varchar(100) not null,
+    deskripsi varchar(100) default '-',
+    terakhir_diubah timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

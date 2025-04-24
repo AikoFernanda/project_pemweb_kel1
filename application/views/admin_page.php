@@ -1,9 +1,10 @@
 <?php
-// if(!isset($_POST['submit'])) { // dengan metode request post, hal2 yang sensitif di website kita bisa lebih aman dari orang usil atau hacker yang mencoba memaksa masuk di halaman admin dengan menambahkan key submit pada URL http://localhost:8888/codeigniter_pemweb_tubes/index.php/Home/admin?submit=
-//     header("Location: " . base_url('index.php/Home/index'));
-//     exit;
-// }
-
+$sesi = $this->session->userdata('role');
+var_dump($sesi); // Cek isi role-nya
+if ($sesi !== "admin") {
+    redirect('Home/admin');
+    return;
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +21,7 @@
     <main>
         <div class="welcome">
             <h1>Selamat Datang, Admin!</h1>
-            <a href=<?= base_url("index.php/Home/index") ?>>Logout</a>
+            <a href=<?= base_url("index.php/Signup_login_control/logout") ?>>Logout</a>
         </div>
         <div>
             <h2>Data Akun Pengguna</h2>
@@ -36,10 +37,6 @@
                     <th>tanggal_daftar</th>
                     <th>aksi</th>
                 </tr>
-                <?php
-                var_dump($akun);
-                die;
-                ?>
                 <?php $nomor = 1 ?>
                 <?php foreach ($akun as $a) : ?> <!--$akun adalah nama variabel yang sudah ditentukan di controller untuk menyimpan data akun. $akun adalah nama variabel yang menyimpan hasil query yang diambil dari database ($data['akun']), yang sudah kita definisikan sebelumnya di controller.-->
                     <tr>

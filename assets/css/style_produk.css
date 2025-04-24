@@ -1,0 +1,590 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/*Agar link #katalog-produk smooth saat diklik:*/
+html {
+    scroll-behavior: smooth;
+}
+
+/* HEADER STYLES */
+header {
+    height: 110px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.logo-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-header img {
+    height: 50px;
+    border-radius: 8px;
+}
+
+.logo-header h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navigasi-header a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    /*transition agar efek hover terasa halus.*/
+}
+
+.navigasi-header a:hover {
+    color: #007bff;
+    /* warna biru seperti Bootstrap saat cursor mengarah ke link <a> */
+    text-decoration: underline;
+}
+
+.loginRegister {
+    display: flex;
+    /* default flex, ketika sudah login atau daftar maka set display: none*/
+    gap: 10px;
+}
+
+/* Tombol Login */
+.btn-login {
+    background: linear-gradient(to right, #007BFF, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.btn-login:hover {
+    background: linear-gradient(to right, #0056b3, #003f88);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Tombol Signup */
+.btn-signup {
+    background: linear-gradient(to right, #28A745, #218838);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.btn-signup:hover {
+    background: linear-gradient(to right, #218838, #1e7e34);
+    box-shadow: 0 6px 16px rgba(40, 167, 69, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Profil */
+.ikon-profil {
+    text-decoration: none;
+    color: black;
+    /* Menghilangkan underline */
+}
+
+.ikon-profil:hover {
+    color: #007bff;
+    ;
+    /* Menambahkan warna ketika hover */
+}
+
+i {
+    font-size: 24px;
+    /* Menentukan ukuran ikon */
+}
+
+/* SLIDER STYLES */
+.slider-container {
+    position: relative;
+    /* penting! position: relative ini bikin .slider-controls bisa tampil di atas slider, bukan “ngilang”. */
+    margin-top: 15px;
+    overflow: hidden;
+    width: 100%;
+    height: 500px;
+    /*.slide lebarnya 100% dan container .slider lebarnya 300% (karena 3 slide).*/
+    /* border: 1px solid #ddd; */
+}
+
+.slider {
+    display: flex;
+    /* transition: transform 0.5s ease; */
+    width: 300%;
+    height: 500px
+        /* 100% x jumlah slide */
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;/* <- Ini penting agar slide mengikuti tinggi dari slider-container */
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    position: relative;
+}
+
+.slide-content {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.slide-1 {
+    background-color: black;
+    /*background-image itu untuk URL gambar.*/
+}
+
+.slide-2 {
+    background-image: url('../img/logo_company.jpeg');
+    /* background-size: cover; // kepotong tapi pas penuh di layar
+    background-position: center; */
+
+    background-size: contain;
+    /* background-repeat: no-repeat; */
+    background-position: center;
+}
+
+.slide-3 {
+    background-image: url('../img/kerja1.jpg');
+}
+
+
+/* File .css tidak bisa pakai base_url() langsung, harus pakai url(). Hal ini karena .css adalah file statis, bukan file PHP, jadi tidak diproses oleh PHP engine.*/
+
+.slide-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.slide-content p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.slider-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #007BFF, #00C6FF);
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    transition: all 0.3s ease; /*Transition + Hover effect → kasih efek floating pas mouse hover.*/
+    backdrop-filter: blur(3px);
+}
+
+.slider-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.5);
+    background: linear-gradient(135deg, #0056b3, #0096c7);
+}
+
+.slider-controls {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.slider-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+.slider-dot.active {
+    background-color: white;
+}
+
+/* PROMO SECTION */
+.section-title {
+    text-align: center;
+    margin: 30px 0 20px;
+}
+
+.section-title h2 {
+    font-size: 22px;
+    color: #333;
+}
+
+.promo-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 10px 0 20px;
+}
+
+.promo-card {
+    min-width: 250px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.promo-img {
+    height: 150px;
+    overflow: hidden;
+}
+
+.promo-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.promo-content {
+    padding: 15px;
+}
+
+.promo-content h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.promo-content p {
+    color: #666;
+    font-size: 14px;
+}
+
+.promo-badge {
+    display: inline-block;
+    background-color: red;
+    color: white;
+    padding: 3px 8px;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+/* PRODUCT SECTION */
+.product-section {
+    background-color: white;
+    padding: 20px 0;
+    margin-top: 30px;
+    border: 1px solid #ddd;
+}
+
+.category-filter {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.category-btn {
+    padding: 8px 15px;
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #555;
+}
+
+.category-btn.active,
+.category-btn:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 10px;
+}
+
+.product-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.product-img {
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+}
+
+.product-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    /*object-fit: contain memastikan gambar tampil utuh*/
+}
+
+.discount-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    padding: 2px 5px;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.product-info {
+    padding: 10px;
+}
+
+.product-info h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.current-price {
+    font-size: 14px;
+    font-weight: bold;
+    color: blue;
+}
+
+.old-price {
+    font-size: 12px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.product-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.add-cart {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-cart:hover {
+    background-color: #0056b3;
+}
+
+.view-details {
+    padding: 5px 10px;
+    background-color: #eee;
+    color: #555;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* FOOTER */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 15px;
+}
+
+.footer-column h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.footer-column p {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.social-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: #444;
+    color: white;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 15px;
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    color: #ccc;
+    font-size: 12px;
+}
+
+/* MODAL LOGIN */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* buat efek gelap */
+    z-index: 999;
+}
+
+.login-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    height: 350px;
+    width: 400px;
+    border-radius: 10px;
+}
+
+.login-content h2 {
+    margin-bottom: 10px;
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.login-content button {
+    padding: 12px 24px;
+    background: linear-gradient(to right, #007BFF, #0056b3);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.login-content button:hover {
+    background: linear-gradient(to right, #0056b3, #004099);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .main-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .slider-container {
+        height: 250px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .slider-container {
+        height: 200px;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+}

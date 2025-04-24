@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/style_beranda.css?v=' . time()); ?>"><!--opsi developer pakai . time() agar css di load tiap halaman reload-->
+    <link rel="stylesheet" href="<?= base_url('assets/css/style_homepage.css?v=' . time()); ?>"><!--opsi developer pakai . time() agar css di load tiap halaman reload-->
 </head>
 
 <body>
@@ -46,13 +46,15 @@
     </header>
 
     <main>
-        <?php if ($this->session->flashdata('login_error')) : ?>
-            <script>
+        <?php if ($this->session->flashdata('login_error')) : ?> <!--Mengecek apakah key 'login_error' true atau ada dari pada key flashdata-->
+            <!-- <script>
                 window.onload = function() { // // window.onload = dijalankan setelah seluruh halaman selesai dimuat.
                     toggleLoginModal(); // Buka modal login otomatis saat halaman dimuat, Modal otomatis muncul
                 };
-            </script>
-            <div class="flash-error" style="color: red;"><?= $this->session->flashdata('login_error'); ?></div>
+            </script> -->
+            <div class="flash-error"><?= $this->session->flashdata('login_error');?></div>
+        <?php elseif ($this->session->flashdata('admin_error')) :?> <!--Dalam PHP else if dengan : (colon) seharusnya ditulis sebagai: elseif() bukan else if(). Blok if ini untuk mengecek apakah key 'admin_error' ada atau true pada key flashdata-->
+            <div class="flash-error"><?= $this->session->flashdata('admin_error');?></div> <!--Menampilkan value key 'admin_error ke layar-->
         <?php endif; ?>
         <section id="profil-company">
             <div class="container profil-company">
@@ -61,7 +63,7 @@
                         <h1>Kebutuhan Anda Ada Disini! <br>Tunggu Apa Lagi?</h1>
                     </div>
                     <div class="row-right">
-                        <h1>[Gambar-gambar company bisa dimasukkan di sini]</h1>
+                        <img src="#" alt="Company">
                     </div>
                 </div>
             </div>
@@ -76,7 +78,7 @@
                             <img src="#" alt="Berita CV Mulamu">
                         </div>
                         <div class="news-description">
-                            <h2>Berita 1</h2>
+                            <h2>Berita <?= $i+1 ?></h2>
                             <p>Deskripsi Berita</p>
                         </div>
                     </div>
@@ -92,10 +94,11 @@
                 <?php for ($j = 0; $j < 8; $j++) : ?>
                     <div class="katalog-box">
                         <img src="#" alt="Img-produk">
-                        <h2>Produk 1</h2>
+                        <h2>Produk <?= $j+1;?></h2>
                         <p>Deskripsi Produk</p>
                     </div>
                 <?php endfor; ?>
+            <div><button type="button" onclick="window.location.href='<?= base_url('index.php/Home/produk');?>'">Lihat Produk Selengkapnya</button></div>
             </div>
         </section>
         <div id="login-modal" class="modal">
@@ -114,7 +117,50 @@
     </main>
 
     <footer>
-        &copy; <?= date('Y'); ?> CV. Mulia Langgeng Mufakat — All rights reserved. <!---->
+    <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Tentang Kami</h3>
+                    <p>CV. Mulia Langgeng Mufakat</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Kategori Produk</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Laptop & Notebook</a></li>
+                        <li><a href="#">Printer</a></li>
+                        <li><a href="#">AC</a></li>
+                        <li><a href="#">Aksesoris</a></li>
+                        <li><a href="#">Lainnya</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Informasi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Tentang Kami</a></li>
+                        <li><a href="#">Cara Pembelian</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontak Kami</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Raya Utama No.123, Kota</p>
+                    <p><i class="fas fa-phone"></i> +62 812-3456-7890</p>
+                    <p><i class="fas fa-envelope"></i> info@mulialanggeng.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 CV. Mulia Langgeng Mufakat — All rights reserved.
+            </div>
+        </div>
+    </footer>
     </footer>
 
     <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>" defer></script> <!--.time() berfungsi agar file JS-nya otomatis ke-refresh saat develop (seperti css),  untuk cache-busting CSS & JS biasanya digunakan umum dalam praktik di kalangan developer agar perubahan langsung kelihatan.

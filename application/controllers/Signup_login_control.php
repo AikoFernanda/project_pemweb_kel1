@@ -22,19 +22,21 @@ class Signup_login_control extends CI_Controller
             $password_akun = password_hash($_POST['password_akun'], PASSWORD_DEFAULT); // Fungsi password_hash() digunakan untuk mengacak (hash) password sebelum disimpan ke database.  $_POST['password_akun']: password asli dari user (input dari form). PASSWORD_DEFAULT: PHP akan otomatis memilih algoritma hash terbaru dan aman (saat ini biasanya bcrypt).
             $no_hp = htmlspecialchars($_POST['no_hp']);
 
-            // Mengecek apakah input signup email atau username dari user sudah digunakan
+            // Mengecek apakah input signup username dari user sudah digunakan
             if ($this->Database_model->isUsernameUsed($username_akun)) {
                 $this->session->set_flashdata('username_used', 'Username telah digunakan.');
                 redirect('Signup_login_control/signup'); // langsung di redirect ke halaman signup tanpa menjalankan program dibawah blok kode ini.
                 return;
             }
 
+            // Mengecek apakah email yang didaftarkan user sudah digunakan
             if ($this->Database_model->isEmailUsed($email)) {
                 $this->session->set_flashdata('email_used', 'Email telah digunakan.');
                 redirect('Signup_login_control/signup');
                 return;
             }
 
+            // insert ke database tabel akun
             $insertAkunSukses = $this->Database_model->insertDataAkun($email, $username_akun, $password_akun); //memasukkan data ke tabel akun
 
             // jika insertDataAkun berhasil akan mengembalikan nilai true dan disimpan $insertAkunSukses
@@ -49,10 +51,10 @@ class Signup_login_control extends CI_Controller
                 $this->session->set_userdata('logged_in', true);
                 redirect('Home/index'); // setara dengan header("Location: " . base_url('index.php/Home/index'));return;
                 return; // opsional, tapi best practice tambah return;
-            } else if($insertAkunSukses === 'duplicate') {
-                    $this->session->set_flashdata('signup_error', 'Username atau Email sudah digunakan.');
-                    redirect('Signup_login_control/signup');
-                    return;
+            } else if ($insertAkunSukses === 'duplicate') {
+                $this->session->set_flashdata('signup_error', 'Username atau Email sudah digunakan.');
+                redirect('Signup_login_control/signup');
+                return;
             } else {
                 $this->session->set_flashdata('signup_error', 'Terjadi kesalahan saat mendaftar. Coba beberapa saat lagi.');
                 redirect('Signup_login_control/signup');

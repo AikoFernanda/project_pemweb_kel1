@@ -30,6 +30,13 @@ class Database_model extends CI_Model
         // result_array() -> array of associative, akses datanya seperti ini: echo $data[0]['nama']; // Output: Andi
     }
 
+    public function getAllProduk()
+    {
+        return $this->db->get('produk')->result_array();
+        // result() → pakai ->nama_produk (mengembalikan dalam bentuk objek)
+        // result_array() → pakai ['nama_produk'] (mengembalikan dalam bentuk array assosiatif)
+    }
+
     public function insertDataAkun($email, $username_akun, $password_akun)
     {
         $dataAkun = [
