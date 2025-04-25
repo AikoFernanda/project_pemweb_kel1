@@ -13,7 +13,7 @@ body {
     color: #333;
 }
 
-/*Agar link #katalog-produk smooth saat diklik:*/
+/* Membuat link navigasi (#katalog-produk, dll.) saat diklik menjadi smooth ngescrollnya */
 html {
     scroll-behavior: smooth;
 }
@@ -70,10 +70,10 @@ header {
     text-decoration: underline;
 }
 
-.loginRegister {
+.login-register {
     display: flex;
     /* default flex, ketika sudah login atau daftar maka set display: none*/
-    gap: 10px;
+    gap: 15px;
 }
 
 /* Tombol Login */
@@ -115,13 +115,17 @@ header {
 }
 
 /* Profil */
-.ikon-profil {
+.ikon-profil,
+.ikon-keranjang {
     text-decoration: none;
     color: black;
     /* Menghilangkan underline */
 }
 
 .ikon-profil:hover {
+    color: #007bff;
+}
+.ikon-keranjang:hover {
     color: #007bff;
     ;
     /* Menambahkan warna ketika hover */

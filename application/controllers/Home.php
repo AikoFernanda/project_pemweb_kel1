@@ -52,5 +52,10 @@ class Home extends CI_Controller
         $data['produk'] = $this->Database_model->getAllProduk();
         $this->load->view('produk_page', $data); // laod view produk dengan passing data dari $data ke view
     }
+
+    public function keranjang()
+    {
+        $this->load->view('keranjang_page');
+    }
         
 }

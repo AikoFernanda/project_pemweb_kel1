@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Beranda</title>
+    <title>Beranda - CV. MULIA LANGGENG MUFAKAT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Google Font -->
@@ -27,10 +27,13 @@
                 <a href="#">Home</a>
                 <a href="#katalog-produk">Produk</a>
                 <a href="#">Layanan</a>
-                <a href="#">Tentang Kami</a>
+                <a href="#footer">Tentang Kami</a>
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="login-register">
+                    <a class="ikon-keranjang" href="<?= base_url('index.php/Home/keranjang'); ?>">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
                     <a class="ikon-profil" href="<?= base_url('index.php/Home/profil'); ?>">
                         <i class="fas fa-user"></i>
                     </a> <!-- Ikon user -->
@@ -117,6 +120,7 @@
     </main>
 
     <footer>
+    <section id="footer">
     <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
@@ -151,9 +155,9 @@
                 </div>
                 <div class="footer-column">
                     <h3>Kontak Kami</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Jl. Raya Utama No.123, Kota</p>
-                    <p><i class="fas fa-phone"></i> +62 812-3456-7890</p>
-                    <p><i class="fas fa-envelope"></i> info@mulialanggeng.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> -</p>
+                    <p><i class="fas fa-phone"></i> +62 823-7459-1985</p>
+                    <p><i class="fas fa-envelope"></i> mulamufakat@gmail.com</p>
                 </div>
             </div>
             <div class="copyright">
@@ -167,4 +171,4 @@
                                                                                          Dengan defer, browser akan load script setelah halaman selesai dimuat. -->
 </body>
 
-</html>
+</html> 

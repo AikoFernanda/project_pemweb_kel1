@@ -34,6 +34,9 @@
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="profil">
+                    <a class="ikon-keranjang" href="<?= base_url('index.php/Home/keranjang');?>">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
                     <a class="ikon-profil" href="<?= base_url('index.php/Home/profil'); ?>">
                         <i class="fas fa-user"></i>
                     </a> <!-- Ikon user -->
@@ -130,11 +133,11 @@
                 </div>
 
                 <div class="category-filter">
-                    <button class="category-btn active">Semua</button>
-                    <button class="category-btn">Laptop/Notebook</button>
-                    <button class="category-btn">Printer</button>
-                    <button class="category-btn">AC</button>
-                    <button class="category-btn">Lainnya</button>
+                    <button class="category-btn active" data-kategori="semua">Semua</button>
+                    <button class="category-btn" data-kategori="Laptop">Laptop/Notebook</button>
+                    <button class="category-btn" data-kategori="Printer">Printer</button>
+                    <button class="category-btn" data-kategori="AC">AC</button>
+                    <button class="category-btn" data-kategori="Lainnya">Lainnya</button>
                 </div>
 
                 <div class="product-grid">
@@ -151,7 +154,7 @@
                             <div class="product-info">
                                 <h3><?= $p['nama_produk']; ?></h3>
                                 <div class="product-price">
-                                    <span class="current-price">Rp <?= number_format($p['persentase_diskon'] != 0 ? $harga_diskon : $p['harga'], 0, ',', '.'); ?></span>
+                                    <span class="current-price">Rp <?= number_format($p['persentase_diskon'] != 0 ? $harga_diskon : $p['harga'], 0, ',', '.'); ?></span> <!-- $angka->harga	Angka yang mau diformat, 0->0 desimal Tidak pakai angka di belakang koma(contoh: .00), ','->Koma Dipakai sebagai pemisah desimal, '.'->Titik Dipakai sebagai pemisah ribuan. Format Indonesia pakai format lokal (titik = ribuan, koma = desimal)-->
                                     <?php if ($p['persentase_diskon'] != 0) : ?>
                                         <span class="old-price">Rp <?= number_format($p['harga'], 0, ',', '.'); ?></span>
                                     <?php endif; ?>
@@ -203,9 +206,9 @@
                 </div>
                 <div class="footer-column">
                     <h3>Kontak Kami</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Jl. Raya Utama No.123, Kota</p>
-                    <p><i class="fas fa-phone"></i> +62 812-3456-7890</p>
-                    <p><i class="fas fa-envelope"></i> info@mulialanggeng.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> -</p>
+                    <p><i class="fas fa-phone"></i> +62 823-7459-1985</p>
+                    <p><i class="fas fa-envelope"></i> mulamufakat@gmail.com</p>
                 </div>
             </div>
             <div class="copyright">
@@ -226,7 +229,11 @@
             </form>
         </div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const base_url = "<?= base_url(); ?>";
+    </script>
+    <script src="<?= base_url('assets/js/kategori_produk.js?v=' . time()) ?>"></script> <!--base_url udah didefinisikan sebelum file JS kategori_produk.js dimuat, agar tinggal pakai di file JS seperti ini: url: base_url + "Katalog_produk/filter_produk"-->
     <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>"></script>
     <script src="<?= base_url('assets/js/slide.js?v=' . time()); ?>"></script>
 </body>

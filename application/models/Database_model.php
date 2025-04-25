@@ -37,6 +37,12 @@ class Database_model extends CI_Model
         // result_array() → pakai ['nama_produk'] (mengembalikan dalam bentuk array assosiatif)
     }
 
+    public function getProdukByKategori($kategori) {
+        $this->db->where('kategori', $kategori);
+        $result = $this->db->get('produk');
+        return $result->result_array();
+    }
+
     public function insertDataAkun($email, $username_akun, $password_akun)
     {
         $dataAkun = [

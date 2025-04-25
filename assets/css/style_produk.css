@@ -112,7 +112,14 @@ header {
 }
 
 /* Profil */
-.ikon-profil {
+.profil {
+    display: flex;
+    /* default flex, ketika sudah login atau daftar maka set display: none*/
+    gap: 15px;
+}
+
+.ikon-profil,
+.ikon-keranjang {
     text-decoration: none;
     color: black;
     /* Menghilangkan underline */
@@ -120,8 +127,11 @@ header {
 
 .ikon-profil:hover {
     color: #007bff;
-    ;
     /* Menambahkan warna ketika hover */
+}
+
+.ikon-keranjang:hover {
+    color: #007bff;
 }
 
 i {
@@ -268,12 +278,13 @@ i {
     min-width: 250px;
     background-color: white;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 20px 20px 0 0;
 }
 
 .promo-img {
     height: 150px;
     overflow: hidden;
+    border-radius: 20px 20px 0 0;
 }
 
 .promo-img img {
@@ -284,6 +295,7 @@ i {
 
 .promo-content {
     padding: 15px;
+    border-radius: 20px 20px 0 0;
 }
 
 .promo-content h3 {

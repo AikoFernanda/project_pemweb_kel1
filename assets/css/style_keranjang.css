@@ -1,0 +1,91 @@
+* {
+    /* Membuat penambahan padding dan border tidak mengubah elemen menjadi lebih besar dari ukuran aslinya */
+    box-sizing: border-box;
+    /* Mengubah default margin dan padding jadi 0, agar memiliki control penuh */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+html {
+    /* Membuat link navigasi pada header lebih smooth ngescrollnya saat diklik */
+    scroll-behavior: smooth
+}
+
+.container {
+    /* Menentukan lebar maksimal elemen tidak boleh lebih dari 1200px */
+    max-width: 1200px;
+    /* menentukan jarak dengan margin auto yakni pas ditengah */
+    margin: auto;
+    /* menentukan Jarak konten dengan border */
+    padding: 20px;
+}
+
+header {
+    /* menentukan tinggi maksimum elemen agar tidak lebih dari 110px */
+    height: 110px;
+    /* menentukan background elemen */
+    background-color: #fff;
+    /* menambahkan efek bayangan pada elemen dengan */
+    box-shadow: 0 2px 8 px rgb(0,0,0,0.03); /* 0: Tidak ada pergeseran bayangan horizontal (bayangan tidak bergeser ke kiri/kanan), 2px: Bayangan bergeser 2px ke bawah (vertikal), 8px: Radius blur bayangan sebesar 8px(semakin besar, semakin kabur), */
+    /* jarak konten dengan border. ada ruang 20px di atas dan bawah, tapi 0 tidak ada ruang di kiri dan kanan elemen.*/
+    padding: 20px 0;
+    /* Menambahkan batas pada bagian bawah eleme */
+    border-bottom: 1px solid #eee;
+}
+
+.main-header {
+    /* membuat displaynya flex */
+    display: flex;
+    /* menentukan posisi konten dalam elemen, space-between digunakan dalam Flexbox untuk mengatur persebaran elemen di sepanjang main axis (sumbu utama, biasanya horizontal)membuat elemen ditengah(horizontal), Meletakkan elemen pertama di paling kiri, Elemen terakhir di paling kanan, Dan elemen-elemen di antaranya memiliki jarak yang rata di antara satu sama lain  */
+    justify-content: space-between;
+    /* membuat elemen ditengah(vertikal) */
+    align-items: center;
+}
+
+.logo-header {
+    /* membuat displaynya flex */
+    display: flex;
+    /* membuat semua elemen ditengah(vertikal) */
+    align-items: center;
+    /* jarak antar elemen */
+    gap: 10px
+}
+
+.logo-header img {
+    /* tinggi img pada log-header */
+    height: 50px;
+    /* menentukan kelengkungan sudut elemet */
+    border-radius: 8px;
+}
+
+.logo-header h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.navigasi-header a {
+    margin: 0 15px;
+    text-decoration: none;
+    /* mengatur wana content teks */
+    color: #555;
+    /* mengatur tebal content teks*/
+    font-weight: 500;
+    /* Kalau warna berubah (misal saat hover), transisinya akan berlangsung selama 0.3 detik dengan efek halus (ease), bukan tiba-tiba. */
+    transition: color 0.3s ease;
+}
+
+.navigasi-header a:hover {
+    /* hover adalah pseudo-class di CSS yang digunakan untuk memberi efek saat kursor mouse berada di atas elemen, tanpa harus diklik. Dengan diberi properti color, ketika cursor berada diatas elemen, akan berubah sesuai color pada hover*/
+    color: #007bff;
+    /* menentukan dekorasi text, underline membuat ketika cursor berada diatas elemen, akan muncul underscore pada content text */
+    text-decoration: underline;
+}
+
+
