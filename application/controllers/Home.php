@@ -55,7 +55,9 @@ class Home extends CI_Controller
 
     public function keranjang()
     {
-        $this->load->view('keranjang_page');
+        $id_user = $this->session->userdata('id_user');
+        $data['produk'] = $this->Database_model->getKeranjangByIdUser($id_user);
+        $this->load->view('keranjang_page', $data);
     }
         
 }

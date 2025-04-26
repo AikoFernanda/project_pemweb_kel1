@@ -1,0 +1,328 @@
+* {
+    /* Membuat penambahan padding dan border tidak mengubah elemen menjadi lebih besar dari ukuran aslinya */
+    box-sizing: border-box;
+    /* Mengubah default margin dan padding jadi 0, agar memiliki control penuh */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+html {
+    /* Membuat link navigasi pada header lebih smooth ngescrollnya saat diklik */
+    scroll-behavior: smooth
+}
+
+.container {
+    /* Menentukan lebar maksimal elemen tidak boleh lebih dari 1200px */
+    max-width: 1200px;
+    /* menentukan jarak dengan margin auto yakni pas ditengah */
+    margin: auto;
+    /* menentukan Jarak konten dengan border */
+    padding: 20px;
+}
+
+/* HEADER STYLE */
+header {
+    /* menentukan tinggi maksimum elemen agar tidak lebih dari 110px */
+    height: 110px;
+    /* menentukan background elemen */
+    background-color: #fff;
+    /* menambahkan efek bayangan pada elemen dengan */
+    box-shadow: 0 2px 8 px rgb(0, 0, 0, 0.03);
+    /* 0: Tidak ada pergeseran bayangan horizontal (bayangan tidak bergeser ke kiri/kanan), 2px: Bayangan bergeser 2px ke bawah (vertikal), 8px: Radius blur bayangan sebesar 8px(semakin besar, semakin kabur), */
+    /* jarak konten dengan border. ada ruang 20px di atas dan bawah, tapi 0 tidak ada ruang di kiri dan kanan elemen.*/
+    padding: 20px 0;
+    /* Menambahkan batas pada bagian bawah eleme */
+    border-bottom: 1px solid #eee;
+}
+
+.main-header {
+    /* membuat displaynya flex */
+    display: flex;
+    /* menentukan posisi konten dalam elemen, space-between digunakan dalam Flexbox untuk mengatur persebaran elemen di sepanjang main axis (sumbu utama, biasanya horizontal)membuat elemen ditengah(horizontal), Meletakkan elemen pertama di paling kiri, Elemen terakhir di paling kanan, Dan elemen-elemen di antaranya memiliki jarak yang rata di antara satu sama lain  */
+    justify-content: space-between;
+    /* membuat elemen ditengah(vertikal) */
+    align-items: center;
+}
+
+.logo-header {
+    /* membuat displaynya flex */
+    display: flex;
+    /* membuat semua elemen ditengah(vertikal) */
+    align-items: center;
+    /* jarak antar elemen */
+    gap: 10px
+}
+
+.logo-header img {
+    /* tinggi img pada log-header */
+    height: 50px;
+    /* menentukan kelengkungan sudut elemet */
+    border-radius: 8px;
+}
+
+.logo-header h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.navigasi-header a {
+    margin: 0 15px;
+    text-decoration: none;
+    /* mengatur wana content teks */
+    color: #555;
+    /* mengatur tebal content teks*/
+    font-weight: 500;
+    /* Kalau warna berubah (misal saat hover), transisinya akan berlangsung selama 0.3 detik dengan efek halus (ease), bukan tiba-tiba. */
+    transition: color 0.3s ease;
+}
+
+.navigasi-header a:hover {
+    /* hover adalah pseudo-class di CSS yang digunakan untuk memberi efek saat kursor mouse berada di atas elemen, tanpa harus diklik. Dengan diberi properti color, ketika cursor berada diatas elemen, akan berubah sesuai color pada hover*/
+    color: #007bff;
+    /* menentukan dekorasi text, underline membuat ketika cursor berada diatas elemen, akan muncul underscore pada content text */
+    text-decoration: underline;
+}
+
+main .container {
+    margin-top: 40px;
+}
+
+/* btn-back */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    background-color: #6b6b6b; /* ungu tua, biar match sama tema */
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none; /* ini penting biar garis bawah ilang */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-back i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.btn-back:hover {
+    background-color: #333; /* ungu lebih gelap saat hover */
+}
+
+/* Product  */
+.product-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.product-img {
+    flex: 1 1 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.product-info {
+    flex: 1 1 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-name {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.product-meta {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.product-description {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.product-price {
+    margin-top: 8px;
+    font-size: 1.1em;
+}
+
+.harga-diskon {
+    color: red;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.harga-asli {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.harga-normal {
+    color: black;
+    font-weight: normal;
+}
+
+.buy-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.buy-button:hover {
+    background-color: #0056b3;
+}
+
+.quantity-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#quantity {
+    width: 50px;
+    text-align: center;
+    font-size: 16px;
+    padding: 5px;
+}
+
+/* Hilangkan spinner untuk input number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /*standar untuk browser(Chrome/Safari)*/
+  appearance: none; /* standar untuk browser lain(seperti Edge, Opera). */
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* standar untuk browser Firefox */
+  appearance: textfield;      /* standar untuk browser lain(seperti Edge, Opera).*/
+}
+/* FOOTER STYLE */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 15px;
+}
+
+.footer-column h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-decoration: none;
+}
+
+.footer-column p {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.social-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: #444;
+    color: white;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 15px;
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    color: #ccc;
+    font-size: 12px;
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+    .product-detail {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-img,
+    .product-info {
+        flex: 1 1 100%;
+    }
+}

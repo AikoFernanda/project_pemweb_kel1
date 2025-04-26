@@ -12,7 +12,7 @@
     <!-- ikon user, Font Awesome (paling umum & gampang). Tambahin link CDN di <head> HTML:-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- Custom CSS -->
+    <!-- Link CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/css/style_homepage.css?v=' . time()); ?>"><!--opsi developer pakai . time() agar css di load tiap halaman reload-->
 </head>
 
@@ -31,7 +31,7 @@
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="login-register">
-                    <a class="ikon-keranjang" href="<?= base_url('index.php/Home/keranjang'); ?>">
+                    <a class="ikon-keranjang" href="<?= base_url('index.php/Katalog_produk/keranjang'); ?>">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </a>
                     <a class="ikon-profil" href="<?= base_url('index.php/Home/profil'); ?>">
@@ -164,7 +164,6 @@
                 &copy; 2025 CV. Mulia Langgeng Mufakat — All rights reserved.
             </div>
         </div>
-    </footer>
     </footer>
 
     <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>" defer></script> <!--.time() berfungsi agar file JS-nya otomatis ke-refresh saat develop (seperti css),  untuk cache-busting CSS & JS biasanya digunakan umum dalam praktik di kalangan developer agar perubahan langsung kelihatan.

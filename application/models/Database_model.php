@@ -36,11 +36,23 @@ class Database_model extends CI_Model
         // result() → pakai ->nama_produk (mengembalikan dalam bentuk objek)
         // result_array() → pakai ['nama_produk'] (mengembalikan dalam bentuk array assosiatif)
     }
+    
+    public function getKeranjangByIdUser($id_user) {
+        $this->db->where('id_user', $id_user);
+        $result = $this->db->get('keranjang');
+        return $result->result_array(); 
+    }
 
     public function getProdukByKategori($kategori) {
         $this->db->where('kategori', $kategori);
         $result = $this->db->get('produk');
-        return $result->result_array();
+        return $result->result_array(); // mengembalikan array of array, array pertama adalah banyak row(data/record produk) array kedua adalah kolom(atribut/field dari produk)
+    }
+
+    public function getProdukById($id_produk) {
+        $this->db->where('id_produk', $id_produk);
+        $result = $this->db->get('produk');
+        return $result->row_array(); // mengembalikan 1 baris array assosiatif atau istilahnya tidak mengembalikan array of array seperti result_array(), jadi dia hanya mengembalikan 1 baris array saja.
     }
 
     public function insertDataAkun($email, $username_akun, $password_akun)

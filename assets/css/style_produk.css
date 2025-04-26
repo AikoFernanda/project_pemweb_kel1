@@ -351,18 +351,38 @@ i {
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* repeat(4, 1fr) artinya: 4 kolom, masing-masing mengambil 1 bagian yang sama lebarnya. */
     gap: 15px;
     padding: 10px;
+    align-items: stretch;
+    /* align-items: stretch, maka: Tingginya disamakan untuk semua item dalam satu baris, dan ukuran tingginya diambil dari baris itu — bukan dari satu product-card saja. Jadi, apapun isi dalam kartunya, semua container kartunya dibuat stretch dalam 1 baris itu*/
 }
 
-.product-card {
+.product-detail {
+    /* membuat supaya product-card seolah2 tidak seperti link */
+    color: inherit; /* supaya warna teks di <a> ngikut warna teks parent-nya, bukan warna link default. */
+    text-decoration: none; /* supaya tidak ada dekorasi text seperti underline, dll*/
+}
+
+/* .product-card {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
 
+} */
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* height: 100% → supaya .product-card benar-benar mengisi seluruh tinggi area grid yang disediakan (yang sudah di-stretch tadi). */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
 .product-card:hover {
@@ -371,7 +391,7 @@ i {
 }
 
 .product-img {
-    height: 150px;
+    /* height: 150px; */ /* di command aja, biar img bagus, tidak ada batasan 150px untuk tingginya*/
     overflow: hidden;
     position: relative;
     border-radius: 8px;
@@ -450,6 +470,10 @@ i {
     border: none;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.product-null {
+    text-align: center;
 }
 
 /* FOOTER */

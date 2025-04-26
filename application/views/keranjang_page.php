@@ -25,7 +25,10 @@
     </header>
     <main>
         <h1>Keranjang Anda</h1>
-        <table border="1px" cellpadding="10px" cellspacing="10px">
+        <?php $i = 0;?>
+        <br>
+        <?php var_dump($produk);?>
+        <table border="1px" cellpadding="20px" cellspacing="1px">
             <tr>
                 <th>Nomor</th>
                 <th>Nama Produk</th>
@@ -35,11 +38,11 @@
             </tr>
             <?php foreach ($produk as $p) : ?>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><?=$i?></td>
+                    <td><?=$p['nama_produk']?></td>
+                    <td><?=$p['kategori']?></td>
+                    <td><?=$p['jumlah']?></td>
+                    <td><?=$p['subtotal']?></td>
                 </tr>
             <?php endforeach; ?>
         </table>

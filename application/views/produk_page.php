@@ -34,7 +34,7 @@
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="profil">
-                    <a class="ikon-keranjang" href="<?= base_url('index.php/Home/keranjang');?>">
+                    <a class="ikon-keranjang" href="<?= base_url('index.php/Katalog_produk/keranjang');?>">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </a>
                     <a class="ikon-profil" href="<?= base_url('index.php/Home/profil'); ?>">
@@ -134,8 +134,8 @@
 
                 <div class="category-filter">
                     <button class="category-btn active" data-kategori="semua">Semua</button>
-                    <button class="category-btn" data-kategori="Laptop">Laptop/Notebook</button>
-                    <button class="category-btn" data-kategori="Printer">Printer</button>
+                    <button class="category-btn" data-kategori="Notebook/Laptop">Notebook/Laptop</button>
+                    <button class="category-btn" data-kategori="Printer/Scanner">Printer/Scanner</button>
                     <button class="category-btn" data-kategori="AC">AC</button>
                     <button class="category-btn" data-kategori="Lainnya">Lainnya</button>
                 </div>
@@ -144,6 +144,7 @@
                     <?php foreach ($produk as $p) : ?>
                         <?php $diskon = ($p['harga'] * $p['persentase_diskon']) / 100 ?>
                         <?php $harga_diskon = $p['harga'] - $diskon; ?>
+                        <a class="product-detail" href="<?= base_url('index.php/Katalog_produk/detail_produk?id_produk=' . $p['id_produk'])?>">
                         <div class="product-card">
                             <div class="product-img">
                                 <img src="<?= base_url('assets/img/produk/' . $p['gambar']); ?>" alt="<?= $p['nama_produk']; ?>">
@@ -165,6 +166,7 @@
                                 </div>
                             </div>
                         </div>
+                        </a>
                     <?php endforeach; ?>
                 </div>
             </section>
