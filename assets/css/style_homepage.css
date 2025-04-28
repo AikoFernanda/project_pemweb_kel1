@@ -125,6 +125,7 @@ header {
 .ikon-profil:hover {
     color: #007bff;
 }
+
 .ikon-keranjang:hover {
     color: #007bff;
     ;
@@ -260,7 +261,7 @@ footer {
 .footer-column h3 {
     font-size: 16px;
     margin-bottom: 15px;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 .footer-column p {
@@ -308,13 +309,14 @@ footer {
 
 /* MODAL LOGIN */
 .modal {
-    display: none; 
-    position: fixed; 
+    display: none;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* buat efek gelap */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* buat efek gelap */
     z-index: 999;
 }
 
@@ -377,5 +379,34 @@ footer {
 
     to {
         opacity: 1;
+    }
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+
+    /* ukuran layar ≤ 768px (biasanya tablet kecil atau smartphone), maka: */
+    header {
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .slider-container {
+        height: 250px;
+        margin-top: 50px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-content {
+        flex-direction: column;
     }
 }

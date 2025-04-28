@@ -90,6 +90,73 @@ header {
     text-decoration: underline;
 }
 
+/* login-register BTN STYLE*/
+.login-register {
+    display: flex;
+    /* default flex, ketika sudah login atau daftar maka set display: none*/
+    gap: 15px;
+}
+
+/* Tombol Login */
+.btn-login {
+    background: linear-gradient(to right, #007BFF, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.btn-login:hover {
+    background: linear-gradient(to right, #0056b3, #003f88);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Tombol Signup */
+.btn-signup {
+    background: linear-gradient(to right, #28A745, #218838);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.btn-signup:hover {
+    background: linear-gradient(to right, #218838, #1e7e34);
+    box-shadow: 0 6px 16px rgba(40, 167, 69, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Profil */
+.ikon-profil,
+.ikon-keranjang {
+    text-decoration: none;
+    color: black;
+    /* Menghilangkan underline */
+}
+
+.ikon-profil:hover {
+    color: #007bff;
+}
+.ikon-keranjang:hover {
+    color: #007bff;
+    ;
+    /* Menambahkan warna ketika hover */
+}
+
+i {
+    font-size: 24px;
+    /* Menentukan ukuran ikon */
+}
+
 main .container {
     margin-top: 40px;
 }
@@ -100,11 +167,13 @@ main .container {
     align-items: center;
     padding: 8px 16px;
     margin-bottom: 20px;
-    background-color: #6b6b6b; /* ungu tua, biar match sama tema */
+    background-color: #6b6b6b;
+    /* ungu tua, biar match sama tema */
     color: white;
     font-weight: 500;
     font-size: 14px;
-    text-decoration: none; /* ini penting biar garis bawah ilang */
+    text-decoration: none;
+    /* ini penting biar garis bawah ilang */
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
@@ -115,7 +184,8 @@ main .container {
 }
 
 .btn-back:hover {
-    background-color: #333; /* ungu lebih gelap saat hover */
+    background-color: #333;
+    /* ungu lebih gelap saat hover */
 }
 
 /* Product  */
@@ -171,25 +241,41 @@ main .container {
     margin-bottom: 20px;
 }
 
+.price-one-product {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: #333;
+}
+
 .product-price {
-    margin-top: 8px;
-    font-size: 1.1em;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .harga-diskon {
-    color: red;
+    color: #e53935;
     font-weight: bold;
-    margin-right: 8px;
+    font-size: 1.4em;
+    margin-right: 10px;
 }
 
+
 .harga-asli {
-    color: #888;
-    font-size: 0.9em;
+    color: #aaa;
+    font-size: 1em;
+    text-decoration: line-through;
 }
 
 .harga-normal {
-    color: black;
-    font-weight: normal;
+    color: #333;
+    font-size: 1.4em;
+    font-weight: bold;
 }
 
 .buy-button {
@@ -199,9 +285,12 @@ main .container {
     padding: 14px 30px;
     border-radius: 8px;
     font-size: 16px;
+    font-weight: bold;
     text-decoration: none;
     text-align: center;
     transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
 .buy-button:hover {
@@ -211,40 +300,59 @@ main .container {
 .quantity-container {
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 15px;
+    gap: 10px;
 }
 
 .quantity-btn {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
     font-weight: bold;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
+    color: #333;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #e0e0e0;
 }
 
 #quantity {
-    width: 50px;
+    width: 60px;
+    height: 36px;
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
     padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.total-price {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #2e7d32;
 }
 
 /* Hilangkan spinner untuk input number */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none; /*standar untuk browser(Chrome/Safari)*/
-  appearance: none; /* standar untuk browser lain(seperti Edge, Opera). */
-  margin: 0;
+    -webkit-appearance: none;
+    /*standar untuk browser(Chrome/Safari)*/
+    appearance: none;
+    /* standar untuk browser lain(seperti Edge, Opera). */
+    margin: 0;
 }
 
 input[type=number] {
-  -moz-appearance: textfield; /* standar untuk browser Firefox */
-  appearance: textfield;      /* standar untuk browser lain(seperti Edge, Opera).*/
+    -moz-appearance: textfield;
+    /* standar untuk browser Firefox */
+    appearance: textfield;
+    /* standar untuk browser lain(seperti Edge, Opera).*/
 }
+
 /* FOOTER STYLE */
 footer {
     background-color: #333;
@@ -314,8 +422,97 @@ footer {
     font-size: 12px;
 }
 
+/* MODAL LOGIN */
+.modal {
+    display: none; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* buat efek gelap */
+    z-index: 999;
+}
+
+.login-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    height: 350px;
+    width: 400px;
+    border-radius: 10px;
+}
+
+.login-content h2 {
+    margin-bottom: 10px;
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.login-content button {
+    padding: 12px 24px;
+    background: linear-gradient(to right, #007BFF, #0056b3);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.login-content button:hover {
+    background: linear-gradient(to right, #0056b3, #004099);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+@keyframes fadeIn { /*elemen itu akan muncul dari transparan ➔ ke jelas perlahan.*/
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 /* Responsive tweak */
-@media (max-width: 768px) {
+@media (max-width: 768px) { /* ukuran layar ≤ 768px (biasanya tablet kecil atau smartphone), maka: */
+    .main-header {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+
+    .navigasi-header {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .navigasi-header a {
+        margin: 5px 10px;
+    }
+
+    .login-register {
+        margin-top: 10px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-login,
+    .btn-signup {
+        width: 100%;
+        text-align: center;
+    }
+
     .product-detail {
         flex-direction: column;
         align-items: center;

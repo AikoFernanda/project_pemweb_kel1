@@ -41,11 +41,17 @@ class Signup_login_control extends CI_Controller
 
             // jika insertDataAkun berhasil akan mengembalikan nilai true dan disimpan $insertAkunSukses
             if ($insertAkunSukses) {
-                // ambil id_akun dengan function getLastId() dari model Database_model.php
+                // ambil id_akun dengan function getLastId() dari model Database_model.php 
                 $id_akun = $this->Database_model->getLastId();
+                // dan insert ke tabel User
                 $this->Database_model->insertDataUser($id_akun, $no_hp);
 
+                // ambil data akun dan user dari pendaftar/signup
+                $akun = $this->Database_model->getAkunByUsername($username_akun);
+                $user = $this->Database_model->getUserByIdAkun($akun['id_akun']);
+
                 $this->session->set_userdata('id_akun', $id_akun);
+                $this->session->set_userdata('id_user', $user['id_user']);
                 $this->session->set_userdata('username_akun', $username_akun);
                 $this->session->set_userdata('role', 'user');
                 $this->session->set_userdata('logged_in', true);
@@ -101,9 +107,10 @@ class Signup_login_control extends CI_Controller
             } else if ($akun = $this->Database_model->getAkunByUsername($username_akun)) {
                 if (password_verify($password_akun, $akun['password_akun'])) {
                     // Gunakan password_verify() saat login	Untuk membandingkan password user dengan hash di database. Jika password cocok, maka jalankan di bawah ini
-
+                    $user = $this->Database_model->getUserByIdAkun($akun['id_akun']);
                     // set_userdata adalah fungsi untuk menyimpan data ke dalam session di CodeIgniter.
                     $this->session->set_userdata('id_akun', $akun['id_akun']);
+                    $this->session->set_userdata('id_user', $user['id_user']);
                     $this->session->set_userdata('username_akun', $username_akun);
                     $this->session->set_userdata('role', $akun['role']);
                     $this->session->set_userdata('logged_in', true);

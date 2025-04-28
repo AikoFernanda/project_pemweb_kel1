@@ -14,7 +14,11 @@ class Home extends CI_Controller
     // Jangan akses file langsung di dalam application/views/ menggunakan base_url() atau URL langsung. Alih-alih mengarahkan ke file PHP di dalam folder views, kita harus menggunakan Controller untuk memuat view tersebut.
     // nama classnya Welcome, 'W' wajib huruf besar karena class harus didahului huruf besar dan nama class sesuai dengan nama file controller. Semua Hal ini agar sesuai standart PSR
     public function index()
-    { //// nama method dari class Hello adalah index
+    { // nama method dari class Hello adalah index
+        $page = "index.php/Home/index";
+        if($this->session->userdata('id_user')) {
+            $this->session->set_userdata('location', $page);
+        }
         $this->load->view('homepage');
     }
 
@@ -49,15 +53,11 @@ class Home extends CI_Controller
 
     public function produk()
     {
+        $page = "index.php/Home/produk";
+        if($this->session->userdata('id_user')) {
+            $this->session->set_userdata('location', $page);
+        }
         $data['produk'] = $this->Database_model->getAllProduk();
         $this->load->view('produk_page', $data); // laod view produk dengan passing data dari $data ke view
     }
-
-    public function keranjang()
-    {
-        $id_user = $this->session->userdata('id_user');
-        $data['produk'] = $this->Database_model->getKeranjangByIdUser($id_user);
-        $this->load->view('keranjang_page', $data);
-    }
-        
 }

@@ -12,7 +12,7 @@
     <main><a href="<?= base_url('index.php/Signup_login_control/logout'); ?>">
             <button class="btn-logout">Logout</button>
         </a></main>
-        <a href="<?= base_url('index.php/Home/index'); ?>">Kembali</a>
+        <a href="<?= base_url($this->session->userdata('location')); ?>">Kembali</a> <!--Jadi back sesuai sesi menyimpan page terakhir pada key sesi 'location'-->
     <footer></footer>
 </body>
 

@@ -30,26 +30,104 @@ class Database_model extends CI_Model
         // result_array() -> array of associative, akses datanya seperti ini: echo $data[0]['nama']; // Output: Andi
     }
 
+    public function getUserByIdAkun($id_akun)
+    {
+        $this->db->where('id_akun', $id_akun);
+        $result = $this->db->get('user');
+        return $result->row_array();
+    }
+
     public function getAllProduk()
     {
         return $this->db->get('produk')->result_array();
         // result() → pakai ->nama_produk (mengembalikan dalam bentuk objek)
         // result_array() → pakai ['nama_produk'] (mengembalikan dalam bentuk array assosiatif)
     }
-    
-    public function getKeranjangByIdUser($id_user) {
+
+    public function getKeranjangByIdUser($id_user)
+    {
         $this->db->where('id_user', $id_user);
         $result = $this->db->get('keranjang');
-        return $result->result_array(); 
+
+        if ($result->num_rows() > 0) {
+            return $result->result_array();
+        } else {
+            return [];  // Jika tidak ada data, kembalikan array kosong
+        }
     }
 
-    public function getProdukByKategori($kategori) {
+    public function deleteProdukFromKeranjang($id_user, $id_produk){
+        $this->db->where('id_user', $id_user);
+        $this->db->where('id_produk', $id_produk);
+        return $result = $this->db->delete('keranjang'); // return true jika berhasil delete di db, false jika gagal
+    }
+
+    public function getProdukByKategori($kategori)
+    {
         $this->db->where('kategori', $kategori);
         $result = $this->db->get('produk');
         return $result->result_array(); // mengembalikan array of array, array pertama adalah banyak row(data/record produk) array kedua adalah kolom(atribut/field dari produk)
     }
 
-    public function getProdukById($id_produk) {
+    public function getProdukForShowInKeranjang($id_user)
+    {
+        // Ambil data keranjang berdasarkan user_id
+        $tabelKeranjang = $this->getKeranjangByIdUser($id_user); /* jika memanggil dalam satu file yaitu Database_model, cukup $this->namafunction(). Salah jik memanggilnya $this->db->namafunction() yang seolah2 dipanggil dari kelas database CI_DB_mysqli_driver yang hanya berfungsi untuk query database.*/
+        // Inisialisasi array untuk menyimpan produk yang akan ditampilkan. 
+        $produkForShow = [];
+        // loop untuk memasukkan tiap element produk yang sesuai dalam array $produkForShow
+        foreach ($tabelKeranjang as $k) {
+            // Ambil data produk berdasarkan id_produk
+            $tabelProduk = $this->getProdukById($k['id_produk']);
+            // Tambahkan data produk ke dalam array assosiatif $produkForShow. Untuk mengembalikan array of array kita perlu menggunakan [] untuk menambahkan data produk ke dalam array.
+            $produkForShow[] = [
+                "id_produk" => $tabelProduk['id_produk'],
+                "gambar" => $tabelProduk['gambar'],
+                "nama_produk" => $tabelProduk['nama_produk'],
+                "kategori" => $tabelProduk['kategori'],
+                "jumlah" => $k['jumlah'],
+                "subtotal" => $k['subtotal']
+            ];
+        }
+        // Kembalikan array produk yang akan ditampilkan di keranjang
+        return $produkForShow;
+    }
+
+    public function addProdukInKeranjang($id_user, $id_produk, $jumlah, $subtotal)
+    {
+        $dataProduk = [
+            "id_user" => $id_user,
+            "id_produk" => $id_produk,
+            "jumlah" => $jumlah,
+            "subtotal" => $subtotal
+        ];
+        /* Cari dulu apakah produk ini sudah ada di keranjang */
+        $this->db->where('id_user', $id_user);
+        $this->db->where('id_produk', $id_produk); /*Kalau mau tambah kondisi banyak, cukup panggil $this->db->where() lagi.*/
+        $cekKeranjang = $this->db->get('keranjang')->row(); /*$cekKeranjang itu adalah object query builder, bukan langsung data hasilnya. Harus ambil datanya pakai num_rows() atau row(). row() itu ngembaliin object, bukan array.*/
+
+        if ($cekKeranjang) {
+            /* jika data di keranjang ditemukan, maka update jumlah dan harganya */
+            $jumlahSebelumnya = $cekKeranjang->jumlah;
+            $subtotalSebelumnya = $cekKeranjang->subtotal;
+            $jumlahSekarang = $jumlahSebelumnya + $jumlah;
+            $subtotalSekarang = $subtotalSebelumnya + $subtotal;
+            $this->db->where('id_user', $id_user);
+            $this->db->where('id_produk', $id_produk);
+            $updateKeranjang = $this->db->update('keranjang', [
+                "jumlah" => $jumlahSekarang,
+                "subtotal" => $subtotalSekarang
+            ]);
+            return $updateKeranjang;
+        } else {
+            /* jika tidak ditemukan buat row baru atau insert data */
+            $insertKeranjang = $this->db->insert('keranjang', $dataProduk);
+            return $insertKeranjang;
+        }
+    }
+
+    public function getProdukById($id_produk)
+    {
         $this->db->where('id_produk', $id_produk);
         $result = $this->db->get('produk');
         return $result->row_array(); // mengembalikan 1 baris array assosiatif atau istilahnya tidak mengembalikan array of array seperti result_array(), jadi dia hanya mengembalikan 1 baris array saja.
@@ -104,6 +182,7 @@ class Database_model extends CI_Model
         return $id_akun;
 
         //Fungsi insert_id() dari CodeIgniter akan mengembalikan id dari data terakhir yang berhasil dimasukkan (dalam hal ini, ID dari tabel akun setelah insert sukses).
+        // berguna jika kalau id AUTO_INCREMENT.
         //dan mengembalikan value id tersebut sebagai value function getLastId
     }
 

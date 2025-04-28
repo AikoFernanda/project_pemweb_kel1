@@ -14,6 +14,7 @@
 
     <!-- ikon user, Font Awesome (paling umum & gampang). Link untuk Load Font Awesome, yaitu ikon-ikon siap pakai. Tambahin link CDN di <head> HTML:-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
@@ -29,12 +30,28 @@
                 <a href="#">Layanan</a>
                 <a href="#">Tentang Kami</a>
             </div>
+            <?php if ($this->session->userdata('logged_in')) : ?>
+                <div class="login-register">
+                    <a class="ikon-keranjang" href="<?= base_url('index.php/Katalog_produk/keranjang'); ?>">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                    <a class="ikon-profil" href="<?= base_url('index.php/Home/profil'); ?>">
+                        <i class="fas fa-user"></i>
+                    </a> <!-- Ikon user -->
+                </div>
+            <?php else : ?>
+                <div id="btn-login-register" class="login-register">
+                    <button type="button" class="btn-login" onclick="toggleLoginModal()">Login</button> <!--onclick, ini adalah event handler. Saat pengguna mengklik elemen ini, maka akan memanggil fungsi JavaScript bernama closeLoginModal() yang berfungsi untuk membuka modal login yang berdisplay none(disembunyikan) ke block-->
+                    <button type="button" class="btn-signup" onclick="window.location.href='<?= base_url('index.php/Signup_login_control/signup'); ?>'">Sign Up</button>
+                </div>
+            <?php endif; ?>
         </div>
     </header>
     <main>
+        <?= var_dump($this->session->userdata());?><br>
         <div class="container">
             <a href="<?= base_url('index.php/Home/produk') ?>" class="btn-back">
-                <i class="fas fa-arrow-left"></i> Kembali ke Produk <!--Untuk ikon panah ke kiri-->
+                <i class="fas fa-arrow-left"></i> Kembali <!--Untuk ikon panah ke kiri-->
             </a>
 
             <div class="product-detail">
@@ -52,7 +69,7 @@
 
                     <p class="product-description"><?= nl2br($produk['deskripsi']); ?></p>
 
-                    <div class="product-price">
+                    <div class="price-one-product">
                         <?php $diskon = ($produk['harga'] * $produk['persentase_diskon']) / 100; ?>
                         <?php $harga_diskon = $produk['harga'] - $diskon; ?>
                         <?php if ($produk['persentase_diskon'] != 0) : ?>
@@ -67,8 +84,13 @@
                                 Rp <?= number_format($produk['harga'], 0, ',', '.'); ?>
                             </span>
                         <?php endif; ?>
-                        <form action="<?= base_url('index.php/Home/keranjang'); ?>" method="POST">
-                            <input type="hidden" name="id_produk" value="<?= $produk['id_produk'] ?>">
+                    </div>
+
+                    <div class="product-price">
+                        <form id="formTambahKeranjang" action="<?= base_url('index.php/Katalog_produk/addKeranjang'); ?>" method="POST">
+                            <input type="hidden" name="id_produk" value="<?= $produk['id_produk']; ?>">
+                            <input type="hidden" name="nama_produk" value="<?= $produk['nama_produk']; ?>">
+                            <input type="hidden" name="kategori" value="<?= $produk['kategori']; ?>">
 
                             <div class="quantity-container">
                                 <button id="decreaseBtn" type="button" class="quantity-btn" onclick="return decreaseQuantity()">-</button>
@@ -83,12 +105,27 @@
                                 <button id="increaseBtn" type="button" class="quantity-btn" onclick="return increaseQuantity()">+</button>
                             </div>
                             <div id="total-price" class="total-price">
-                                Rp <?= number_format(($produk['persentase_diskon'] != 0 ? $harga_diskon : $produk['harga']), 0, ',', '.'); ?>
+                                <?= 'Rp ' . number_format(($produk['persentase_diskon'] != 0 ? $harga_diskon : $produk['harga']), 0, ',', '.'); ?>
                             </div>
+                            <input type="hidden" name="harga_satuan" value="<?= $produk['persentase_diskon'] != 0 ? $harga_diskon : $produk['harga']; ?>">
                             <button type="submit" class="buy-button">Tambah ke Keranjang</button>
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- Modal Login-->
+        <div id="login-modal" class="modal">
+            <div class="login-content">
+                <span class="close" onclick="toggleLoginModal()">&times;</span> <!--membuat elemen <span> dengan class 'close', <span> adalah elemen inline (biasanya untuk teks pendek). &timens ini adalah HTML entity(seperti &copy, dsb.) untuk simbol silang (×). Jadi di layar akan muncul tanda silang, sering digunakan sebagai tombol “close”.-->
+                <h2>Login</h2>
+                <form action="<?= base_url('index.php/Signup_login_control/login'); ?>" method="POST">
+                    <label for="username">Username:</label><br>
+                    <input id="username" type="text" name="username_akun" required><br>
+                    <label for="password">Password:</label><br>
+                    <input id="password" type="password" name="password_akun" required><br><br>
+                    <button type="submit" name="submit">Login</button>
+                </form>
             </div>
         </div>
     </main>
@@ -128,7 +165,7 @@
                     </div>
                     <div class="footer-column">
                         <h3>Kontak Kami</h3>
-                        <p><i class="fas fa-map-marker-alt"></i> -</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Jl. Poskeskel, Desa Mulyojati Kec. Metro Barat Kota Metro</p>
                         <p><i class="fas fa-phone"></i> +62 823-7459-1985</p>
                         <p><i class="fas fa-envelope"></i> mulamufakat@gmail.com</p>
                     </div>
@@ -138,7 +175,18 @@
                 </div>
             </div>
     </footer>
+
+    <!--JAX bergantung pada jQuery untuk menjalankan request HTTP secara asinkron (misalnya $.ajax()), jadi jQuery harus ada di halaman agar AJAX bisa berfungsi.-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.24/dist/sweetalert2.min.css">
+
     <script src="<?= base_url('assets/js/cart_quantity_product.js?v=' . time()); ?>"></script>
+    <script src="<?= base_url('assets/js/add_cart.js?v=' . time()) ?>"></script>
+    <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>" defer></script> <!--.time() berfungsi agar file JS-nya otomatis ke-refresh saat develop (seperti css),  untuk cache-busting CSS & JS biasanya digunakan umum dalam praktik di kalangan developer agar perubahan langsung kelihatan.
+                                                                                         Dengan defer, browser akan load script setelah halaman selesai dimuat. -->
 </body>
 
 </html>

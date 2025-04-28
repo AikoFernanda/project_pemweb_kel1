@@ -16,10 +16,9 @@ function updatePrice() {
     var basePrice = parseInt(document.getElementById('quantity').getAttribute('data-harga')); /* ambil atribut data-harga yang nempel di <input id="quantity">. BasePrice untuk mendapatkan harga 1 product*/
     var totalPrice = qty * basePrice;
     var totalPriceElement = document.getElementById('total-price');
-    totalPriceElement.innerHTML = "Rp " + formatRupiah(totalPrice);
-    console.log(totalPriceElement)
+    totalPriceElement.innerHTML = formatRupiah(totalPrice); // &nbsp; spasi yang dianggap benar oleh browser, tidak dihapus. Karena ada beberapa hal seperti styling pakai CSS, misalnya text-align: right;, atau ada padding/margin tertentu, maka spasi satu karakter kayak ' ' di HTML nggak akan kelihatan secara visual. HTML dan CSS itu "mengabaikan" spasi kecil kayak gitu dalam tampilan. HTML juga kadang memperlakukan beberapa spasi sebagai satu spasi saja.
 
-    /*
+    /* 
      Ambil elemen input dulu:
      document.getElementById('quantity')
      Ambil data-harga dari elemen itu:
@@ -30,17 +29,15 @@ function updatePrice() {
 }
 
 function formatRupiah(angka) {
-    return angka.toLocaleString('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
+    return 'Rp ' + angka.toLocaleString('id-ID', {
         minimumFractionDigits: 0
     });
+}
 
     // minimumFractionDigits: 0 artinya tidak perlu desimal kayak ,00.
     // .toLocaleString(...)	Ini method bawaan JavaScript buat format angka jadi string sesuai lokal negara
     // 'id-ID' Artinya format Indonesia (jadi pakai titik untuk ribuan, koma untuk desimal)
     // { style: 'currency', currency: 'IDR' }	Mau gaya mata uang (currency) dan kode mata uangnya Rupiah (IDR)
-    }
 
 
 function decreaseQuantity() {

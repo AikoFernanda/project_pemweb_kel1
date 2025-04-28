@@ -208,7 +208,7 @@
                 </div>
                 <div class="footer-column">
                     <h3>Kontak Kami</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> -</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Poskeskel, Desa Mulyojati Kec. Metro Barat Kota Metro</p>
                     <p><i class="fas fa-phone"></i> +62 823-7459-1985</p>
                     <p><i class="fas fa-envelope"></i> mulamufakat@gmail.com</p>
                 </div>
