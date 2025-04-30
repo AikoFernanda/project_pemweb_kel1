@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keranjang - CV. MULIA LANGGENG MUFAKAT</title>
+    <title>Checkout - CV. MULIA LANGGENG MUFAKAT</title>
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!--LINK CSS-->
-    <link rel="stylesheet" href="<?= base_url('assets/css/style_keranjang.css?v=' . time()) ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/style_checkout.css?v=' . time()) ?>">
 </head>
 
 <body>
@@ -31,56 +31,49 @@
             </div>
         </div>
     </header>
-    <main class="container">
-        <h1>Keranjang Anda</h1>
-        <a href="<?= base_url($this->session->userdata('location')) ?>" class="btn-back">
-            <i class="fas fa-arrow-left"></i> Kembali<!--Untuk ikon panah ke kiri-->
-        </a>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nomor</th>
-                    <th>Gambar Produk</th>
-                    <th>Nama Produk</th>
-                    <th>Kategori</th>
-                    <th>Jumlah</th>
-                    <th>Subtotal</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $i = 0; ?>
-                <?php if ($produk) : ?>
+    <main>
+        <div class="checkout-container">
+            <h2>Checkout</h2>
+            <a href="<?= base_url('index.php/Home/produk') ?>" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Kembali <!--Untuk ikon panah ke kiri-->
+            </a>
+
+            <div class="checkout-wrapper">
+                <!-- Formulir Pengiriman -->
+                <div class="checkout-form">
+                    <form id="form-checkout" action="<?= base_url('index.php/Home/transaksi'); ?>" method="POST">
+                        <input type="hidden" name="total_transaksi" value="<?= $totalHarga ?>">
+
+                        <label for="nama">Nama Lengkap</label>
+                        <input type="text" name="nama_lengkap" value="<?= $user['nama_lengkap']; ?>" required>
+
+                        <label for="alamat">Alamat Pengiriman</label>
+                        <textarea name="alamat" required><?= $user['alamat']; ?></textarea> <!--textarea tidak pakai value pada propertinya, value taruh dalam content langsung/diantara tag pembuka dan penutup.-->
+
+                        <label for="no_hp">Nomor HP</label>
+                        <input type="tel" name="no_hp" value="<?= $user['no_hp']; ?>" pattern="\d{9,11}" maxlength="11" required title="Masukkan nomor telepon dengan benar" required>
+
+                        <button type="submit" class="btn-submit">Konfirmasi Pesanan</button>
+                    </form>
+                </div>
+
+                <!-- Ringkasan Produk -->
+                <div class="checkout-summary">
+                    <h3>Ringkasan Produk</h3>
                     <?php foreach ($produk as $p) : ?>
-                        <tr>
-                            <td><?= $i+1 ?></td>
-                            <td><img src="<?= base_url('assets/img/produk/' . $p['gambar']); ?>" alt="<?= $p['nama_produk'] ?>" width="100"></td>
-                            <td><?= $p['nama_produk'] ?></td>
-                            <td><?= $p['kategori'] ?></td>
-                            <td><?= $p['jumlah'] ?></td>
-                            <td><?= 'Rp ' . number_format($p['subtotal'], 0, ',', '.') ?></td>
-                            <td>
-                                <form class="delete-keranjang" action="<?= base_url('index.php/Katalog_produk/deleteKeranjang') ?>" method="POST"> <!--form untuk post value dari key id_produk ke controller untuk dihapus datanya di database dengan model-->
-                                    <input type="hidden" name="id_produk" value="<?= $p['id_produk'];?>">
-                                    <button type="submit" class="btn-hapus">Hapus</button>
-                                </form> <!--jangan gunakan id pada form, karena form ini diloop oleh foreach. Jadi banyak form dengan id yang sama, sementara id harus unik tidak boleh sama. id="delete-keranjang" ganti jadi class="delete-keranjang"-->
-                            </td>
-                        </tr>
-                        <?php $i++; ?>
+                        <div class="product-summary">
+                            <img src="<?= base_url('assets/img/produk/' . $p['gambar']); ?>" alt="<?= $p['nama_produk'] ?>">
+                            <div class="info">
+                                <p class="nama"><?= $p['nama_produk'] ?></p>
+                                <p>Jumlah: <?= $p['jumlah'] ?></p>
+                                <p>Harga: Rp <?= number_format($p['subtotal'], 0, ',', '.') ?></p>
+                            </div>
+                        </div>
                     <?php endforeach; ?>
-                <?php elseif ($message) : ?>
-                    <tr>
-                        <td colspan="7" class="no-items"><?= $message; ?></td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-        <div class="checkout">
-            <div class="checkout-content">
-                <h2 id="total-price">Total: Rp <?= number_format($totalHarga, 0, ',', '.'); ?></h2>
-                <form action="<?= base_url('index.php/Katalog_produk/checkout');?>" method="POST">
-                <button type="submit" name="btn-checkout" class="btn-checkout">Checkout Sekarang</button>
-                </form>
+                    <div class="total-harga">
+                        <strong>Total: Rp <?= number_format($totalHarga, 0, ',', '.') ?></strong>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -130,8 +123,16 @@
                 </div>
             </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- wajib ada jQuery untuk AJAX-->
-    <script src="<?= base_url('assets/js/delete_cart.js?v=' . time());?>"></script>
+    <!--jQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- wajib ada jQuery karena pakai $(document).ready() dan $.ajax():-->
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Jika kode JS-nya di file eksternal (assets/js/konfirmasi_pesanan.js), jangan pakai '<\?==?> didalam file js. Sebagai gantinya, lempar base URL dari PHP ke JS seperti ini:-->
+    <script>
+        const baseUrl = "<?= base_url(); ?>"; // Lalu di konfirmasi_pesanan.js-nya tinggal pakai: window.location.href = baseUrl + "index.php/Katalog_produk/keranjang";
+    </script>
+    <!--js untuk menangani submit konfirmasi pesanan-->
+    <script src="<?= base_url('assets/js/konfirmasi_pesanan.js?v=' . time()); ?>"></script>
 </body>
 
-</html>
+</html>console.log('Hello, World!');

@@ -75,6 +75,8 @@ class Database_model extends CI_Model
         $tabelKeranjang = $this->getKeranjangByIdUser($id_user); /* jika memanggil dalam satu file yaitu Database_model, cukup $this->namafunction(). Salah jik memanggilnya $this->db->namafunction() yang seolah2 dipanggil dari kelas database CI_DB_mysqli_driver yang hanya berfungsi untuk query database.*/
         // Inisialisasi array untuk menyimpan produk yang akan ditampilkan. 
         $produkForShow = [];
+
+        $totalHarga = 0;
         // loop untuk memasukkan tiap element produk yang sesuai dalam array $produkForShow
         foreach ($tabelKeranjang as $k) {
             // Ambil data produk berdasarkan id_produk
@@ -88,9 +90,13 @@ class Database_model extends CI_Model
                 "jumlah" => $k['jumlah'],
                 "subtotal" => $k['subtotal']
             ];
+            $totalHarga += $k['subtotal'];
         }
         // Kembalikan array produk yang akan ditampilkan di keranjang
-        return $produkForShow;
+        return [
+            'produk' => $produkForShow,
+            'total_harga' => $totalHarga
+        ];
     }
 
     public function addProdukInKeranjang($id_user, $id_produk, $jumlah, $subtotal)
@@ -220,6 +226,28 @@ class Database_model extends CI_Model
         // Karena where() tidak langsung menjalankan query,
         // Dia hanya menyimpan kondisi, dan nanti saat get('akun'), CodeIgniter akan menggabungkan semuanya dan membentuk SQL-nya dengan benar.
         // Urutan di CodeIgniter itu method chaining, bukan urutan SQL. where() dulu boleh dan benar, karena get() lah yang baru mengeksekusi query-nya dan menyatukan semua kondisi yang sebelumnya sudah ditentukan.
+    }
+
+    public function getTransactionId(){
+        $lastId = $this->db->getLastId('transaksi');
+        $nextId = $lastId + 1;
+        return $nextId;
+    }
+
+    public function transaction($kode_pemesanan, $id_user, $total_transaksi, $status_transaksi) {
+        $dataTransaksi = [
+            "kode_pemesanan" => $kode_pemesanan,
+            "id_user" => $id_user,
+            "total_transaksi" => $total_transaksi,
+            "status_transaksi" => $status_transaksi
+        ];
+        return $this->db->insert('transaksi', $dataTransaksi);
+    }
+
+    public function deleteAllCartList($id_user) {
+        $this->db->where('id_user', $id_user);
+        $result = $this->db->delete('keranjang');
+        return $result;
     }
 }
 // return pada model itu mengembalikan hasil dari operasi ke controller, jadi controller bisa tahu:

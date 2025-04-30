@@ -31,3 +31,47 @@ create table produk
     deskripsi varchar(100) default '-',
     terakhir_diubah timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+-- CREATE TABLE keranjang 
+-- (
+-- 	id_user INT NOT NULL,
+--     id_produk INT NOT NULL,
+--     jumlah INT NOT NULL,
+--     subtotal INT NOT NULL,
+--     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     PRIMARY KEY (id_user, id_produk),
+--     FOREIGN KEY(id_user) REFERENCES `user`(id_user) ON DELETE CASCADE,
+--     FOREIGN KEY(id_produk) REFERENCES produk(id_produk) ON DELETE CASCADE
+-- );
+
+CREATE TABLE keranjang (
+    id_keranjang INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
+    id_produk INT NOT NULL,
+    jumlah INT NOT NULL,
+    subtotal INT NOT NULL,
+    update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES user(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_produk) REFERENCES produk(id_produk) ON DELETE CASCADE
+);
+
+CREATE TABLE transaksi
+(
+    id_transaksi INT AUTO_INCREMENT PRIMARY KEY,
+    kode_pemesanan VARCHAR(20) NOT NULL unique,
+    id_user INT NOT NULL,
+    total_transaksi INT NOT NULL,
+    status_transaksi ENUM('Lunas', 'Gagal', 'Pending') NOT NULL DEFAULT 'Pending',
+    tanggal_transaksi TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(id_user) REFERENCES user(id_user) ON DELETE CASCADE
+);
+
+CREATE TABLE detail_transaksi (
+    id_transaksi INT,
+    id_produk INT,
+    jumlah INT,
+    subtotal INT,
+    PRIMARY KEY (id_transaksi, id_produk),
+    FOREIGN KEY (id_transaksi) REFERENCES transaksi(id_transaksi) ON DELETE CASCADE,
+    FOREIGN KEY (id_produk) REFERENCES produk(id_produk)
+);

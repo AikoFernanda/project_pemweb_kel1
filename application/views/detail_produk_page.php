@@ -48,7 +48,6 @@
         </div>
     </header>
     <main>
-        <?= var_dump($this->session->userdata());?><br>
         <div class="container">
             <a href="<?= base_url('index.php/Home/produk') ?>" class="btn-back">
                 <i class="fas fa-arrow-left"></i> Kembali <!--Untuk ikon panah ke kiri-->

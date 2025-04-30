@@ -56,7 +56,7 @@ header {
     margin: 0 15px;
     text-decoration: none;
     color: #555;
-    font-weight: 500;
+    font-weight: 600;
     transition: color 0.3s ease;
     /*transition agar efek hover terasa halus.*/
 }
@@ -597,15 +597,29 @@ footer {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+    /* ukuran layar ≤ 768px (biasanya tablet kecil atau smartphone), maka: */
     header {
         height: auto;
         padding: 10px 0;
     }
-
+    
     .main-header {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+        align-items: center;
+        height: auto;
+    }
+
+    .navigasi-header {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .profil {
+        margin-top: 10px;
+        flex-direction: row;
+        gap: 30px;
     }
 
     .slider-container {

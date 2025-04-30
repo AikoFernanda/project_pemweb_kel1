@@ -12,7 +12,11 @@ class Katalog_produk extends CI_Controller
     public function keranjang()
     {
         $id_user = $this->session->userdata('id_user');
-        $data['produk'] = $this->Database_model->getProdukForShowInKeranjang($id_user);
+        $keranjang = $this->Database_model->getProdukForShowInKeranjang($id_user);
+        $data = [
+            'produk' => $keranjang['produk'],
+            'totalHarga' => $keranjang['total_harga']
+        ];
         // Cek apakah ada produk di keranjang
         if (empty($data['produk'])) {
             // Menambahkan pesan jika keranjang kosong
@@ -81,14 +85,83 @@ class Katalog_produk extends CI_Controller
 
     public function deleteKeranjang()
     {
+        // Mendapatkan id_user dari session
         $id_user = htmlspecialchars($this->session->userdata('id_user')); // htmlspecialchars() mengubah karakter berbahaya (<, >, ", ', dll.) menjadi entitas HTML aman. Kalau mau lebih baik pakai $this->input->post('id_produk', TRUE), lebih praktis, framework-friendly, dan otomatis. otomatis membersihkan input dari karakter berbahaya, mencegah serangan seperti XSS (Cross Site Scripting).
-        $id_produk = htmlspecialchars($_POST['id_produk']);
+        // mendapatkan id_produk dari request method post
+        $id_produk = $this->input->post('id_produk', TRUE); // untuk mendapatkan input dengan sanitasi otomatis. Ini adalah cara yang lebih aman dibandingkan htmlspecialchars().
+        // hapus produk dari keranjang dengan model 
         $result = $this->Database_model->deleteProdukFromKeranjang($id_user, $id_produk);
+
+        // mendapatkan data keranjang terbaru(produk dan total harga) dengan model setelah dihapus
+        $keranjang = $this->Database_model->getProdukForShowInKeranjang($id_user);
+        $totalHarga = $keranjang['total_harga'];
         if ($result) {
-            $pesan =  "Produk Berhasil Dihapus";
+            echo json_encode([
+                'success' => true,
+                'pesan' => 'Produk Berhasil Dihapus Dari Keranjang.',
+                'totalHarga' => $totalHarga,
+                'totalHargaFormat' => number_format($totalHarga, 0, ',', '.')
+            ]);
         } else {
-            $pesan = "Produk Gagal Dihapus. Coba Lagi Nanti";
+            echo json_encode([
+                'success' => false,
+                'pesan' => "Produk Gagal Dihapus. Coba Lagi Nanti.",
+                'totalHarga' => $totalHarga,
+                'totalHargaFormat' => number_format($totalHarga, 0, ',', '.')
+            ]);
         }
-        echo $pesan;
+    }
+
+    public function checkout()
+    {
+        $id_user = $this->session->userdata('id_user');
+        $user = $this->Database_model->getUserByIdAkun($id_user);
+        $keranjang = $this->Database_model->getProdukForShowInKeranjang($id_user);
+        $data = [
+            'produk' => $keranjang['produk'],
+            'totalHarga' => $keranjang['total_harga'],
+            'user' => $user
+        ];
+        // Cek apakah ada produk di keranjang
+        if (empty($data['produk'])) {
+            // Menambahkan pesan jika keranjang kosong
+            $data['message'] = 'Keranjang Anda kosong.';
+        }
+        $this->load->view('checkout_page', $data);
+    }
+
+    public function transaksi()
+    {
+        $id_user = $this->session->userdata('id_user');
+        $keranjang = $this->Database_model->getProdukForShowInKeranjang($id_user);
+        $nama_lengkap = $this->input->post('nama_lengkap');
+        $alamat = $this->input->post('alamat');
+        $no_hp = $this->input->post('no_hp');
+        $id_transaksi = str_pad($this->Database_model->getTransactionId(), 3, 0, STR_PAD_LEFT); // memberi format 3 digit input, menambah 0 di kiri input hingga input berjumlah 3 digit
+        $kode_pemesanan = "INV" . "-" . time('Ymd') . "-" . "$id_transaksi";
+        $total_transaksi = $this->input->post('total_transaksi');
+        $dataTransaksi = [
+            "kode_pemesanan" => $kode_pemesanan,
+            "id_user" => $id_user,
+            "total_transaksi" => $total_transaksi,
+            "status_transaksi" => "berhasil" // di set selalu berhasil, karena belum ada sistem transaksi real di web ini.
+        ];
+        $result = $this->Database_model->transaction($dataTransaksi['kode_pemesanan'], $dataTransaksi['id_user'], $dataTransaksi['total_transaksi'], $dataTransaksi['status_transaksi']);
+        if ($result) {
+            echo json_encode(
+                [
+                    "status_transaksi" => "success",
+                    "pesan" => "Pesanan Anda Berhasil Dibuat."
+                ]
+            );
+            $this->Database_model->deleteAllCartList($id_user);
+        } else {
+            echo json_encode(
+                [
+                    "status" => "error",
+                    "pesan" => "Pesanan Anda Gagal Dibuat."
+                ]
+            );
+        }
     }
 }
