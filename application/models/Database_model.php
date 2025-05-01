@@ -1,5 +1,7 @@
 <?php
 
+use LDAP\Result;
+
 class Database_model extends CI_Model
 {
     // CI_Controller → untuk controller (logika request & response)
@@ -56,7 +58,8 @@ class Database_model extends CI_Model
         }
     }
 
-    public function deleteProdukFromKeranjang($id_user, $id_produk){
+    public function deleteProdukFromKeranjang($id_user, $id_produk)
+    {
         $this->db->where('id_user', $id_user);
         $this->db->where('id_produk', $id_produk);
         return $result = $this->db->delete('keranjang'); // return true jika berhasil delete di db, false jika gagal
@@ -99,7 +102,7 @@ class Database_model extends CI_Model
         ];
     }
 
-    public function addProdukInKeranjang($id_user, $id_produk, $jumlah, $subtotal)
+    public function addProdukInKeranjang($id_user, $id_produk, $jumlah, $hargaSatuanProduk, $subtotal)
     {
         $dataProduk = [
             "id_user" => $id_user,
@@ -109,28 +112,38 @@ class Database_model extends CI_Model
         ];
         /* Cari dulu apakah produk ini sudah ada di keranjang */
         $this->db->where('id_user', $id_user);
-        $this->db->where('id_produk', $id_produk); /*Kalau mau tambah kondisi banyak, cukup panggil $this->db->where() lagi.*/
-        $cekKeranjang = $this->db->get('keranjang')->row(); /*$cekKeranjang itu adalah object query builder, bukan langsung data hasilnya. Harus ambil datanya pakai num_rows() atau row(). row() itu ngembaliin object, bukan array.*/
+        $this->db->where('id_produk', $id_produk); /* Kalau mau tambah kondisi banyak, cukup panggil $this->db->where() lagi.*/
+        $cekKeranjang = $this->db->get('keranjang')->result(); /*$cekKeranjang itu adalah object query builder, bukan langsung data hasilnya. Harus ambil datanya pakai result, num_rows() atau row(). row() itu ngembaliin object, bukan array.*/
 
         if ($cekKeranjang) {
-            /* jika data di keranjang ditemukan, maka update jumlah dan harganya */
-            $jumlahSebelumnya = $cekKeranjang->jumlah;
-            $subtotalSebelumnya = $cekKeranjang->subtotal;
-            $jumlahSekarang = $jumlahSebelumnya + $jumlah;
-            $subtotalSekarang = $subtotalSebelumnya + $subtotal;
-            $this->db->where('id_user', $id_user);
-            $this->db->where('id_produk', $id_produk);
-            $updateKeranjang = $this->db->update('keranjang', [
-                "jumlah" => $jumlahSekarang,
-                "subtotal" => $subtotalSekarang
-            ]);
-            return $updateKeranjang;
+            // Loop foreach memeriksa semua baris keranjang yang memiliki id_produk sama.
+            foreach ($cekKeranjang as $c) {
+                $HargaSatuanKeranjang = $c->subtotal / $c->jumlah; // $hargaSatuanKeranjang untuk mendapatkan harga satuan produk yang sudah ada dikeranjang, tujuannya untuk dibandingkan produk yang sama dengan di keranjang tetapi ditentukan oleh harga(normal atau diskon) produk baru yang akan diinsert ke keranjang apakah harganya sama atau beda(karena promo). Kalau produk sama beda harga(faktor ada promo) maka buat row baru, jika produk dan harga sama tinggal update jumlah
+
+                /* jika data di keranjang ditemukan dan harga sama, update jumlah dan subtotal*/
+                if ($hargaSatuanProduk == $HargaSatuanKeranjang) {
+                    $jumlahSebelumnya = $c->jumlah;
+                    $subtotalSebelumnya = $c->subtotal;
+                    $jumlahSekarang = $jumlahSebelumnya + $jumlah;
+                    $subtotalSekarang = $subtotalSebelumnya + $subtotal;
+                    $this->db->where('id_keranjang', $c->id_keranjang); // ID unik tabel keranjang
+                    $updateKeranjang = $this->db->update('keranjang', [
+                        "jumlah" => $jumlahSekarang,
+                        "subtotal" => $subtotalSekarang
+                    ]);
+                    return $updateKeranjang;
+                }
+            }
+            // Jika tidak ada data yang cocok (produk sama tapi harga beda), insert baris baru 
+            $insertKeranjang = $this->db->insert('keranjang', $dataProduk);
+            return $insertKeranjang;
         } else {
-            /* jika tidak ditemukan buat row baru atau insert data */
+            // Jika tidak ada data yang cocok (produk sama tapi harga beda), insert baris baru 
             $insertKeranjang = $this->db->insert('keranjang', $dataProduk);
             return $insertKeranjang;
         }
     }
+
 
     public function getProdukById($id_produk)
     {
@@ -183,11 +196,11 @@ class Database_model extends CI_Model
 
     public function getLastId()
     {
-        // Ambil ID akun terakhir
-        $id_akun = $this->db->insert_id();
-        return $id_akun;
+        // Ambil ID dari insert sebelumnya/terakhir
+        $id = $this->db->insert_id();
+        return $id;
 
-        //Fungsi insert_id() dari CodeIgniter akan mengembalikan id dari data terakhir yang berhasil dimasukkan (dalam hal ini, ID dari tabel akun setelah insert sukses).
+        //$this->db->insert_id() di CodeIgniter digunakan untuk mengambil ID terakhir yang di-insert ke database oleh perintah insert sebelumnya. Artinya, ID itu berasal dari tabel yang baru saja di masukkan data ke dalamnya (dan kolom ID-nya harus auto-increment), ID dari tabel akun setelah insert sukses.
         // berguna jika kalau id AUTO_INCREMENT.
         //dan mengembalikan value id tersebut sebagai value function getLastId
     }
@@ -228,26 +241,69 @@ class Database_model extends CI_Model
         // Urutan di CodeIgniter itu method chaining, bukan urutan SQL. where() dulu boleh dan benar, karena get() lah yang baru mengeksekusi query-nya dan menyatukan semua kondisi yang sebelumnya sudah ditentukan.
     }
 
-    public function getTransactionId(){
-        $lastId = $this->db->getLastId('transaksi');
+    public function getTransactionId()
+    {
+        $query = $this->db->query("SELECT MAX(id_transaksi) AS max_id FROM transaksi");
+        $lastId = $query->row()->max_id; /* row mengembalikan objek, row_array() mengembalikan array asosiatif. Akses ke kolom/atribut max_id dari hasil objek */
+        if ($lastId == NULL) {
+            $lastId = 0;
+        }
         $nextId = $lastId + 1;
         return $nextId;
     }
 
-    public function transaction($kode_pemesanan, $id_user, $total_transaksi, $status_transaksi) {
+    public function transaction($kode_pemesanan, $id_user, $total_transaksi, $status_transaksi)
+    {
         $dataTransaksi = [
             "kode_pemesanan" => $kode_pemesanan,
             "id_user" => $id_user,
             "total_transaksi" => $total_transaksi,
             "status_transaksi" => $status_transaksi
         ];
-        return $this->db->insert('transaksi', $dataTransaksi);
+        $result = $this->db->insert('transaksi', $dataTransaksi);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function deleteAllCartList($id_user) {
+    public function deleteAllCartList($id_user)
+    {
         $this->db->where('id_user', $id_user);
         $result = $this->db->delete('keranjang');
         return $result;
+    }
+
+    public function addDetailTransaction($id_user, $id_transaksi)
+    {
+        $cartProduct = $this->getKeranjangByIdUser($id_user);
+        if ($cartProduct) {
+            foreach ($cartProduct as $c) {
+                // insert ke tabel detail_transaksi
+                $this->db->insert('detail_transaksi', [
+                    'id_transaksi' => $id_transaksi,
+                    'id_produk' => $c['id_produk'],
+                    'jumlah' => $c['jumlah'],
+                    'subtotal' => $c['subtotal']
+                ]);
+                // update stok
+                $this->decrementStock($c['id_produk'], $c['jumlah']);
+            }
+        }
+    }
+
+    public function decrementStock($id_produk, $orderCount)
+    {
+        $produk = $this->getProdukById($id_produk);
+        if ($produk) {
+            $stokBaru = $produk['stok'] - $orderCount;
+            $stokBaru = max(0, $stokBaru); // Jangan sampai negatif
+            $this->db->where('id_produk', $id_produk);
+            $this->db->update('produk', [
+                "stok" => $stokBaru
+            ]);
+        }
     }
 }
 // return pada model itu mengembalikan hasil dari operasi ke controller, jadi controller bisa tahu:

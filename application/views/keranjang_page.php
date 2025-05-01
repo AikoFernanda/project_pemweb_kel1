@@ -132,6 +132,7 @@
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- wajib ada jQuery untuk AJAX-->
     <script src="<?= base_url('assets/js/delete_cart.js?v=' . time());?>"></script>
+    <script src="<?= base_url('assets/js/checkout_cart.js?v=' . time());?>"></script>
 </body>
 
 </html>

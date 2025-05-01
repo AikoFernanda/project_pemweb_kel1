@@ -67,11 +67,11 @@ CREATE TABLE transaksi
 );
 
 CREATE TABLE detail_transaksi (
-    id_transaksi INT,
-    id_produk INT,
-    jumlah INT,
-    subtotal INT,
-    PRIMARY KEY (id_transaksi, id_produk),
+    id_detail_transaksi INT AUTO_INCREMENT PRIMARY KEY,
+    id_transaksi INT NOT NULL,
+    id_produk INT NOT NULL,
+    jumlah INT NOT NULL,
+    subtotal INT NOT NULL
     FOREIGN KEY (id_transaksi) REFERENCES transaksi(id_transaksi) ON DELETE CASCADE,
-    FOREIGN KEY (id_produk) REFERENCES produk(id_produk)
+    FOREIGN KEY (id_produk) REFERENCES produk(id_produk) ON DELETE CASCADE
 );

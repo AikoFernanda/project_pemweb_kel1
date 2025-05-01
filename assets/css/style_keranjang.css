@@ -208,6 +208,12 @@ button.btn-hapus:hover {
     background-color: #218838;
 }
 
+.btn-checkout:disabled {
+    background-color: #ccc !important; /* !important digunakan untuk memaksa sebuah aturan CSS agar menang, walaupun ada aturan lain yang lebih spesifik atau datang belakangan.*/
+    color: #777;
+    cursor: not-allowed;
+}
+
 /* FOOTER */
 footer {
     background-color: #333;

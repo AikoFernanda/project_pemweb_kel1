@@ -278,7 +278,7 @@ main .container {
     font-weight: bold;
 }
 
-.buy-button {
+#addToCartBtn {
     display: inline-block;
     background-color: #007bff;
     color: #fff;
@@ -293,8 +293,14 @@ main .container {
     cursor: pointer;
 }
 
-.buy-button:hover {
+#addToCartBtn:hover {
     background-color: #0056b3;
+}
+
+.btn-danger {
+    /*!important untuk menimpa background default dari #addToCartBtn.*/
+    background-color: #dc3545 !important; /* merah */
+    color: #fff;
 }
 
 .quantity-container {

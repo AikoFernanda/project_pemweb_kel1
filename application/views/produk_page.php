@@ -161,7 +161,7 @@
                                     <?php endif; ?>
                                 </div>
                                 <div class="product-actions">
-                                    <button class="add-cart" type="button">Keranjang</button>
+                                    <p class="cart-status" data-stock="<?= $p['stok'];?>">Tersedia</p>
                                     <button class="view-details" type="button">Detail</button>
                                 </div>
                             </div>
@@ -236,6 +236,7 @@
         const base_url = "<?= base_url(); ?>";
     </script>
     <script src="<?= base_url('assets/js/kategori_produk.js?v=' . time()) ?>"></script> <!--base_url udah didefinisikan sebelum file JS kategori_produk.js dimuat, agar tinggal pakai di file JS seperti ini: url: base_url + "Katalog_produk/filter_produk"-->
+    <script src="<?= base_url('assets/js/card_status.js?v=' . time())?>"></script>
     <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>"></script>
     <script src="<?= base_url('assets/js/slide.js?v=' . time()); ?>"></script>
 </body>

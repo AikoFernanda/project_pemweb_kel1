@@ -35,13 +35,13 @@
         <div class="checkout-container">
             <h2>Checkout</h2>
             <a href="<?= base_url('index.php/Home/produk') ?>" class="btn-back">
-                <i class="fas fa-arrow-left"></i> Kembali <!--Untuk ikon panah ke kiri-->
+                <i class="fas fa-arrow-left"></i> Kembali<!--Untuk ikon panah ke kiri-->
             </a>
 
             <div class="checkout-wrapper">
                 <!-- Formulir Pengiriman -->
                 <div class="checkout-form">
-                    <form id="form-checkout" action="<?= base_url('index.php/Home/transaksi'); ?>" method="POST">
+                    <form id="form-checkout" action="<?= base_url('index.php/Katalog_produk/transaksi'); ?>" method="POST">
                         <input type="hidden" name="total_transaksi" value="<?= $totalHarga ?>">
 
                         <label for="nama">Nama Lengkap</label>
@@ -51,9 +51,9 @@
                         <textarea name="alamat" required><?= $user['alamat']; ?></textarea> <!--textarea tidak pakai value pada propertinya, value taruh dalam content langsung/diantara tag pembuka dan penutup.-->
 
                         <label for="no_hp">Nomor HP</label>
-                        <input type="tel" name="no_hp" value="<?= $user['no_hp']; ?>" pattern="\d{9,11}" maxlength="11" required title="Masukkan nomor telepon dengan benar" required>
+                        <input type="tel" name="no_hp" value="<?= $user['no_hp']; ?>" pattern="\d{9,12}" maxlength="12" title="Masukkan nomor telepon dengan benar" required>
 
-                        <button type="submit" class="btn-submit">Konfirmasi Pesanan</button>
+                        <button type="submit" class="btn-submit" data-total-harga="<?= $totalHarga; ?>">Konfirmasi Pesanan</button>
                     </form>
                 </div>
 
@@ -135,4 +135,4 @@
     <script src="<?= base_url('assets/js/konfirmasi_pesanan.js?v=' . time()); ?>"></script>
 </body>
 
-</html>console.log('Hello, World!');
+</html>

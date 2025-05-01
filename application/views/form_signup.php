@@ -48,7 +48,7 @@
                         <input id="email" type="text" name="email" required> <!--name lebih baik diisini sesuai field pada database agar mempermudah dalam CRUD-->
 
                         <label for="telepon">Nomor Telepon:</label> <br>
-                        <input id="telepon" type="tel" name="no_hp" pattern="\d{9,11}" maxlength="11" required title="Masukkan nomor telepon dengan benar">
+                        <input id="telepon" type="tel" name="no_hp" pattern="\d{9,12}" maxlength="12" required title="Masukkan nomor telepon dengan benar" required>
 
                         <label for="password">Password:</label> <br>
                         <input id="password" type="password" name="password_akun" required> <!--type = "password" agar ketika user menginput input-box password karakternya tampil bulet2 item, jadi tidak bisa dilihat  dan dibaca orang lain pada layar/UI-->

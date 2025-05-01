@@ -100,14 +100,14 @@
                                     min=1
                                     value=1
                                     data-stok="<?= $produk['stok']; ?>"
-                                    data-harga="<?= $produk['persentase_diskon'] != 0 ? $harga_diskon : $produk['harga']; ?>" readonly> <!--Di HTML, kalau kita mau nambahin data tambahan ke elemen, kita pakai atribut khusus yang diawali (data-). readonly di input jumlah supaya user ga bisa ketik sembarangan.-->
+                                    data-harga="<?= $produk['persentase_diskon'] != 0 ? $harga_diskon : $produk['harga']; ?>"> <!--Di HTML, kalau kita mau nambahin data tambahan ke elemen, kita pakai atribut khusus yang diawali (data-). readonly di input jumlah supaya user ga bisa ketik sembarangan.-->
                                 <button id="increaseBtn" type="button" class="quantity-btn" onclick="return increaseQuantity()">+</button>
                             </div>
                             <div id="total-price" class="total-price">
                                 <?= 'Rp ' . number_format(($produk['persentase_diskon'] != 0 ? $harga_diskon : $produk['harga']), 0, ',', '.'); ?>
                             </div>
                             <input type="hidden" name="harga_satuan" value="<?= $produk['persentase_diskon'] != 0 ? $harga_diskon : $produk['harga']; ?>">
-                            <button type="submit" class="buy-button">Tambah ke Keranjang</button>
+                            <button id="addToCartBtn" type="submit">+ Tambah ke Keranjang</button>
                         </form>
                     </div>
                 </div>

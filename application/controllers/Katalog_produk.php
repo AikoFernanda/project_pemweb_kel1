@@ -34,18 +34,28 @@ class Katalog_produk extends CI_Controller
             echo "Session expired atau belum login!";
             return;
         }
-
-        $id_user = $this->session->userdata('id_user');
-        $id_produk = htmlspecialchars($_POST['id_produk']);
-        $jumlah = htmlspecialchars($_POST['jumlah']);
-        $harga = htmlspecialchars($_POST['harga_satuan']);
+    
+        $id_produk = htmlspecialchars($this->input->post('id_produk'));
+        $jumlah = (int) $this->input->post('jumlah'); // pastikan integer
+        $harga = (int) $this->input->post('harga_satuan');
         $subtotal = $jumlah * $harga;
+    
+        $produk = $this->Database_model->getProdukById($id_produk);
 
-        $insert = $this->Database_model->addProdukInKeranjang($id_user, $id_produk, $jumlah, $subtotal);
-        if ($insert) {
-            echo "Produk Berhasil Ditambahkan";
+        if (!$jumlah) {
+            echo "Jumlah tidak diterima dari client.";
+            return;
+        }
+
+        if ($produk['stok'] > 0 && $jumlah <= $produk['stok']) {
+            $insert = $this->Database_model->addProdukInKeranjang($id_user, $id_produk, $jumlah, $harga, $subtotal);
+            if ($insert) {
+                echo "Produk Berhasil Ditambahkan";
+            } else {
+                echo "Produk Gagal Ditambahkan. Coba Lagi Nanti";
+            }
         } else {
-            echo "Produk Gagal Ditambahkan. Coba Lagi Nanti";
+            echo "Stok Produk Tidak Tersedia.";
         }
     }
 
@@ -137,28 +147,30 @@ class Katalog_produk extends CI_Controller
         $nama_lengkap = $this->input->post('nama_lengkap');
         $alamat = $this->input->post('alamat');
         $no_hp = $this->input->post('no_hp');
-        $id_transaksi = str_pad($this->Database_model->getTransactionId(), 3, 0, STR_PAD_LEFT); // memberi format 3 digit input, menambah 0 di kiri input hingga input berjumlah 3 digit
-        $kode_pemesanan = "INV" . "-" . time('Ymd') . "-" . "$id_transaksi";
+        $id_transaksi = str_pad($this->Database_model->getTransactionId(), 5, 0, STR_PAD_LEFT); // memberi format 3 digit input, menambah 0 di kiri input hingga input berjumlah 3 digit
+        $kode_pemesanan = "INV" . "-" . date('Ymd') . "-" . $id_transaksi;
         $total_transaksi = $this->input->post('total_transaksi');
         $dataTransaksi = [
             "kode_pemesanan" => $kode_pemesanan,
             "id_user" => $id_user,
             "total_transaksi" => $total_transaksi,
-            "status_transaksi" => "berhasil" // di set selalu berhasil, karena belum ada sistem transaksi real di web ini.
+            "status_transaksi" => "Lunas" // di set selalu Lunas, karena belum ada sistem transaksi real di web ini.
         ];
         $result = $this->Database_model->transaction($dataTransaksi['kode_pemesanan'], $dataTransaksi['id_user'], $dataTransaksi['total_transaksi'], $dataTransaksi['status_transaksi']);
         if ($result) {
+            $id_transaksi = $this->Database_model->getLastId();
+            $this->Database_model->addDetailTransaction($id_user, $id_transaksi);
+            $this->Database_model->deleteAllCartList($id_user);
             echo json_encode(
                 [
                     "status_transaksi" => "success",
                     "pesan" => "Pesanan Anda Berhasil Dibuat."
                 ]
             );
-            $this->Database_model->deleteAllCartList($id_user);
         } else {
             echo json_encode(
                 [
-                    "status" => "error",
+                    "status_transaksi" => "error",
                     "pesan" => "Pesanan Anda Gagal Dibuat."
                 ]
             );

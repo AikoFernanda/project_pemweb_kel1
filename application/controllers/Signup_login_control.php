@@ -41,7 +41,7 @@ class Signup_login_control extends CI_Controller
 
             // jika insertDataAkun berhasil akan mengembalikan nilai true dan disimpan $insertAkunSukses
             if ($insertAkunSukses) {
-                // ambil id_akun dengan function getLastId() dari model Database_model.php 
+                // ambil id_akun dengan function getLastId() dari model Database_model.php. getLastId() berfungsi mengambil id(PK, auto_increment) terakhir dari insert sebelumnya(insertDataAkun)
                 $id_akun = $this->Database_model->getLastId();
                 // dan insert ke tabel User
                 $this->Database_model->insertDataUser($id_akun, $no_hp);

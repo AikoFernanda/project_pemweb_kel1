@@ -3,12 +3,31 @@ function updateButtons() {
     var stock = parseInt(qty.getAttribute('data-stok'));
     var decreaseBtn = document.getElementById('decreaseBtn');
     var increaseBtn = document.getElementById('increaseBtn');
+    var addToCartBtn = document.getElementById('addToCartBtn');
 
-    // Disable tombol - kalau qty 1
-    decreaseBtn.disabled = (parseInt(qty.value) <= 1);
+    // jika stock habis disabled semua button
+    if (stock === 0) {
+        decreaseBtn.disabled = true;
+        increaseBtn.disabled = true;
+        if(addToCartBtn) {
+            addToCartBtn.disabled = true;
+            addToCartBtn.innerText = 'Stok Tidak Tersedia';
+            addToCartBtn.classList.add('btn-danger'); // classList.add() ➜ Menambahkan class baru ke elemen (kalau belum ada). ini akan menimpa css style defaultnya dengan class btn-danger
+        }
+    } else {
+        // disabled tombol - kalau qty 1
+        decreaseBtn.disabled = (parseInt(qty.value) <= 1); // jika getElementById perlu .value untuk mengakses atau mendapatkan value dari id tersebut. jika getAttribute tidak perlu, karena langsung mengembalikan nilai/value dari atribut tersebut.
 
-    // Disable tombol + kalau qty sama dengan stok
-    increaseBtn.disabled = (parseInt(qty.value) >= stock);
+        // disabled tombol + kalau qty sama dengan stok
+        increaseBtn.disabled = (parseInt(qty.value) >= stock);
+
+        // enable tombol tambah keranjang jika stock tersedia
+        if (addToCartBtn) {
+            addToCartBtn.disabled = false;
+            addToCartBtn.innerText = '+ Tambah ke Keranjang';
+            addToCartBtn.classList.remove('btn-primary'); // classList.remove() ➜ Menghapus class tersebut kalau sudah ada.Hapus style btn-primary dari id='addToCartBtn.
+        }
+    }
 }
 
 function updatePrice() {
@@ -34,10 +53,10 @@ function formatRupiah(angka) {
     });
 }
 
-    // minimumFractionDigits: 0 artinya tidak perlu desimal kayak ,00.
-    // .toLocaleString(...)	Ini method bawaan JavaScript buat format angka jadi string sesuai lokal negara
-    // 'id-ID' Artinya format Indonesia (jadi pakai titik untuk ribuan, koma untuk desimal)
-    // { style: 'currency', currency: 'IDR' }	Mau gaya mata uang (currency) dan kode mata uangnya Rupiah (IDR)
+// minimumFractionDigits: 0 artinya tidak perlu desimal kayak ,00.
+// .toLocaleString(...)	Ini method bawaan JavaScript buat format angka jadi string sesuai lokal negara
+// 'id-ID' Artinya format Indonesia (jadi pakai titik untuk ribuan, koma untuk desimal)
+// { style: 'currency', currency: 'IDR' }	Mau gaya mata uang (currency) dan kode mata uangnya Rupiah (IDR)
 
 
 function decreaseQuantity() {
