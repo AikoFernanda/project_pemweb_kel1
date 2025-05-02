@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Registrasi</title>
+    <title>Registrasi - CV. MULIA LANGGENG MUFAKAT</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/style_form_signup.css?v=' . time()); ?>">
 </head>
 

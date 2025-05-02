@@ -12,8 +12,11 @@ $(document).ready(function() {
             type: 'POST', // tipenya post
             data: { kategori: kategori },
             success: function(response) {
-                $('.product-grid').html(response);
+                $('.product-grid').html(response); // replace isi grid dengan partial
+                updateCartStatus(); // <--- panggil ulang fungsi agar elemen baru diproses
             }
         });
     });
 });
+// Setelah partial view dimuat (via AJAX), panggil ulang fungsi
+// card_status.js bisa tetap dipakai di partial view asalkan fungsi utamanya tidak hanya berjalan saat DOM pertama kali dimuat, tapi juga bisa dipanggil ulang setelah isi halaman diubah. Solusinya diubah menjadi function agar bisa dipanggil berulang kali.

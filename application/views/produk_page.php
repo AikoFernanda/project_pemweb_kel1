@@ -16,7 +16,7 @@
 
     <!--CSS-->
     <link rel="stylesheet" href="<?= base_url('assets/css/style_produk.css?v=' . time()); ?>">
-</head>
+</head> 
 
 <body>
     <!-- HEADER -->

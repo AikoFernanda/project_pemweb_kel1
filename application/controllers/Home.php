@@ -26,12 +26,8 @@ class Home extends CI_Controller
     {
         // mengecek apakah session userdata key 'role'-nya bernilai admin
         if ($this->session->userdata('role') === "admin") {
-            // Ini memanggil model bernama Database_model.php dari folder application/models.
-            $this->load->model('Database_model');
-            // Menjalankan method getDataAkun() yang ada di dalam class Database_model.
-            $data['akun'] = $this->Database_model->getDataAkun();
             // Memanggil view bernama akun_view.php dan mengirim data ke dalamnya.
-            $this->load->view('admin_page', $data);
+            $this->load->view('admin_page');
         } else {
             // Balikan ke Homepage dengan session flashdata key 'admin_error'
             $this->session->set_flashdata('admin_error', 'Anda bukan admin!');

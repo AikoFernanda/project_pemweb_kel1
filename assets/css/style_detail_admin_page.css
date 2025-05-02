@@ -1,0 +1,240 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/*Agar link #katalog-produk smooth saat diklik:*/
+html {
+    scroll-behavior: smooth;
+}
+
+/* HEADER STYLES */
+header {
+    height: 110px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+
+.welcome {
+    margin: 40px 0 20px;
+    text-align: center;
+}
+
+
+
+/* MAIN STYLE */
+main.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    margin: 40px auto;
+    /*jika isi elemen main terlalu lebar dan tidak muat dalam layar, maka akan muncul scroll horizontal.*/
+    /* 
+    overflow-x mengatur bagaimana konten yang meluap secara horizontal (sumbu X) akan ditangani oleh elemen tersebut. overflow-y untuk mengatu secara vertika (sumbu Y).
+    auto: Akan menampilkan scroll bar jika diperlukan saja (jika konten benar-benar meluap). */
+}
+
+.tabel-wrapper {
+    max-height: 400px; /* batasi tinggi area tabel */
+    overflow-y: auto;  /* scroll vertikal kalau barisnya banyak */
+    overflow-x: auto;  /* jaga-jaga kalau tabelnya melebar */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    /*
+    overflow-x mengatur bagaimana konten yang meluap secara horizontal (sumbu X) akan ditangani oleh elemen tersebut. overflow-y untuk mengatu secara vertika (sumbu Y).
+    auto: Akan menampilkan scroll bar jika diperlukan saja (jika konten benar-benar meluap).
+    */
+}
+
+main h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+main .btn-back {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+main .btn-back:hover {
+    background-color: #2980b9;
+}
+
+main table {
+    width: 100%;
+    border-collapse: collapse;
+    /*garis antar sel akan menyatu jadi satu garis bersih, lebih rapi, dan elegan dibanding separate(default table), yang mana border table lebih tebal dari border tiap sel dalam table.*/
+    background-color: #fdfdfd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* 
+    Properti ini digunakan pada elemen tabel untuk mengontrol bagaimana garis (border) dari sel dan tabel digabungkan.
+    Nilai:
+    separate: (default) Setiap sel punya border masing-masing, dengan jarak antar border.
+    collapse: Semua border antar sel digabung menjadi satu garis. */
+}
+
+main th,
+main td {
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    text-align: center;
+    /* Tengahin isi sel */
+    vertical-align: middle;
+    /* Tengahin secara vertikal */
+}
+
+main thead {
+    background-color: #f8f8f8;
+    font-weight: 600;
+}
+
+main tbody tr:hover {
+    background-color: #f1f1f1;
+    /* mengubah background warna <tr> ketika cursor berada di <tr> tersebut */
+    /* pseudo-class CSS bernama :hover. Properti ini digunakan untuk menambahkan efek saat elemen disentuh oleh kursor. */
+}
+
+main .btn-edit,
+main .btn-hapus {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+main .btn-edit {
+    background-color: #27ae60;
+    color: white;
+    margin-right: 5px;
+}
+
+main .btn-edit:hover {
+    background-color: #1e8449;
+}
+
+main .btn-hapus {
+    background-color: #e74c3c;
+    color: white;
+}
+
+main .btn-hapus:hover {
+    background-color: #c0392b;
+}
+
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 15px;
+}
+
+.footer-column h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-decoration: none;
+}
+
+.footer-column p {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.social-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: #444;
+    color: white;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 15px;
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    color: #ccc;
+    font-size: 12px;
+}

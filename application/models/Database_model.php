@@ -46,6 +46,23 @@ class Database_model extends CI_Model
         // result_array() → pakai ['nama_produk'] (mengembalikan dalam bentuk array assosiatif)
     }
 
+    public function getAllUser() {
+        return $this->db->get('user')->result_array();
+    }
+
+    public function getAllCarts() {
+        return $this->db->get('keranjang')->result_array();
+    }
+
+    public function getAllTransactions() {
+        return $this->db->get('transaksi')->result_array();
+    }
+
+    public function getAllCartDetails() {
+        return $this->db->get('detail_transaksi')->result_array();
+    }
+
+
     public function getKeranjangByIdUser($id_user)
     {
         $this->db->where('id_user', $id_user);
@@ -63,6 +80,30 @@ class Database_model extends CI_Model
         $this->db->where('id_user', $id_user);
         $this->db->where('id_produk', $id_produk);
         return $result = $this->db->delete('keranjang'); // return true jika berhasil delete di db, false jika gagal
+    }
+
+    public function deleteAkunById($id_akun) {
+        return $this->db->where('id_akun', $id_akun)->delete('akun');
+    }
+
+    public function deleteProdukById($id_produk) {
+        return $this->db->where('id_produk', $id_produk)->delete('produk');
+    }
+
+    public function deleteUserById($id_user) {
+        return $this->db->where('id_user', $id_user)->delete('user');
+    }
+
+    public function deleteCartById($id_keranjang) {
+        return $this->db->where('id_keranjang', $id_keranjang)->delete('keranjang');
+    }
+
+    public function deleteTransactionById($id_transaksi) {
+        return $this->db->where('id_transaksi', $id_transaksi)->delete('transaksi');
+    }
+
+    public function deleteTransactionDetailById($id_detail_transaksi) {
+        return $this->db->where('id_detail_transaksi', $id_detail_transaksi);
     }
 
     public function getProdukByKategori($kategori)

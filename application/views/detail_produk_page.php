@@ -180,7 +180,6 @@
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.24/dist/sweetalert2.min.css">
 
     <script src="<?= base_url('assets/js/cart_quantity_product.js?v=' . time()); ?>"></script>
     <script src="<?= base_url('assets/js/add_cart.js?v=' . time()) ?>"></script>

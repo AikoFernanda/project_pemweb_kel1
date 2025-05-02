@@ -1,6 +1,5 @@
 <?php
 $sesi = $this->session->userdata('role');
-var_dump($sesi); // Cek isi role-nya
 if ($sesi !== "admin") {
     redirect('Home/admin');
     return;
@@ -13,52 +12,103 @@ if ($sesi !== "admin") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Admin - CV. MULIA LANGGENG MUFAKAT</title>
+    <!--link css-->
+    <link rel="stylesheet" href="<?= base_url('assets/css/style_admin_page.css?v=' . time()); ?>">
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <!-- ikon user, Font Awesome (paling umum & gampang). Tambahin link CDN di <head> HTML:-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
-    <header></header>
-    <main>
-        <div class="welcome">
+    <header>
+        <div class="container header-content">
+            <h2>Admin Panel</h2>
+            <button class="logout-btn" onclick="window.location.href='<?= base_url('index.php/Signup_login_control/logout'); ?>'">Logout</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="welcome">
             <h1>Selamat Datang, Admin!</h1>
-            <a href=<?= base_url("index.php/Signup_login_control/logout") ?>>Logout</a>
-        </div>
-        <div>
-            <h2>Data Akun Pengguna</h2>
-            <table border="1px" cellpadding="10px" cellspacing="0">
-                <tr>
-                    <th>no.</th>
-                    <th>id_akun</th>
-                    <th>email</th>
-                    <th>username_akun</th>
-                    <th>password_akun</th>
-                    <th>role</th>
-                    <th>status_akun</th>
-                    <th>tanggal_daftar</th>
-                    <th>aksi</th>
-                </tr>
-                <?php $nomor = 1 ?>
-                <?php foreach ($akun as $a) : ?> <!--$akun adalah nama variabel yang sudah ditentukan di controller untuk menyimpan data akun. $akun adalah nama variabel yang menyimpan hasil query yang diambil dari database ($data['akun']), yang sudah kita definisikan sebelumnya di controller.-->
-                    <tr>
-                        <td><?= $nomor ?></td>
-                        <td><?= $a->id_akun ?></td>
-                        <td><?= $a->email ?></td>
-                        <td><?= $a->username_akun ?></td>
-                        <td><?= $a->password_akun ?></td>
-                        <td><?= $a->role ?></td>
-                        <td><?= $a->status_akun ?></td>
-                        <td><?= $a->tanggal_daftar ?></td>
-                        <td>
-                            <button class="btn-edit" name="edit">Edit</button>
-                            <button class="btn-hapus" name="hapus">Hapus</button>
-                        </td>
-                    </tr>
-                    <?php $nomor+=1 ?>
-                <?php endforeach; ?>
-            </table>
-        </div>
+            <p>Silahkan pilih salah satu menu berikut untuk mengelola data.</p>
+        </section>
+
+        <section class="grid-menu">
+            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=akun'); ?>'">
+                <h3>Data Akun Pengguna</h3>
+                <p>Kelola informasi akun pengguna.</p>
+            </div>
+            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=produk'); ?>'">
+                <h3>Data Produk</h3>
+                <p>Lihat dan ubah data produk.</p>
+            </div>
+            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=user'); ?>'">
+                <h3>Data Pengguna</h3>
+                <p>Kelola data pengguna terdaftar.</p>
+            </div>
+            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=keranjang'); ?>'">
+                <h3>Data Keranjang</h3>
+                <p>Lihat isi keranjang pengguna.</p>
+            </div>
+            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=transaksi'); ?>'">
+                <h3>Data Transaksi</h3>
+                <p>Riwayat transaksi pengguna.</p>
+            </div>
+            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=detail_transaksi'); ?>'">
+                <h3>Detail Transaksi</h3>
+                <p>Detail dari setiap transaksi</p>
+            </div>
+        </section>
     </main>
-    <footer></footer>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Tentang Kami</h3>
+                    <p>CV. Mulia Langgeng Mufakat</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Kategori Produk</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Laptop & Notebook</a></li>
+                        <li><a href="#">Printer</a></li>
+                        <li><a href="#">AC</a></li>
+                        <li><a href="#">Aksesoris</a></li>
+                        <li><a href="#">Lainnya</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Informasi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Tentang Kami</a></li>
+                        <li><a href="#">Cara Pembelian</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontak Kami</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Poskeskel, Desa Mulyojati Kec. Metro Barat Kota Metro</p>
+                    <p><i class="fas fa-phone"></i> +62 823-7459-1985</p>
+                    <p><i class="fas fa-envelope"></i> mulamufakat@gmail.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 CV. Mulia Langgeng Mufakat — All rights reserved.
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>

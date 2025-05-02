@@ -301,6 +301,7 @@ main .container {
     /*!important untuk menimpa background default dari #addToCartBtn.*/
     background-color: #dc3545 !important; /* merah */
     color: #fff;
+    cursor: not-allowed !important;
 }
 
 .quantity-container {
