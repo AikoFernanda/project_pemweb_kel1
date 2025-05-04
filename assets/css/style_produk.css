@@ -182,8 +182,12 @@ i {
 }
 
 .slide-1 {
-    background-color: black;
     /*background-image itu untuk URL gambar.*/
+    background-image: url('../img/branding/display_toko1.jpeg');
+    
+    background-size: contain;
+    /* background-repeat: no-repeat; */
+    background-position: center;
 }
 
 .slide-2 {
@@ -198,6 +202,10 @@ i {
 
 .slide-3 {
     background-image: url('../img/kerja1.jpg');
+
+    background-size: contain;
+    /* background-repeat: no-repeat; */
+    background-position: center;
 }
 
 

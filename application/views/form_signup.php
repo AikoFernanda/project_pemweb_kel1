@@ -45,7 +45,7 @@
                         <input id="username" type="text" name="username_akun" required> <!--wajib menggunakan properti id pada input, jika ingin menghubungkan input dengan label dengan properti for sama dengan id input. Jadi jika nama label pada UI web diklik, maka cursor user otomatis masuk input box-->
 
                         <label for="email">Email:</label> <br>
-                        <input id="email" type="text" name="email" required> <!--name lebih baik diisini sesuai field pada database agar mempermudah dalam CRUD-->
+                        <input id="email" type="email" name="email" required> <!--name lebih baik diisini sesuai field pada database agar mempermudah dalam CRUD-->
 
                         <label for="telepon">Nomor Telepon:</label> <br>
                         <input id="telepon" type="tel" name="no_hp" pattern="\d{9,12}" maxlength="12" required title="Masukkan nomor telepon dengan benar" required>

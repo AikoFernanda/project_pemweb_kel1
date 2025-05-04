@@ -48,7 +48,7 @@ class Signup_login_control extends CI_Controller
 
                 // ambil data akun dan user dari pendaftar/signup
                 $akun = $this->Database_model->getAkunByUsername($username_akun);
-                $user = $this->Database_model->getUserByIdAkun($akun['id_akun']);
+                $user = $this->Database_model->getUserById($akun['id_akun']);
 
                 $this->session->set_userdata('id_akun', $id_akun);
                 $this->session->set_userdata('id_user', $user['id_user']);
@@ -107,7 +107,7 @@ class Signup_login_control extends CI_Controller
             } else if ($akun = $this->Database_model->getAkunByUsername($username_akun)) {
                 if (password_verify($password_akun, $akun['password_akun'])) {
                     // Gunakan password_verify() saat login	Untuk membandingkan password user dengan hash di database. Jika password cocok, maka jalankan di bawah ini
-                    $user = $this->Database_model->getUserByIdAkun($akun['id_akun']);
+                    $user = $this->Database_model->getUserById($akun['id_akun']);
                     // set_userdata adalah fungsi untuk menyimpan data ke dalam session di CodeIgniter.
                     $this->session->set_userdata('id_akun', $akun['id_akun']);
                     $this->session->set_userdata('id_user', $user['id_user']);

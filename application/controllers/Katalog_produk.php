@@ -40,7 +40,7 @@ class Katalog_produk extends CI_Controller
         $harga = (int) $this->input->post('harga_satuan');
         $subtotal = $jumlah * $harga;
     
-        $produk = $this->Database_model->getProdukById($id_produk);
+        $produk = $this->Database_model->getProductById($id_produk);
 
         if (!$jumlah) {
             echo "Jumlah tidak diterima dari client.";
@@ -78,7 +78,7 @@ class Katalog_produk extends CI_Controller
 
         if (isset($_GET['id_produk'])) {
             $id_produk = htmlspecialchars($_GET['id_produk']); /*(buat keamanan dari input user, mencegah XSS) */
-            $data['produk'] = $this->Database_model->getProdukById($id_produk); /* Ambil data produk berdasarkan id dan masukkan data array assosiatif sebagai value ke dalam variabel $data dengan key 'produk' */
+            $data['produk'] = $this->Database_model->getProductById($id_produk); /* Ambil data produk berdasarkan id dan masukkan data array assosiatif sebagai value ke dalam variabel $data dengan key 'produk' */
             $this->session->set_userdata('location_detail_produk', $id_produk); // Simpan id produk ke session, Tenang session bisa "hangus" sendiri secara otomatis, tanpa tombol logout. Untuk waktu session aktif sebelum expiration sesuai config yang telah disetting.
             $this->session->set_userdata('location', $page); // Simpan page ke session
         } else {
@@ -86,7 +86,7 @@ class Katalog_produk extends CI_Controller
         }
 
         if ($id_produk) {
-            $data['produk'] = $this->Database_model->getProdukById($id_produk);
+            $data['produk'] = $this->Database_model->getProductById($id_produk);
         } else {
             $data['produk'] = null; // Atau kamu bisa redirect kalau produk tidak ditemukan
         }
@@ -125,7 +125,7 @@ class Katalog_produk extends CI_Controller
     public function checkout()
     {
         $id_user = $this->session->userdata('id_user');
-        $user = $this->Database_model->getUserByIdAkun($id_user);
+        $user = $this->Database_model->getUserById($id_user);
         $keranjang = $this->Database_model->getProdukForShowInKeranjang($id_user);
         $data = [
             'produk' => $keranjang['produk'],

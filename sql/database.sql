@@ -14,6 +14,7 @@ CREATE TABLE `user` (
     id_akun INT NOT NULL,
     nama_lengkap VARCHAR(100),
     alamat TEXT,
+    foto VARCHAR(50) DEFAULT 'default.jpg' 
     no_hp VARCHAR(20),
     tanggal_lahir DATE,
     FOREIGN KEY (id_akun) REFERENCES akun(id_akun) ON DELETE CASCADE

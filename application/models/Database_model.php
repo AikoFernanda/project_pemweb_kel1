@@ -32,13 +32,6 @@ class Database_model extends CI_Model
         // result_array() -> array of associative, akses datanya seperti ini: echo $data[0]['nama']; // Output: Andi
     }
 
-    public function getUserByIdAkun($id_akun)
-    {
-        $this->db->where('id_akun', $id_akun);
-        $result = $this->db->get('user');
-        return $result->row_array();
-    }
-
     public function getAllProduk()
     {
         return $this->db->get('produk')->result_array();
@@ -103,7 +96,7 @@ class Database_model extends CI_Model
     }
 
     public function deleteTransactionDetailById($id_detail_transaksi) {
-        return $this->db->where('id_detail_transaksi', $id_detail_transaksi);
+        return $this->db->where('id_detail_transaksi', $id_detail_transaksi)->delete('detail_transaksi');
     }
 
     public function getProdukByKategori($kategori)
@@ -124,7 +117,7 @@ class Database_model extends CI_Model
         // loop untuk memasukkan tiap element produk yang sesuai dalam array $produkForShow
         foreach ($tabelKeranjang as $k) {
             // Ambil data produk berdasarkan id_produk
-            $tabelProduk = $this->getProdukById($k['id_produk']);
+            $tabelProduk = $this->getProductById($k['id_produk']);
             // Tambahkan data produk ke dalam array assosiatif $produkForShow. Untuk mengembalikan array of array kita perlu menggunakan [] untuk menambahkan data produk ke dalam array.
             $produkForShow[] = [
                 "id_produk" => $tabelProduk['id_produk'],
@@ -183,14 +176,6 @@ class Database_model extends CI_Model
             $insertKeranjang = $this->db->insert('keranjang', $dataProduk);
             return $insertKeranjang;
         }
-    }
-
-
-    public function getProdukById($id_produk)
-    {
-        $this->db->where('id_produk', $id_produk);
-        $result = $this->db->get('produk');
-        return $result->row_array(); // mengembalikan 1 baris array assosiatif atau istilahnya tidak mengembalikan array of array seperti result_array(), jadi dia hanya mengembalikan 1 baris array saja.
     }
 
     public function insertDataAkun($email, $username_akun, $password_akun)
@@ -336,7 +321,7 @@ class Database_model extends CI_Model
 
     public function decrementStock($id_produk, $orderCount)
     {
-        $produk = $this->getProdukById($id_produk);
+        $produk = $this->getProductById($id_produk);
         if ($produk) {
             $stokBaru = $produk['stok'] - $orderCount;
             $stokBaru = max(0, $stokBaru); // Jangan sampai negatif
@@ -345,6 +330,142 @@ class Database_model extends CI_Model
                 "stok" => $stokBaru
             ]);
         }
+    }
+
+    // GET DATA PARTIAL
+    public function getAccountById($id_akun) {
+        $this->db->where('id_akun', $id_akun);
+        $result = $this->db->get('akun');
+        if ($result->num_rows() > 0) {
+            return $result->row_array(); // mengembalikan 1 baris array assosiatif atau istilahnya tidak mengembalikan array of array seperti result_array(), jadi dia hanya mengembalikan 1 baris array saja.
+        } else {
+            return [];  // Jika tidak ada data, kembalikan array kosong
+        }
+    }
+
+    public function getProductById($id_produk)
+    {
+        $this->db->where('id_produk', $id_produk);
+        $result = $this->db->get('produk');
+        if ($result->num_rows() > 0) {
+            return $result->row_array(); // mengembalikan 1 baris array assosiatif atau istilahnya tidak mengembalikan array of array seperti result_array(), jadi dia hanya mengembalikan 1 baris array saja.
+        } else {
+            return [];  // Jika tidak ada data, kembalikan array kosong
+        }
+    }
+
+    public function getUserById($id_user)
+    {
+        $this->db->where('id_user', $id_user);
+        $result = $this->db->get('user');
+        if ($result->num_rows() > 0) {
+            return $result->row_array();
+        } else {
+            return [];  // Jika tidak ada data, kembalikan array kosong
+        }
+    }
+
+    public function getCartById($id_keranjang)
+    {
+        $this->db->where('id_keranjang', $id_keranjang);
+        $result = $this->db->get('keranjang');
+
+        if ($result->num_rows() > 0) {
+            return $result->row_array();
+        } else {
+            return [];  // Jika tidak ada data, kembalikan array kosong
+        }
+    }
+
+    public function getTransactionById($id_transaksi)
+    {
+        $this->db->where('id_transaksi', $id_transaksi);
+        $result = $this->db->get('transaksi');
+
+        if ($result->num_rows() > 0) {
+            return $result->row_array();
+        } else {
+            return [];  // Jika tidak ada data, kembalikan array kosong
+        }
+    } 
+
+    public function getTransactionDetailById($id_detail_transaksi)
+    {
+        $this->db->where('id_detail_transaksi', $id_detail_transaksi);
+        $result = $this->db->get('detail_transaksi');
+
+        if ($result->num_rows() > 0) {
+            return $result->row_array();
+        } else {
+            return [];  // Jika tidak ada data, kembalikan array kosong
+        }
+    } 
+
+    // UPDATE DATA PARTIAL
+    public function updateAkunById($id_akun, $data) {
+        return $this->db->where('id_akun', $id_akun)->update('akun', [
+            'email' => $data['email'],
+            'username_akun' => $data['username_akun'],
+            'password_akun' => $data['password_akun'],
+            'role' => $data['role'],
+            'status_akun' => $data['status_akun']
+        ]);
+    }
+
+    public function updateProductById($id_produk, $data) {
+        return $this->db->where('id_produk', $id_produk)->update('produk', [
+            'nama_produk' => $data['nama_produk'],
+            'kategori'=> $data['kategori'],
+            'stok' => $data['stok'],
+            'harga' => $data['harga'],
+            'persentase_diskon' => $data['persentase_diskon'],
+            'gambar' => $data['gambar'],
+            'deskripsi' => $data['deskripsi']
+        ]);
+    }
+
+    public function updateUserById($id_user, $data) {
+        $update = [
+            'nama_lengkap' => $data['nama_lengkap'],
+            'jenis_kelamin' => $data['jenis_kelamin'],
+            'alamat' => $data['alamat'],
+            'no_hp' => $data['no_hp'],
+            'tanggal_lahir' => $data['tanggal_lahir']
+        ];
+
+        /* jika user mengupload foto, update foto. */
+        if(!empty($data['foto'])) { // empty->apakah variabel tidak ada atau bernilai "kosong" dalam arti luas.
+            $update['foto'] = $data['foto'];
+        }
+
+        return $this->db->where('id_user', $id_user)->update('user', $update);
+    }
+
+    public function updateCartById($id_keranjang, $data) {
+        return $this->db->where('id_keranjang', $id_keranjang)->update('keranjang', [
+            'id_user' => $data['id_user'],
+            'id_produk' => $data['id_produk'],
+            'jumlah' => $data['jumlah'],
+            'subtotal' => $data['subtotal']
+        ]);
+    }
+
+    public function updateTransactionById($id_transaksi, $data) {
+        return $this->db->where('id_transaksi', $id_transaksi)->update('transaksi', [
+            'kode_pemesanan' => $data['kode_pemesanan'],
+            'id_user' => $data['id_user'],
+            'total_transaksi' => $data['total_transaksi'],
+            'status_transaksi' => $data['status_transaksi']
+        ]);
+    }
+
+    public function updateTransactionDetailById($id_detail_transaksi, $data) {
+        return $this->db->where('id_detail_transaksi', $id_detail_transaksi)->update('detail_transaksi', [
+            'id_transaksi' => $data ['id_transaksi'],
+            'id_produk' => $data['id_produk'],
+            'jumlah' => $data['jumlah'],
+            'subtotal' => $data['subtotal']
+        ]);
     }
 }
 // return pada model itu mengembalikan hasil dari operasi ke controller, jadi controller bisa tahu:

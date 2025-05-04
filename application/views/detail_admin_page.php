@@ -30,7 +30,6 @@ if ($sesi !== "admin") {
         </div>
     </header>
     <main class="container">
-        <h1></h1>
         <a href="<?= base_url('index.php/Home/admin') ?>" class="btn-back">
             <i class="fas fa-arrow-left"></i> Kembali<!--Untuk ikon panah ke kiri-->
         </a>
@@ -62,8 +61,11 @@ if ($sesi !== "admin") {
                                     <td><?= $a->status_akun ?></td>
                                     <td><?= $a->tanggal_daftar ?></td>
                                     <td>
-                                        <button class="btn-edit" name="edit">Edit</button>
-                                        <button class="btn-hapus" name="hapus" data-id="<?= $a->id_akun ?>">Hapus</button>
+                                        <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
+                                            <input type="hidden" name="id_akun" value="<?= $a->id_akun; ?>">
+                                            <button type="submit" class="btn-edit" name="edit">Edit</button>
+                                        </form>
+                                        <button type="button" class="btn-hapus" name="hapus" data-id="<?= $a->id_akun; ?>">Hapus</button>
                                     </td>
                                 </tr>
                                 <?php $i += 1 ?>
@@ -106,8 +108,11 @@ if ($sesi !== "admin") {
                                     <td><?= $p['deskripsi']; ?></td>
                                     <td><?= $p['terakhir_diubah']; ?></td>
                                     <td>
-                                        <button class="btn-edit" name="edit">Edit</button>
-                                        <button class="btn-hapus" name="hapus" data-id="<?= $p['id_produk']; ?>">Hapus</button>
+                                        <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
+                                            <input type="hidden" name="id_produk" value="<?= $p['id_produk']; ?>">
+                                            <button type="submit" class="btn-edit" name="edit">Edit</button>
+                                        </form>
+                                        <button type="button" class="btn-hapus" name="hapus" data-id="<?= $p['id_produk']; ?>">Hapus</button>
                                     </td>
                                 </tr>
                                 <?php $i += 1 ?>
@@ -124,10 +129,11 @@ if ($sesi !== "admin") {
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
                         <th>Nomor</th>
-                        <th>Id User</th>
+                        <th>Id Akun</th>
                         <th>Nama Lengkap</th>
                         <th>Jenis Kelamin</th>
                         <th>Alamat</th>
+                        <th>Foto</th>
                         <th>No HP</th>
                         <th>Tanggal Lahir</th>
                         <th>Aksi</th>
@@ -141,11 +147,15 @@ if ($sesi !== "admin") {
                                     <td><?= $u['nama_lengkap']; ?></td>
                                     <td><?= $u['jenis_kelamin']; ?></td>
                                     <td><?= $u['alamat']; ?></td>
+                                    <td><?= $u['foto'];?></td>
                                     <td><?= $u['no_hp']; ?></td>
                                     <td><?= $u['tanggal_lahir']; ?></td>
                                     <td>
-                                        <button class="btn-edit" name="edit">Edit</button>
-                                        <button class="btn-hapus" name="hapus" data-id="<?= $u['id_user']; ?>">Hapus</button>
+                                        <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
+                                            <input type="hidden" name="id_user" value="<?= $u['id_user']; ?>">
+                                            <button type="submit" class="btn-edit" name="edit">Edit</button>
+                                        </form>
+                                        <button type="button" class="btn-hapus" name="hapus" data-id="<?= $u['id_user']; ?>">Hapus</button>
                                     </td>
                                 </tr>
                                 <?php $i += 1 ?>
@@ -182,8 +192,11 @@ if ($sesi !== "admin") {
                                     <td><?= $k['subtotal']; ?></td>
                                     <td><?= $k['update_at']; ?></td>
                                     <td>
-                                        <button class="btn-edit" name="edit">Edit</button>
-                                        <button class="btn-hapus" name="hapus" data-id="<?= $k['id_keranjang']; ?>">Hapus</button>
+                                        <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
+                                            <input type="hidden" name="id_keranjang" value="<?= $k['id_keranjang']; ?>">
+                                            <button type="submit" class="btn-edit" name="edit">Edit</button>
+                                        </form>
+                                        <button type="button" class="btn-hapus" name="hapus" data-id="<?= $k['id_keranjang']; ?>">Hapus</button>
                                     </td>
                                 </tr>
                                 <?php $i += 1 ?>
@@ -220,8 +233,11 @@ if ($sesi !== "admin") {
                                     <td><?= $t['status_transaksi']; ?></td>
                                     <td><?= $t['tanggal_transaksi']; ?></td>
                                     <td>
-                                        <button class="btn-edit" name="edit">Edit</button>
-                                        <button class="btn-hapus" name="hapus" data-id="<?= $t['id_transaksi']; ?>">Hapus</button>
+                                        <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
+                                            <input type="hidden" name="id_transaksi" value="<?= $t['id_transaksi']; ?>">
+                                            <button type="submit" class="btn-edit" name="edit">Edit</button>
+                                        </form>
+                                        <button type="button" class="btn-hapus" name="hapus" data-id="<?= $t['id_transaksi']; ?>">Hapus</button>
                                     </td>
                                 </tr>
                                 <?php $i += 1 ?>
@@ -256,8 +272,11 @@ if ($sesi !== "admin") {
                                     <td><?= $d['jumlah']; ?></td>
                                     <td><?= $d['subtotal']; ?></td>
                                     <td>
-                                        <button class="btn-edit" name="edit">Edit</button>
-                                        <button class="btn-hapus" name="hapus" data-id="<?= $d['id_detail_transaksi']; ?>">Hapus</button>
+                                        <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
+                                            <input type="hidden" name="id_detail_transaksi" value="<?= $d['id_detail_transaksi']; ?>">
+                                            <button type="submit" class="btn-edit" name="edit">Edit</button>
+                                        </form>
+                                        <button type="button" class="btn-hapus" name="hapus" data-id="<?= $d['id_detail_transaksi']; ?>">Hapus</button>
                                     </td>
                                 </tr>
                                 <?php $i += 1 ?>
@@ -323,11 +342,10 @@ if ($sesi !== "admin") {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
     <script>
         const admin_page_location = "<?= $this->session->userdata('admin_page_location') ?>"; // kirim variabel admin_page_location ke js yang sudah dinisialisasi value session key 'admin_page_location'.
-        const dataDelete = "<?= base_url('index.php/admin_control/dataDelete');?>";
+        const dataDelete = "<?= base_url('index.php/Admin_control/dataDelete'); ?>";
         console.log("Lokasi sekarang:", admin_page_location);
     </script>
     <script src="<?= base_url('assets/js/admin.js?v=' . time()); ?>"></script> <!--link file js-->
-
 </body>
 
 </html>

@@ -25,7 +25,7 @@
             </div>
             <div class="navigasi-header">
                 <a href="#">Home</a>
-                <a href="#katalog-produk">Produk</a>
+                <a href="<?= base_url('index.php/Home/produk');?>">Produk</a>
                 <a href="#">Layanan</a>
                 <a href="#footer">Tentang Kami</a>
             </div>
@@ -66,7 +66,7 @@
                         <h1>Kebutuhan Anda Ada Disini! <br>Tunggu Apa Lagi?</h1>
                     </div>
                     <div class="row-right">
-                        <img src="#" alt="Company">
+                        <img src="<?= base_url('assets/img/branding/banner1.jpeg')?>" alt="Company">
                     </div>
                 </div>
             </div>
