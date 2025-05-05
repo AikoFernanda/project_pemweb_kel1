@@ -45,13 +45,13 @@
                         <input type="hidden" name="total_transaksi" value="<?= $totalHarga ?>">
 
                         <label for="nama">Nama Lengkap</label>
-                        <input type="text" name="nama_lengkap" value="<?= $user['nama_lengkap']; ?>" required>
+                        <input type="text" name="nama_pemesan" value="<?= $user['nama_lengkap']; ?>" required>
 
                         <label for="alamat">Alamat Pengiriman</label>
-                        <textarea name="alamat" required><?= $user['alamat']; ?></textarea> <!--textarea tidak pakai value pada propertinya, value taruh dalam content langsung/diantara tag pembuka dan penutup.-->
+                        <textarea name="alamat_tujuan" required><?= $user['alamat']; ?></textarea> <!--textarea tidak pakai value pada propertinya, value taruh dalam content langsung/diantara tag pembuka dan penutup.-->
 
                         <label for="no_hp">Nomor HP</label>
-                        <input type="tel" name="no_hp" value="<?= $user['no_hp']; ?>" pattern="\d{9,12}" maxlength="12" title="Masukkan nomor telepon dengan benar" required>
+                        <input type="tel" name="no_hp_pemesan" value="<?= $user['no_hp']; ?>" pattern="\d{9,12}" maxlength="12" title="Masukkan nomor telepon dengan benar" required>
 
                         <button type="submit" class="btn-submit" data-total-harga="<?= $totalHarga; ?>">Konfirmasi Pesanan</button>
                     </form>

@@ -37,10 +37,10 @@ class Admin_control extends CI_Controller
                     $data['detail_transaksi'] = $this->Database_model->getAllCartDetails(); // mengembalikan array of array(assosiatif)
                     $this->session->set_userdata('admin_page_location', $location);
                     break;
-                // case 'pengiriman':
-                //     $data['pengiriman'] = $this->Database_model->getAllDeliveries();
-                //     $this->session->set_userdata('admin_page_locatino', $location);
-                //     break;
+                case 'jadwal_pengiriman':
+                    $data['jadwal_pengiriman'] = $this->Database_model->getAllDeliveries();
+                    $this->session->set_userdata('admin_page_location', $location);
+                    break;
                 default:
                     redirect('Home/admin');
                     return;
@@ -78,6 +78,10 @@ class Admin_control extends CI_Controller
             case 'detail_transaksi':
                 $id_detail_transaksi = $this->input->post('id_detail_transaksi', TRUE);
                 $result = $this->Database_model->deleteTransactionDetailById($id_detail_transaksi);
+                break;
+            case 'jadwal_pengiriman':
+                $id_jadwal = $this->input->post('id_jadwal', TRUE);
+                $result = $this->Database_model->deleteDeliverById($id_jadwal);
                 break;
             default:
                 echo json_encode(['status' => 'error', 'pesan' => 'Lokasi tidak dikenali']);
@@ -130,6 +134,19 @@ class Admin_control extends CI_Controller
                 $detail_transaksi['detail_transaksi'] = $this->Database_model->getTransactionDetailById($id_detail_transaksi);
                 $this->load->view('edit_admin_page.php', $detail_transaksi);
                 break;
+            case 'jadwal_pengiriman':
+                $id_jadwal = $this->input->post('id_jadwal');
+                $jadwal_pengiriman['jadwal_pengiriman'] = $this->Database_model->getDeliveryById($id_jadwal);
+                $jadwal_pengiriman['jadwal_pengiriman']['tanggal_pengiriman'] = date(
+                    'Y-m-d\TH:i',
+                    strtotime($jadwal_pengiriman['jadwal_pengiriman']['tanggal_pengiriman']) // merubah dari format db type datetime menjadi format input type datetime-local, misal 2025-05-05T14:30.
+                );
+                $this->load->view('edit_admin_page.php', $jadwal_pengiriman);
+                // T adalah huruf literal untuk memisahkan tanggal dan jam pada input datetime-local di HTML. 
+                // Karena dalam PHP date() fungsi T biasanya berarti timezone, kamu perlu escape dengan backslash (\) agar dianggap sebagai huruf biasa. misal 2025-05-05T14:30 (format yang dibutuhkan oleh <input type="datetime-local">)
+                // $raw = "2025-05-05 14:30:00"; // dari database
+                // $timestamp = strtotime($raw); // jadi angka: 1746455400 (contoh)
+                // $formatted = date('Y-m-d\TH:i', $timestamp); // hasil: 2025-05-05T14:30
             default:
                 echo 'error';
         }
@@ -166,6 +183,17 @@ class Admin_control extends CI_Controller
                 $id = $postData['id_detail_transaksi'];
                 $result = $this->Database_model->updateTransactionDetailById($id, $postData);
                 break;
+            case 'jadwal_pengiriman':
+                $id = $postData['id_jadwal'];
+                // Ubah format tanggal dari datetime-local ke format datetime (MySQL)
+                $postData['tanggal_pengiriman'] = date('Y-m-d H:i:s', strtotime($postData['tanggal_pengiriman']));
+                $result = $this->Database_model->updateDeliverykById($id, $postData);
+                break;
+                //'H:i:s', Ini format waktu jam-menit-detik dalam 24 jam: 
+                //H = jam (00–23)
+                //i = menit (00–59)
+                //s = detik (00–59)
+                //Contoh hasil: date('Y-m-d H:i:s'); Output: 2025-05-05 14:30:00
             default:
                 echo json_encode(['status' => 'error', 'pesan' => 'Lokasi tidak ditemukan']);
                 return;

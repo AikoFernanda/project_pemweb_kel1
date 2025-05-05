@@ -144,9 +144,9 @@ class Katalog_produk extends CI_Controller
     {
         $id_user = $this->session->userdata('id_user');
         $keranjang = $this->Database_model->getProdukForShowInKeranjang($id_user);
-        $nama_lengkap = $this->input->post('nama_lengkap');
-        $alamat = $this->input->post('alamat');
-        $no_hp = $this->input->post('no_hp');
+        $nama_pemesan = $this->input->post('nama_pemesan');
+        $alamat_tujuan = $this->input->post('alamat_tujuan');
+        $no_hp_pemesan = $this->input->post('no_hp_pemesan');
         $id_transaksi = str_pad($this->Database_model->getTransactionId(), 5, 0, STR_PAD_LEFT); // memberi format 3 digit input, menambah 0 di kiri input hingga input berjumlah 3 digit
         $kode_pemesanan = "INV" . "-" . date('Ymd') . "-" . $id_transaksi;
         $total_transaksi = $this->input->post('total_transaksi');
@@ -159,7 +159,7 @@ class Katalog_produk extends CI_Controller
         $result = $this->Database_model->transaction($dataTransaksi['kode_pemesanan'], $dataTransaksi['id_user'], $dataTransaksi['total_transaksi'], $dataTransaksi['status_transaksi']);
         if ($result) {
             $id_transaksi = $this->Database_model->getLastId();
-            $this->Database_model->addDetailTransaction($id_user, $id_transaksi);
+            $this->Database_model->insertDetailTransactionAndDeliveries($id_user, $id_transaksi, $nama_pemesan, $alamat_tujuan, $no_hp_pemesan);
             $this->Database_model->deleteAllCartList($id_user);
             echo json_encode(
                 [

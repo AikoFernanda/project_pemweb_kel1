@@ -61,6 +61,10 @@ if ($sesi !== "admin") {
                 <h3>Detail Transaksi</h3>
                 <p>Detail dari setiap transaksi</p>
             </div>
+            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=jadwal_pengiriman'); ?>'">
+                <h3>Jadwal Pengiriman Pesanan</h3>
+                <p>Kelola jadwal pengiriman pesanan</p>
+            </div>
         </section>
     </main>
 

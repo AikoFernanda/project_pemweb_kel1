@@ -72,7 +72,20 @@ CREATE TABLE detail_transaksi (
     id_transaksi INT NOT NULL,
     id_produk INT NOT NULL,
     jumlah INT NOT NULL,
-    subtotal INT NOT NULL
+    subtotal INT NOT NULL,
     FOREIGN KEY (id_transaksi) REFERENCES transaksi(id_transaksi) ON DELETE CASCADE,
     FOREIGN KEY (id_produk) REFERENCES produk(id_produk) ON DELETE CASCADE
+);
+
+CREATE TABLE jadwal_pengiriman
+(
+	id_jadwal INT AUTO_INCREMENT,
+    id_transaksi INT NOT NULL,
+    nama_pemesan VARCHAR(100) NOT NULL,
+    alamat_tujuan VARCHAR(100) NOT NULL,
+    no_hp_pemesan VARCHAR(13) NOT NULL,
+    status_pengiriman ENUM('Sudah Dikirim', 'Belum Dikirim') DEFAULT 'Belum Dikirim',
+    tanggal_pengiriman DATETIME DEFAULT NULL,
+    PRIMARY KEY(id_jadwal),
+    FOREIGN KEY(id_transaksi) REFERENCES transaksi(id_transaksi) ON DELETE CASCADE
 );

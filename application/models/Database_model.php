@@ -39,20 +39,29 @@ class Database_model extends CI_Model
         // result_array() → pakai ['nama_produk'] (mengembalikan dalam bentuk array assosiatif)
     }
 
-    public function getAllUser() {
+    public function getAllUser()
+    {
         return $this->db->get('user')->result_array();
     }
 
-    public function getAllCarts() {
+    public function getAllCarts()
+    {
         return $this->db->get('keranjang')->result_array();
     }
 
-    public function getAllTransactions() {
+    public function getAllTransactions()
+    {
         return $this->db->get('transaksi')->result_array();
     }
 
-    public function getAllCartDetails() {
+    public function getAllCartDetails()
+    {
         return $this->db->get('detail_transaksi')->result_array();
+    }
+
+    public function getAllDeliveries()
+    {
+        return $this->db->get('jadwal_pengiriman')->result_array();
     }
 
 
@@ -75,28 +84,38 @@ class Database_model extends CI_Model
         return $result = $this->db->delete('keranjang'); // return true jika berhasil delete di db, false jika gagal
     }
 
-    public function deleteAkunById($id_akun) {
+    public function deleteAkunById($id_akun)
+    {
         return $this->db->where('id_akun', $id_akun)->delete('akun');
     }
 
-    public function deleteProdukById($id_produk) {
+    public function deleteProdukById($id_produk)
+    {
         return $this->db->where('id_produk', $id_produk)->delete('produk');
     }
 
-    public function deleteUserById($id_user) {
+    public function deleteUserById($id_user)
+    {
         return $this->db->where('id_user', $id_user)->delete('user');
     }
 
-    public function deleteCartById($id_keranjang) {
+    public function deleteCartById($id_keranjang)
+    {
         return $this->db->where('id_keranjang', $id_keranjang)->delete('keranjang');
     }
 
-    public function deleteTransactionById($id_transaksi) {
+    public function deleteTransactionById($id_transaksi)
+    {
         return $this->db->where('id_transaksi', $id_transaksi)->delete('transaksi');
     }
 
-    public function deleteTransactionDetailById($id_detail_transaksi) {
+    public function deleteTransactionDetailById($id_detail_transaksi)
+    {
         return $this->db->where('id_detail_transaksi', $id_detail_transaksi)->delete('detail_transaksi');
+    }
+
+    public function deleteDeliverById($id_jadwal) {
+        return $this->db->where('id_jadwal', $id_jadwal)->delete('jadwal_pengiriman');
     }
 
     public function getProdukByKategori($kategori)
@@ -301,20 +320,35 @@ class Database_model extends CI_Model
         return $result;
     }
 
-    public function addDetailTransaction($id_user, $id_transaksi)
+    public function insertDetailTransactionAndDeliveries($id_user, $id_transaksi, $nama_pemesan, $alamat_tujuan, $no_hp_pemesan)
     {
         $cartProduct = $this->getKeranjangByIdUser($id_user);
+        if (!$cartProduct) return false; // langsung gagal jika keranjang kosong.
+        $this->db->trans_begin();
         if ($cartProduct) {
             foreach ($cartProduct as $c) {
                 // insert ke tabel detail_transaksi
-                $this->db->insert('detail_transaksi', [
+                $result = $this->db->insert('detail_transaksi', [
                     'id_transaksi' => $id_transaksi,
                     'id_produk' => $c['id_produk'],
                     'jumlah' => $c['jumlah'],
                     'subtotal' => $c['subtotal']
                 ]);
-                // update stok
-                $this->decrementStock($c['id_produk'], $c['jumlah']);
+            }
+            // update stok
+            $this->decrementStock($c['id_produk'], $c['jumlah']);
+            $dataPengiriman = [
+                'id_transaksi' => $id_transaksi,
+                'nama_pemesan' => $nama_pemesan,
+                'alamat_tujuan' => $alamat_tujuan,
+                'no_hp_pemesan' => $no_hp_pemesan
+            ];
+            $resultPengiriman = $this->insertDataPengiriman($dataPengiriman);
+            if ($this->db->trans_status() === FALSE || !$resultPengiriman) { // Fungsi trans_status() di CI digunakan untuk mengecek apakah semua query dalam sebuah database transaction berjalan sukses atau tidak. FALSE → jika salah satu query gagal
+                $this->db->trans_rollback(); // batalkan semua query dalam database transaksi
+            } else {
+                $this->db->trans_commit(); // simpan ke DB
+                return true;
             }
         }
     }
@@ -332,8 +366,16 @@ class Database_model extends CI_Model
         }
     }
 
-    // GET DATA PARTIAL
-    public function getAccountById($id_akun) {
+    // INSERT A DATA //
+    public function insertDataPengiriman($data)
+    {
+        return $this->db->insert('jadwal_pengiriman', $data);
+    }
+
+
+    // GET DATA PARTIAL //
+    public function getAccountById($id_akun)
+    {
         $this->db->where('id_akun', $id_akun);
         $result = $this->db->get('akun');
         if ($result->num_rows() > 0) {
@@ -387,7 +429,7 @@ class Database_model extends CI_Model
         } else {
             return [];  // Jika tidak ada data, kembalikan array kosong
         }
-    } 
+    }
 
     public function getTransactionDetailById($id_detail_transaksi)
     {
@@ -399,10 +441,21 @@ class Database_model extends CI_Model
         } else {
             return [];  // Jika tidak ada data, kembalikan array kosong
         }
-    } 
+    }
 
-    // UPDATE DATA PARTIAL
-    public function updateAkunById($id_akun, $data) {
+    public function getDeliveryById($id_jadwal) {
+        $this->db->where('id_jadwal', $id_jadwal);
+        $result = $this->db->get('jadwal_pengiriman');
+        if($result->num_rows() > 0 ) {
+            return $result->row_array();
+        } else {
+            return [];
+        }
+    }
+
+    // UPDATE DATA PARTIAL //
+    public function updateAkunById($id_akun, $data)
+    {
         return $this->db->where('id_akun', $id_akun)->update('akun', [
             'email' => $data['email'],
             'username_akun' => $data['username_akun'],
@@ -412,10 +465,11 @@ class Database_model extends CI_Model
         ]);
     }
 
-    public function updateProductById($id_produk, $data) {
+    public function updateProductById($id_produk, $data)
+    {
         return $this->db->where('id_produk', $id_produk)->update('produk', [
             'nama_produk' => $data['nama_produk'],
-            'kategori'=> $data['kategori'],
+            'kategori' => $data['kategori'],
             'stok' => $data['stok'],
             'harga' => $data['harga'],
             'persentase_diskon' => $data['persentase_diskon'],
@@ -424,7 +478,8 @@ class Database_model extends CI_Model
         ]);
     }
 
-    public function updateUserById($id_user, $data) {
+    public function updateUserById($id_user, $data)
+    {
         $update = [
             'nama_lengkap' => $data['nama_lengkap'],
             'jenis_kelamin' => $data['jenis_kelamin'],
@@ -434,14 +489,15 @@ class Database_model extends CI_Model
         ];
 
         /* jika user mengupload foto, update foto. */
-        if(!empty($data['foto'])) { // empty->apakah variabel tidak ada atau bernilai "kosong" dalam arti luas.
+        if (!empty($data['foto'])) { // empty->apakah variabel tidak ada atau bernilai "kosong" dalam arti luas.
             $update['foto'] = $data['foto'];
         }
 
         return $this->db->where('id_user', $id_user)->update('user', $update);
     }
 
-    public function updateCartById($id_keranjang, $data) {
+    public function updateCartById($id_keranjang, $data)
+    {
         return $this->db->where('id_keranjang', $id_keranjang)->update('keranjang', [
             'id_user' => $data['id_user'],
             'id_produk' => $data['id_produk'],
@@ -450,7 +506,8 @@ class Database_model extends CI_Model
         ]);
     }
 
-    public function updateTransactionById($id_transaksi, $data) {
+    public function updateTransactionById($id_transaksi, $data)
+    {
         return $this->db->where('id_transaksi', $id_transaksi)->update('transaksi', [
             'kode_pemesanan' => $data['kode_pemesanan'],
             'id_user' => $data['id_user'],
@@ -459,12 +516,24 @@ class Database_model extends CI_Model
         ]);
     }
 
-    public function updateTransactionDetailById($id_detail_transaksi, $data) {
+    public function updateTransactionDetailById($id_detail_transaksi, $data)
+    {
         return $this->db->where('id_detail_transaksi', $id_detail_transaksi)->update('detail_transaksi', [
-            'id_transaksi' => $data ['id_transaksi'],
+            'id_transaksi' => $data['id_transaksi'],
             'id_produk' => $data['id_produk'],
             'jumlah' => $data['jumlah'],
             'subtotal' => $data['subtotal']
+        ]);
+    }
+
+    public function updateDeliverykById($id_jadwal, $data){
+        return $this->db->where('id_jadwal', $id_jadwal)->update('jadwal_pengiriman', [
+            'id_transaksi' => $data['id_transaksi'],
+            'nama_pemesan' => $data['nama_pemesan'],
+            'alamat_tujuan' => $data['alamat_tujuan'],
+            'no_hp_pemesan' => $data['no_hp_pemesan'],
+            'status_pengiriman' => $data['status_pengiriman'],
+            'tanggal_pengiriman' => $data['tanggal_pengiriman']
         ]);
     }
 }

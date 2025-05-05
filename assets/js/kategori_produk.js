@@ -1,5 +1,3 @@
-src="https://code.jquery.com/jquery-3.6.0.min.js"
-
 $(document).ready(function() {
     $('.category-btn').on('click', function() {
         $('.category-btn').removeClass('active');

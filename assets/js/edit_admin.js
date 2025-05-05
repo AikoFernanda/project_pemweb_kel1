@@ -25,10 +25,15 @@ $(document).ready(function () {
                                 timer: 2000,
                                 showConfirmButton: false
                             }).then(() => {
-                                window.location.href=admin_page;
+                                window.location.href = admin_page;
                             });
                         } else {
-                            Swal.fire('Gagal!', response.pesan, 'error');
+                            Swal.fire({
+                                icon: "error",
+                                title: 'Gagal!',
+                                text: response.pesan,
+                                confirmButtonText: "Tutup"
+                            });
                         }
                     },
                     error: function (xhr, status, error) {
@@ -36,7 +41,7 @@ $(document).ready(function () {
                             icon: 'error',
                             title: 'Kesalahan Server',
                             text: 'Terjadi kesalahan saat mengirim data.',
-                            confirmButtonText: 'error'
+                            confirmButtonText: 'Tutup'
                         });
                         console.error("AJAX Error:", xhr.responseText);
                     }

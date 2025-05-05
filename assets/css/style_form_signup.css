@@ -61,6 +61,11 @@ header {
     font-weight: 600;
 }
 
+.navigasi-header a:hover {
+    text-decoration: underline;
+    color: #007bff;
+}
+
 
 /* body {
 

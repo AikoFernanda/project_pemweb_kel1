@@ -17,7 +17,7 @@
             </div>
             <div class="navigasi-header">
                 <a href="<?= base_url('index.php/Home/index'); ?>">Home</a>
-                <a href="#katalog-produk">Produk</a>
+                <a href="<?= base_url('index.php/Home/produk'); ?>">Produk</a>
                 <a href="#">Layanan</a>
                 <a href="#">Tentang Kami</a>
             </div>

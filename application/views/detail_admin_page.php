@@ -12,7 +12,7 @@ if ($sesi !== "admin") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= 'Admin Detail - CV MULIA LANGGENG MUFAKAT'; ?></title>
+    <title>Admin Detail - CV MULIA LANGGENG MUFAKAT</title>
     <!--link css-->
     <link rel="stylesheet" href="<?= base_url('assets/css/style_detail_admin_page.css?v=' . time()); ?>">
     <!-- Google Font -->
@@ -35,6 +35,7 @@ if ($sesi !== "admin") {
         </a>
         <div class="tabel-wrapper">
             <?php if (($this->session->userdata('admin_page_location')) === 'akun') : ?>
+                <h1>Data Akun</h1>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
                         <th>Nomor</th>
@@ -72,12 +73,13 @@ if ($sesi !== "admin") {
                             <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
-                                <td colspan="7">Data tidak ditemukan.</td>
+                                <td colspan="9">Data tidak ditemukan.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'produk'): ?>
+                <h1>Data Produk</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -119,12 +121,13 @@ if ($sesi !== "admin") {
                             <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
-                                <td colspan="7">Data tidak ditemukan.</td>
+                                <td colspan="11">Data tidak ditemukan.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'user'): ?>
+                <h1>Data User</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -147,7 +150,7 @@ if ($sesi !== "admin") {
                                     <td><?= $u['nama_lengkap']; ?></td>
                                     <td><?= $u['jenis_kelamin']; ?></td>
                                     <td><?= $u['alamat']; ?></td>
-                                    <td><?= $u['foto'];?></td>
+                                    <td><?= $u['foto']; ?></td>
                                     <td><?= $u['no_hp']; ?></td>
                                     <td><?= $u['tanggal_lahir']; ?></td>
                                     <td>
@@ -162,12 +165,13 @@ if ($sesi !== "admin") {
                             <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
-                                <td colspan="7">Data tidak ditemukan.</td>
+                                <td colspan="9">Data tidak ditemukan.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'keranjang'): ?>
+                <h1>Data Keranjang</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -203,12 +207,13 @@ if ($sesi !== "admin") {
                             <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
-                                <td colspan="7">Data tidak ditemukan.</td>
+                                <td colspan="8">Data tidak ditemukan.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'transaksi'): ?>
+                <h1>Data Transaksi</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -244,12 +249,13 @@ if ($sesi !== "admin") {
                             <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
-                                <td colspan="7">Data tidak ditemukan.</td>
+                                <td colspan="8">Data tidak ditemukan.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'detail_transaksi'): ?>
+                <h1>Data Detail Transaksi</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -288,8 +294,52 @@ if ($sesi !== "admin") {
                         <?php endif; ?>
                     </tbody>
                 </table>
+                <?php elseif ($this->session->userdata('admin_page_location') === 'jadwal_pengiriman') : ?>
+                    <h1>Data Jadwal Pengiriman</h1>
+                    <?php $i = 1 ?>
+                    <table border="1px" cellpadding="10px" cellspacing="0">
+                        <thead>
+                            <th>Nomor</th>
+                            <th>Id Jadwal</th>
+                            <th>Id Transaksi</th>
+                            <th>Nama Pemesan</th>
+                            <th>Alamat Tujuan</th>
+                            <th>No. HP Pemesan</th>
+                            <th>Status Pengiriman</th>
+                            <th>Tanggal Pengiriman</th>
+                            <th>Aksi</th>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($jadwal_pengiriman)) : ?>
+                                <?php foreach ($jadwal_pengiriman as $j) : ?>
+                                    <tr>
+                                        <td><?= $i; ?></td>
+                                        <td><?= $j['id_jadwal']; ?></td>
+                                        <td><?= $j['id_transaksi']; ?></td>
+                                        <td><?= $j['nama_pemesan']; ?></td>
+                                        <td><?= $j['alamat_tujuan']; ?></td>
+                                        <td><?= $j['no_hp_pemesan']; ?></td>
+                                        <td><?= $j['status_pengiriman']; ?></td>
+                                        <td><?= $j['tanggal_pengiriman']; ?></td>
+                                        <td>
+                                            <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
+                                                <input type="hidden" name="id_jadwal" value="<?= $j['id_jadwal']; ?>">
+                                                <button type="submit" class="btn-edit" name="edit">Edit</button>
+                                            </form>
+                                            <button type="button" class="btn-hapus" name="hapus" data-id="<?= $j['id_jadwal']; ?>">Hapus</button>
+                                        </td>
+                                    </tr>
+                                    <?php $i += 1 ?>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="9">Data tidak ditemukan.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
 
-            <?php endif; ?>
+                <?php endif; ?>
         </div>
     </main>
 

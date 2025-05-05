@@ -26,6 +26,9 @@ $(document).ready(function () {
             case 'detail_transaksi':
                 data.id_detail_transaksi = id;
                 break;
+            case 'jadwal_pengiriman':
+                data.id_jadwal = id;
+                break;
         }
 
         $.ajax({
