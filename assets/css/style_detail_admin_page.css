@@ -93,7 +93,7 @@ main h1 {
 
 main .btn-back {
     display: inline-block;
-    background-color: #3498db;
+    background-color: #7c7c7c;
     color: white;
     padding: 10px 16px;
     border-radius: 6px;
@@ -104,7 +104,7 @@ main .btn-back {
 }
 
 main .btn-back:hover {
-    background-color: #2980b9;
+    background-color: #454545;
 }
 
 main table {
@@ -141,8 +141,15 @@ main tbody tr:hover {
     /* pseudo-class CSS bernama :hover. Properti ini digunakan untuk menambahkan efek saat elemen disentuh oleh kursor. */
 }
 
+main .add-data {
+    display: flex;
+    justify-content: right;
+    margin-top: 20px;
+}
+
 main .btn-edit,
-main .btn-hapus {
+main .btn-hapus,
+main .btn-add {
     padding: 6px 12px;
     border: none;
     border-radius: 4px;
@@ -151,13 +158,15 @@ main .btn-hapus {
     transition: background-color 0.2s ease;
 }
 
-main .btn-edit {
+main .btn-add {
     background-color: #27ae60;
     color: white;
-    margin-right: 5px;
+    height: 50px;
+    width: 200px;
+    border-radius: 15px;
 }
 
-main .btn-edit:hover {
+main .btn-add:hover {
     background-color: #1e8449;
 }
 
@@ -170,7 +179,17 @@ main .btn-hapus:hover {
     background-color: #c0392b;
 }
 
+main .btn-edit {
+    background-color: #3498db;
+    color: white;
+    margin-right: 5px;
+}
 
+main .btn-edit:hover {
+    background-color: #2980b9;
+}
+
+/* FOOTER STYLE*/
 footer {
     background-color: #333;
     color: white;

@@ -126,7 +126,7 @@ form input[type="number"],
 form input[type="password"],
 form input[type="date"],
 form input[type="tel"],
-form input[type="email"],
+form input[type='email'],
 form select {
     width: 100%;
     padding: 10px 14px;

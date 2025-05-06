@@ -48,6 +48,7 @@ if ($sesi !== "user") {
             <div class="profile-box">
                 <img src="<?= base_url('assets/img/upload_foto_profil/' . $user['foto'])?>" alt="Foto Profil">
                 <div class="username"><?= $user['nama_lengkap'];?></div>
+                <!-- <div class="email"><?= $user['email'];?></div> -->
             </div>
             <ul class="menu-links">
                 <li><a href="#">Edit Profil</a></li>

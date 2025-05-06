@@ -146,7 +146,7 @@ if ($sesi !== "admin") {
                             <?php foreach ($user as $u) : ?>
                                 <tr>
                                     <td><?= $i; ?></td>
-                                    <td><?= $u['id_user']; ?></td>
+                                    <td><?= $u['id_akun']; ?></td>
                                     <td><?= $u['nama_lengkap']; ?></td>
                                     <td><?= $u['jenis_kelamin']; ?></td>
                                     <td><?= $u['alamat']; ?></td>
@@ -294,53 +294,81 @@ if ($sesi !== "admin") {
                         <?php endif; ?>
                     </tbody>
                 </table>
-                <?php elseif ($this->session->userdata('admin_page_location') === 'jadwal_pengiriman') : ?>
-                    <h1>Data Jadwal Pengiriman</h1>
-                    <?php $i = 1 ?>
-                    <table border="1px" cellpadding="10px" cellspacing="0">
-                        <thead>
-                            <th>Nomor</th>
-                            <th>Id Jadwal</th>
-                            <th>Id Transaksi</th>
-                            <th>Nama Pemesan</th>
-                            <th>Alamat Tujuan</th>
-                            <th>No. HP Pemesan</th>
-                            <th>Status Pengiriman</th>
-                            <th>Tanggal Pengiriman</th>
-                            <th>Aksi</th>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($jadwal_pengiriman)) : ?>
-                                <?php foreach ($jadwal_pengiriman as $j) : ?>
-                                    <tr>
-                                        <td><?= $i; ?></td>
-                                        <td><?= $j['id_jadwal']; ?></td>
-                                        <td><?= $j['id_transaksi']; ?></td>
-                                        <td><?= $j['nama_pemesan']; ?></td>
-                                        <td><?= $j['alamat_tujuan']; ?></td>
-                                        <td><?= $j['no_hp_pemesan']; ?></td>
-                                        <td><?= $j['status_pengiriman']; ?></td>
-                                        <td><?= $j['tanggal_pengiriman']; ?></td>
-                                        <td>
-                                            <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
-                                                <input type="hidden" name="id_jadwal" value="<?= $j['id_jadwal']; ?>">
-                                                <button type="submit" class="btn-edit" name="edit">Edit</button>
-                                            </form>
-                                            <button type="button" class="btn-hapus" name="hapus" data-id="<?= $j['id_jadwal']; ?>">Hapus</button>
-                                        </td>
-                                    </tr>
-                                    <?php $i += 1 ?>
-                                <?php endforeach; ?>
-                            <?php else : ?>
+            <?php elseif ($this->session->userdata('admin_page_location') === 'jadwal_pengiriman') : ?>
+                <h1>Data Jadwal Pengiriman</h1>
+                <?php $i = 1 ?>
+                <table border="1px" cellpadding="10px" cellspacing="0">
+                    <thead>
+                        <th>Nomor</th>
+                        <th>Id Jadwal</th>
+                        <th>Id Transaksi</th>
+                        <th>Nama Pemesan</th>
+                        <th>Alamat Tujuan</th>
+                        <th>No. HP Pemesan</th>
+                        <th>Status Pengiriman</th>
+                        <th>Tanggal Pengiriman</th>
+                        <th>Aksi</th>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($jadwal_pengiriman)) : ?>
+                            <?php foreach ($jadwal_pengiriman as $j) : ?>
                                 <tr>
-                                    <td colspan="9">Data tidak ditemukan.</td>
+                                    <td><?= $i; ?></td>
+                                    <td><?= $j['id_jadwal']; ?></td>
+                                    <td><?= $j['id_transaksi']; ?></td>
+                                    <td><?= $j['nama_pemesan']; ?></td>
+                                    <td><?= $j['alamat_tujuan']; ?></td>
+                                    <td><?= $j['no_hp_pemesan']; ?></td>
+                                    <td><?= $j['status_pengiriman']; ?></td>
+                                    <td><?= $j['tanggal_pengiriman']; ?></td>
+                                    <td>
+                                        <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
+                                            <input type="hidden" name="id_jadwal" value="<?= $j['id_jadwal']; ?>">
+                                            <button type="submit" class="btn-edit" name="edit">Edit</button>
+                                        </form>
+                                        <button type="button" class="btn-hapus" name="hapus" data-id="<?= $j['id_jadwal']; ?>">Hapus</button>
+                                    </td>
                                 </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
-                <?php endif; ?>
+                                <?php $i += 1 ?>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="9">Data tidak ditemukan.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
         </div>
+        <?php if ($this->session->userdata('admin_page_location') === 'akun') : ?>
+            <div class="add-data">
+                <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Akun</button>
+            </div>
+        <?php elseif ($this->session->userdata('admin_page_location') === 'produk') : ?>
+            <div class="add-data">
+                <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Produk</button>
+            </div>
+        <?php elseif ($this->session->userdata('admin_page_location') === 'user') : ?>
+            <div class="add-data">
+                <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah User</button>
+            </div>
+        <?php elseif ($this->session->userdata('admin_page_location') === 'keranjang') : ?>
+            <div class="add-data">
+                <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Keranjang</button>
+            </div>
+        <?php elseif ($this->session->userdata('admin_page_location') === 'transaksi') : ?>
+            <div class="add-data">
+                <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Transaksi</button>
+            </div>
+        <?php elseif ($this->session->userdata('admin_page_location') === 'detail_transaksi') : ?>
+            <div class="add-data">
+                <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Detail Transaksi</button>
+            </div>
+        <?php elseif ($this->session->userdata('admin_page_location') === 'jadwal_pengiriman') : ?>
+            <div class="add-data">
+                <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Jadwal Pengiriman</button>
+            </div>
+        <?php endif; ?>
     </main>
 
     <footer>
@@ -395,7 +423,8 @@ if ($sesi !== "admin") {
         const dataDelete = "<?= base_url('index.php/Admin_control/dataDelete'); ?>";
         console.log("Lokasi sekarang:", admin_page_location);
     </script>
-    <script src="<?= base_url('assets/js/admin.js?v=' . time()); ?>"></script> <!--link file js-->
+    <!--link file js-->
+    <script src="<?= base_url('assets/js/delete_admin.js?v=' . time()); ?>"></script> 
 </body>
 
 </html>

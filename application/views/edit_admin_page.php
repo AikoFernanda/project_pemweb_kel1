@@ -38,7 +38,7 @@ if ($sesi !== "admin") {
             <?php if ($this->session->userdata('admin_page_location') === 'akun') : ?>
                 <input type="hidden" name="id_akun" value="<?= $akun['id_akun']; ?>">
                 <label for="email">Email</label>
-                <input id="email" name="email" type="text" value="<?= $akun['email']; ?>" required>
+                <input id="email" name="email" type="email" value="<?= $akun['email']; ?>" required>
                 <label for="username">Username Akun</label>
                 <input id="username" name="username_akun" type="text" value="<?= $akun['username_akun']; ?>" required>
                 <label for="password">Password Akun</label>
@@ -66,12 +66,12 @@ if ($sesi !== "admin") {
                 <input id="gambar" name="gambar" type="text" value="<?= $produk['gambar']; ?>" required>
                 <label for="deskripsi">Deskripsi</label>
                 <input id="deskripsi" name="deskripsi" type="text" value="<?= $produk['deskripsi']; ?>" required>
-            <?php elseif ($this->session->userdata('admin_page_location') === 'user') : ?> <label for="nama_lengkap">Nama Lengkap</label>
+            <?php elseif ($this->session->userdata('admin_page_location') === 'user') : ?> 
                 <input type="hidden" name="id_user" value="<?= $user['id_user']; ?>">
                 <label for="nama_lengkap">Nama Lengkap</label>
-                <input id="nama_lengkap" name="nama_lengkap" type="text" value="<?= $user['nama_lengkap']; ?>" required>
+                <input type="text" name="nama_lengkap" value="<?= $user['nama_lengkap']; ?>" required>
                 <label for="jenis_kelamin">Jenis Kelamin</label>
-                <select name="jenis_kelamin" id="jenis_kelamin">
+                <select name="jenis_kelamin" id="jenis_kelamin" required>
                     <option value="L" <?= ($user['jenis_kelamin'] == 'L') ? 'selected' : '' ?>>Laki-laki</option>
                     <option value="P" <?= ($user['jenis_kelamin'] == 'P') ? 'selected' : '' ?>>Perempuan</option>
                 </select>
@@ -83,7 +83,7 @@ if ($sesi !== "admin") {
                 <input id="no_hp" name="no_hp" type="tel" value="<?= $user['no_hp']; ?>" pattern="\d{9,12}" maxlength="12" title="Masukkan nomor telepon dengan benar" required>
                 <label for="tanggal_lahir">Tanggal Lahir</label>
                 <input id="tanggal_lahir" name="tanggal_lahir" type="date" value="<?= $user['tanggal_lahir']; ?>" max="<?= date('Y-m-d'); ?>" required>
-            <?php elseif ($this->session->userdata('admin_page_location') === 'keranjang') : ?> <label for="id_user">Id User</label>
+            <?php elseif ($this->session->userdata('admin_page_location') === 'keranjang') : ?>
                 <input type="hidden" name="id_keranjang" value="<?= $keranjang['id_keranjang']; ?>">
                 <label for="id_user">Id User</label>
                 <input id="id_user" name="id_user" type="text" value="<?= $keranjang['id_user']; ?>" required>

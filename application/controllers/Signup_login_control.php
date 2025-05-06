@@ -55,6 +55,7 @@ class Signup_login_control extends CI_Controller
                 $this->session->set_userdata('username_akun', $username_akun);
                 $this->session->set_userdata('role', 'user');
                 $this->session->set_userdata('logged_in', true);
+                $this->session->set_flashdata('login_success', 'Login berhasil! Selamat datang ' . $akun['username_akun'] . '!');
                 redirect('Home/index'); // setara dengan header("Location: " . base_url('index.php/Home/index'));return;
                 return; // opsional, tapi best practice tambah return;
             } else if ($insertAkunSukses === 'duplicate') {
@@ -114,8 +115,8 @@ class Signup_login_control extends CI_Controller
                     $this->session->set_userdata('username_akun', $username_akun);
                     $this->session->set_userdata('role', $akun['role']);
                     $this->session->set_userdata('logged_in', true);
-
-                    header("Location: " . base_url('index.php/Home/index')); // arahkan ke beranda
+                    $this->session->set_flashdata('login_success', 'Login Berhasil! Selamat Datang ' . $akun['username_akun'] . '!');
+                    redirect('Home/index'); // setara dengan header("Location: " . base_url('index.php/Home/index'));return;
                     return;
                 } else {
                     // flashdata untuk notif error

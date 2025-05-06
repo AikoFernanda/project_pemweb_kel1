@@ -114,7 +114,8 @@ class Database_model extends CI_Model
         return $this->db->where('id_detail_transaksi', $id_detail_transaksi)->delete('detail_transaksi');
     }
 
-    public function deleteDeliverById($id_jadwal) {
+    public function deleteDeliverById($id_jadwal)
+    {
         return $this->db->where('id_jadwal', $id_jadwal)->delete('jadwal_pengiriman');
     }
 
@@ -443,10 +444,11 @@ class Database_model extends CI_Model
         }
     }
 
-    public function getDeliveryById($id_jadwal) {
+    public function getDeliveryById($id_jadwal)
+    {
         $this->db->where('id_jadwal', $id_jadwal);
         $result = $this->db->get('jadwal_pengiriman');
-        if($result->num_rows() > 0 ) {
+        if ($result->num_rows() > 0) {
             return $result->row_array();
         } else {
             return [];
@@ -526,7 +528,8 @@ class Database_model extends CI_Model
         ]);
     }
 
-    public function updateDeliverykById($id_jadwal, $data){
+    public function updateDeliverykById($id_jadwal, $data)
+    {
         return $this->db->where('id_jadwal', $id_jadwal)->update('jadwal_pengiriman', [
             'id_transaksi' => $data['id_transaksi'],
             'nama_pemesan' => $data['nama_pemesan'],
@@ -535,6 +538,118 @@ class Database_model extends CI_Model
             'status_pengiriman' => $data['status_pengiriman'],
             'tanggal_pengiriman' => $data['tanggal_pengiriman']
         ]);
+    }
+
+    /* INSERT A ROW DATA */
+    public function insertAccount($data)
+    {
+        $duplikat = $this->db->where('username_akun', $data['username_akun'])->or_where('email', $data['email'])->get('akun')->row_array();
+        if (!$duplikat) {
+            $result = $this->db->insert('akun', $data);
+            if ($result) {
+                return 'success';
+            } else {
+                return 'error';
+            }
+        } else {
+            return 'found';
+        }
+    }
+
+    public function insertProduct($data)
+    {
+        $duplikat = $this->db->where('nama_produk', $data['nama_produk'])->where('harga', $data['harga'])->get('produk')->row_array();
+        if (!$duplikat) {
+            $result = $this->db->insert('produk', $data);
+            if ($result) {
+                return "success";
+            } else {
+                return 'error';
+            }
+        } else {
+            return 'found';
+        }
+    }
+
+    public function insertUser($data)
+    {
+        $akun = $this->getAccountById($data['id_akun']);
+        $user = $this->db->where('id_akun', $data['id_akun'])->get('user')->row_array();
+        if ($akun && !$user) {
+            $result = $this->db->insert('user', $data);
+            if ($result) {
+                return "success";
+            } else {
+                return "error";
+            }
+        } else if ($akun && $user) {
+            return "found";
+        } else {
+            return "notFound";
+        }
+    }
+
+    public function insertCart($data)
+    {
+        $produk = $this->getProductById($data['id_produk']);
+        $user = $this->getUserById($data['id_user']);
+        if ($produk && $user) {
+            $result = $this->db->insert('keranjang', $data);
+            if ($result) {
+                return "success";
+            } else {
+                return "error";
+            }$user = $this->db->where('id_akun', $data['id_akun'])->get('user')->row_array();
+        } else {
+            return "notFound";
+        }
+    }
+
+    public function insertTransaction($data)
+    {
+        $user = $this->getUserById($data['id_user']);
+        if ($user) {
+            $result = $this->db->insert('transaksi', $data);
+            if ($result) {
+                return "success";
+            } else {
+                return "error";
+            }
+        } else {
+            return "notFound";;
+        }
+    }
+
+    public function insertTransactionDetail($data)
+    {
+        $transaksi = $this->getTransactionById($data['id_transaksi']);
+        $produk = $this->getProductById($data['id_produk']);
+        if ($transaksi && $produk) {
+            $result = $this->db->insert('detail_transaksi', $data);
+            if ($result) {
+                return "success";
+            } else {
+                return "error";
+            }
+        } else {
+            return "notFound";
+        }
+    }
+
+
+    public function insertDelivery($data)
+    {
+        $transaksi = $this->getTransactionById($data['id_transaksi']);
+        if ($transaksi) {
+            $result = $this->db->insert('jadwal_pengiriman', $data);
+            if ($result) {
+                return "success";
+            } else {
+                return "error";
+            }
+        } else {
+            return 'notFound';
+        }
     }
 }
 // return pada model itu mengembalikan hasil dari operasi ke controller, jadi controller bisa tahu:

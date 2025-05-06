@@ -58,6 +58,8 @@
             <div class="flash-error"><?= $this->session->flashdata('login_error');?></div>
         <?php elseif ($this->session->flashdata('admin_error')) :?> <!--Dalam PHP else if dengan : (colon) seharusnya ditulis sebagai: elseif() bukan else if(). Blok if ini untuk mengecek apakah key 'admin_error' ada atau true pada key flashdata-->
             <div class="flash-error"><?= $this->session->flashdata('admin_error');?></div> <!--Menampilkan value key 'admin_error ke layar-->
+        <?php elseif ($this->session->flashdata('login_success')) :?>
+            <div class="flash-success"><?= $this->session->flashdata('login_success');?></div>
         <?php endif; ?>
         <section id="profil-company">
             <div class="container profil-company">
