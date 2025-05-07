@@ -16,7 +16,7 @@
 
     <!--CSS-->
     <link rel="stylesheet" href="<?= base_url('assets/css/style_produk.css?v=' . time()); ?>">
-</head> 
+</head>
 
 <body>
     <!-- HEADER -->
@@ -34,7 +34,7 @@
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="profil">
-                    <a class="ikon-keranjang" href="<?= base_url('index.php/Katalog_produk/keranjang');?>">
+                    <a class="ikon-keranjang" href="<?= base_url('index.php/Katalog_produk/keranjang'); ?>">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </a>
                     <a class="ikon-profil" href="<?= base_url('index.php/Home/profil'); ?>">
@@ -45,10 +45,9 @@
                 <div id="btn-login-register" class="login-register">
                     <button type="button" class="btn-login" onclick="toggleLoginModal()">Login</button> <!--onclick, ini adalah event handler. Saat pengguna mengklik elemen ini, maka akan memanggil fungsi JavaScript bernama closeLoginModal() yang berfungsi untuk membuka modal login yang berdisplay none(disembunyikan) ke block-->
                     <button type="button" class="btn-signup" onclick="window.location.href='<?= base_url('index.php/Signup_login_control/signup'); ?>'">Sign Up</button>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
 
-        </div>
+                </div>
     </header>
 
     <!--MAIN CONTENT-->
@@ -95,7 +94,7 @@
                 <div class="promo-container">
                     <div class="promo-card">
                         <div class="promo-img">
-                            <img src="/api/placeholder/300/180" alt="Promo 1">
+                            <img src="<?= base_url('assets/img/produk/ASUS B1402 CBA.jpg');?>" alt="Promo 1">
                         </div>
                         <div class="promo-content">
                             <span class="promo-badge">Diskon 10%</span>
@@ -105,22 +104,32 @@
                     </div>
                     <div class="promo-card">
                         <div class="promo-img">
-                            <img src="/api/placeholder/300/180" alt="Promo 2">
+                            <img src="<?= base_url('assets/img/kerja6.jpeg');?>" alt="Promo 2">
                         </div>
                         <div class="promo-content">
                             <span class="promo-badge">Cashback</span>
-                            <h3>Cashback Printer Epson</h3>
-                            <p>Beli printer Epson sekarang dan dapatkan cashback hingga Rp 500.000. Syarat dan ketentuan berlaku.</p>
+                            <h3>Promo Layanan Weekend!</h3>
+                            <p>Dapatkan promo layanan antar barang elektronik ke rumah anda.</p>
                         </div>
                     </div>
                     <div class="promo-card">
                         <div class="promo-img">
-                            <img src="/api/placeholder/300/180" alt="Promo 3">
+                            <img src="<?= base_url('assets/img/kerja5.jpeg');?>" alt="Promo 3">
                         </div>
                         <div class="promo-content">
                             <span class="promo-badge">Gratis Pemasangan</span>
-                            <h3>Promo AC Daikin</h3>
-                            <p>Beli AC Daikin dan dapatkan gratis biaya pemasangan dan service pertama. Promo terbatas!</p>
+                            <h3>Weekend Makin Asyik!</h3>
+                            <p>Beli barang elektronik dan dapatkan gratis biaya pemasangan dan service pertama. Promo terbatas!</p>
+                        </div>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-img">
+                            <img src="<?= base_url('assets/img/upload_foto_profil/default.png');?>" alt="Promo 3">
+                        </div>
+                        <div class="promo-content">
+                            <span class="promo-badge">Coming Soon</span>
+                            <h3>Coming Soon</h3>
+                            <p>-</p>
                         </div>
                     </div>
                 </div>
@@ -144,28 +153,28 @@
                     <?php foreach ($produk as $p) : ?>
                         <?php $diskon = ($p['harga'] * $p['persentase_diskon']) / 100 ?>
                         <?php $harga_diskon = $p['harga'] - $diskon; ?>
-                        <a class="product-detail" href="<?= base_url('index.php/Katalog_produk/detail_produk?id_produk=' . $p['id_produk'])?>">
-                        <div class="product-card">
-                            <div class="product-img">
-                                <img src="<?= base_url('assets/img/produk/' . $p['gambar']); ?>" alt="<?= $p['nama_produk']; ?>">
-                                <?php if ($p['persentase_diskon'] != 0) : ?>
-                                    <span class="discount-badge">-<?= $p['persentase_diskon']; ?>%</span>
-                                <?php endif; ?>
-                            </div>
-                            <div class="product-info">
-                                <h3><?= $p['nama_produk']; ?></h3>
-                                <div class="product-price">
-                                    <span class="current-price">Rp <?= number_format($p['persentase_diskon'] != 0 ? $harga_diskon : $p['harga'], 0, ',', '.'); ?></span> <!-- $angka->harga	Angka yang mau diformat, 0->0 desimal Tidak pakai angka di belakang koma(contoh: .00), ','->Koma Dipakai sebagai pemisah desimal, '.'->Titik Dipakai sebagai pemisah ribuan. Format Indonesia pakai format lokal (titik = ribuan, koma = desimal)-->
+                        <a class="product-detail" href="<?= base_url('index.php/Katalog_produk/detail_produk?id_produk=' . $p['id_produk']) ?>">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="<?= base_url('assets/img/produk/' . $p['gambar']); ?>" alt="<?= $p['nama_produk']; ?>">
                                     <?php if ($p['persentase_diskon'] != 0) : ?>
-                                        <span class="old-price">Rp <?= number_format($p['harga'], 0, ',', '.'); ?></span>
+                                        <span class="discount-badge">-<?= $p['persentase_diskon']; ?>%</span>
                                     <?php endif; ?>
                                 </div>
-                                <div class="product-actions">
-                                    <p class="cart-status" data-stock="<?= $p['stok'];?>">Tersedia</p>
-                                    <button class="view-details" type="button">Detail</button>
+                                <div class="product-info">
+                                    <h3><?= $p['nama_produk']; ?></h3>
+                                    <div class="product-price">
+                                        <span class="current-price">Rp <?= number_format($p['persentase_diskon'] != 0 ? $harga_diskon : $p['harga'], 0, ',', '.'); ?></span> <!-- $angka->harga	Angka yang mau diformat, 0->0 desimal Tidak pakai angka di belakang koma(contoh: .00), ','->Koma Dipakai sebagai pemisah desimal, '.'->Titik Dipakai sebagai pemisah ribuan. Format Indonesia pakai format lokal (titik = ribuan, koma = desimal)-->
+                                        <?php if ($p['persentase_diskon'] != 0) : ?>
+                                            <span class="old-price">Rp <?= number_format($p['harga'], 0, ',', '.'); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="product-actions">
+                                        <p class="cart-status" data-stock="<?= $p['stok']; ?>">Tersedia</p>
+                                        <button class="view-details" type="button">Detail</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </a>
                     <?php endforeach; ?>
                 </div>
@@ -219,24 +228,24 @@
         </div>
     </footer>
     <div id="login-modal" class="modal">
-        <div class="login-content">
-            <span class="close" onclick="toggleLoginModal()">&times;</span> <!--membuat elemen <span> dengan class 'close', <span> adalah elemen inline (biasanya untuk teks pendek). &timens ini adalah HTML entity(seperti &copy, dsb.) untuk simbol silang (×). Jadi di layar akan muncul tanda silang, sering digunakan sebagai tombol “close”.-->
-            <h2>Login</h2>
-            <form action="<?= base_url('index.php/Signup_login_control/login'); ?>" method="POST">
-                <label for="username">Username:</label><br>
-                <input id="username" type="text" name="username_akun" required><br>
-                <label for="password">Password:</label><br>
-                <input id="password" type="password" name="password_akun" required><br><br>
-                <button type="submit" name="submit">Login</button>
-            </form>
+            <div class="login-content">
+                <span class="close" onclick="toggleLoginModal()">&times;</span> <!--membuat elemen <span> dengan class 'close', <span> adalah elemen inline (biasanya untuk teks pendek). &timens ini adalah HTML entity(seperti &copy, dsb.) untuk simbol silang (×). Jadi di layar akan muncul tanda silang, sering digunakan sebagai tombol “close”.-->
+                <h2>Login</h2>
+                <form action="<?= base_url('index.php/Signup_login_control/login'); ?>" method="POST">
+                    <label for="username">Username:</label>
+                    <input id="username" type="text" name="username_akun" required>
+                    <label for="password">Password:</label>
+                    <input id="password" type="password" name="password_akun" required>
+                    <button type="submit" name="submit">Login</button>
+                </form>
+            </div>
         </div>
-    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const base_url = "<?= base_url(); ?>";
     </script>
     <script src="<?= base_url('assets/js/kategori_produk.js?v=' . time()) ?>"></script> <!--base_url udah didefinisikan sebelum file JS kategori_produk.js dimuat, agar tinggal pakai di file JS seperti ini: url: base_url + "Katalog_produk/filter_produk"-->
-    <script src="<?= base_url('assets/js/card_status.js?v=' . time())?>"></script>
+    <script src="<?= base_url('assets/js/card_status.js?v=' . time()) ?>"></script>
     <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>"></script>
     <script src="<?= base_url('assets/js/slide.js?v=' . time()); ?>"></script>
 </body>

@@ -32,8 +32,7 @@
         <div class="wrapper">
             <div class="container-form">
                 <div class="form-box">
-
-                    <h1>Daftar</h1>
+                    <h2 style="text-align:center;">Daftar Akun</h2>
                     <?php if ($error = $this->session->flashdata('username_used')) : ?>
                         <div class="error-massage">
                             <h3><?= $error; ?></h3>
@@ -45,24 +44,23 @@
                             <h3><?= $error; ?></h3>
                         </div>
                     <?php endif; ?>
-                    <form id="form-data" action="<?= base_url("index.php/Signup_login_control/signup"); ?>" method="POST">
+                    <div class="container-form">
+                        <form id="form-data" action="<?= base_url("index.php/Signup_login_control/signup"); ?>" method="POST">
+                            <label for="username_akun">Username</label>
+                            <input id="username_akun" type="text" name="username_akun" required>
 
-                        <label for="username">Username:</label> <br> <!--for pada label berfungsi untuk menghubungkan atau mengikat antara label dan input, for='username' berarti label milik input dengan id='nama'.-->
-                        <input id="username" type="text" name="username_akun" required> <!--wajib menggunakan properti id pada input, jika ingin menghubungkan input dengan label dengan properti for sama dengan id input. Jadi jika nama label pada UI web diklik, maka cursor user otomatis masuk input box-->
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
 
-                        <label for="email">Email:</label> <br>
-                        <input id="email" type="email" name="email" required> <!--name lebih baik diisini sesuai field pada database agar mempermudah dalam CRUD-->
+                            <label for="telepon">Nomor Telepon:</label>
+                            <input id="telepon" type="tel" name="no_hp" pattern="\d{9,12}" maxlength="12" required title="Masukkan nomor telepon dengan benar" required>
 
-                        <label for="telepon">Nomor Telepon:</label> <br>
-                        <input id="telepon" type="tel" name="no_hp" pattern="\d{9,12}" maxlength="12" required title="Masukkan nomor telepon dengan benar" required>
+                            <label for="password_akun">Kata Sandi</label>
+                            <input type="password_akun" id="password_akun" name="password_akun" required>
 
-                        <label for="password">Password:</label> <br>
-                        <input id="password" type="password" name="password_akun" required> <!--type = "password" agar ketika user menginput input-box password karakternya tampil bulet2 item, jadi tidak bisa dilihat  dan dibaca orang lain pada layar/UI-->
-
-                        <button type="submit" name="submit">Kirim Data</button>
-                        <br>
-
-                    </form>
+                            <button type="submit" name="submit">Daftar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
     </main>

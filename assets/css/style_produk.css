@@ -139,46 +139,44 @@ i {
     /* Menentukan ukuran ikon */
 }
 
-/* SLIDER STYLES */
+/* Slider Style */
 .slider-container {
-    position: relative;
-    /* penting! position: relative ini bikin .slider-controls bisa tampil di atas slider, bukan “ngilang”. */
-    margin-top: 15px;
+    position: relative;  /* penting! position: relative ini bikin .slider-controls bisa tampil di atas slider, bukan “ngilang”. */
+    margin: 30px auto;
     overflow: hidden;
     width: 100%;
-    height: 500px;
-    /*.slide lebarnya 100% dan container .slider lebarnya 300% (karena 3 slide).*/
-    /* border: 1px solid #ddd; */
+    max-width: 1200px;
+    height: 400px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    /*.slide width 100% dan container*/
 }
 
 .slider {
     display: flex;
-    /* transition: transform 0.5s ease; */
     width: 300%;
-    height: 500px
-        /* 100% x jumlah slide */
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
 }
 
 .slide {
     min-width: 100%;
-    height: 100%;/* <- Ini penting agar slide mengikuti tinggi dari slider-container */
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 2rem;
+    height: 100%; /* <- Ini penting agar slide mengikuti tinggi dari slider-container */
+    background-size: cover;
+    background-position: center;
     position: relative;
 }
 
 .slide-content {
     position: absolute;
-    bottom: 30px;
-    left: 30px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 5px;
+    bottom: 40px;
+    left: 40px;
+    max-width: 60%;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 12px;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .slide-1 {
@@ -271,35 +269,67 @@ i {
 }
 
 .section-title h2 {
-    font-size: 22px;
-    color: #333;
+    font-size: 26px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.section-title h2::after {
+    content: "";
+    width: 60px;
+    height: 3px;
+    background-color: #007bff;
+    display: block;
+    margin: 10px auto 0;
+    border-radius: 2px;
 }
 
 .promo-container {
     display: flex;
-    gap: 15px;
+    gap: 16px;
     overflow-x: auto;
-    padding: 10px 0 20px;
+    padding: 20px;
+    scroll-snap-type: x mandatory;
 }
 
 .promo-card {
-    min-width: 250px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 20px 20px 0 0;
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: 280px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
 }
 
-.promo-img {
-    height: 150px;
-    overflow: hidden;
-    border-radius: 20px 20px 0 0;
+.promo-card:hover {
+    transform: translateY(-4px);
 }
 
 .promo-img img {
     width: 100%;
-    height: 100%;
+    height: 160px;
     object-fit: cover;
+    display: block;
 }
+
+.promo-container::-webkit-scrollbar {
+    height: 8px;
+}
+.promo-container::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+
+/* .promo-img {
+    height: 150px;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+} */
 
 .promo-content {
     padding: 15px;

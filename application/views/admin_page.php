@@ -36,34 +36,52 @@ if ($sesi !== "admin") {
             <p>Silahkan pilih salah satu menu berikut untuk mengelola data.</p>
         </section>
 
-        <section class="grid-menu">
-            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=akun'); ?>'">
-                <h3>Data Akun Pengguna</h3>
-                <p>Kelola informasi akun pengguna.</p>
+        <section class="grid-section">
+            <h2 class="section-title">Manajemen Data</h2>
+            <div class="grid-menu">
+                <!-- Data Akun, Data Pengguna, Data Produk -->
+                <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=akun'); ?>'">
+                    <h3>Data Akun Pengguna</h3>
+                    <p>Kelola informasi akun pengguna.</p>
+                </div>
+                <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=user'); ?>'">
+                    <h3>Data Pengguna</h3>
+                    <p>Kelola data pengguna terdaftar.</p>
+                </div>
+                <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=produk'); ?>'">
+                    <h3>Data Produk</h3>
+                    <p>Lihat dan ubah data produk.</p>
+                </div>
+                <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=keranjang'); ?>'">
+                    <h3>Data Keranjang</h3>
+                    <p>Lihat isi keranjang pengguna.</p>
+                </div>
             </div>
-            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=produk'); ?>'">
-                <h3>Data Produk</h3>
-                <p>Lihat dan ubah data produk.</p>
+        </section>
+
+        <section class="grid-section">
+            <h2 class="section-title">Transaksi</h2>
+            <div class="grid-menu">
+                <!-- Data Transaksi, Detail Transaksi -->
+                <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=transaksi'); ?>'">
+                    <h3>Transaksi</h3>
+                    <p>Riwayat transaksi pengguna.</p>
+                </div>
+                <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=detail_transaksi'); ?>'">
+                    <h3>Detail Transaksi</h3>
+                    <p>Detail dari setiap transaksi</p>
+                </div>
             </div>
-            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=user'); ?>'">
-                <h3>Data Pengguna</h3>
-                <p>Kelola data pengguna terdaftar.</p>
-            </div>
-            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=keranjang'); ?>'">
-                <h3>Data Keranjang</h3>
-                <p>Lihat isi keranjang pengguna.</p>
-            </div>
-            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=transaksi'); ?>'">
-                <h3>Data Transaksi</h3>
-                <p>Riwayat transaksi pengguna.</p>
-            </div>
-            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=detail_transaksi'); ?>'">
-                <h3>Detail Transaksi</h3>
-                <p>Detail dari setiap transaksi</p>
-            </div>
-            <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=jadwal_pengiriman'); ?>'">
-                <h3>Jadwal Pengiriman Pesanan</h3>
-                <p>Kelola jadwal pengiriman pesanan</p>
+        </section>
+
+        <section class="grid-section">
+            <h2 class="section-title">Logistik</h2>
+            <div class="grid-menu">
+                <!-- Jadwal Pengiriman -->
+                <div class="card" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=jadwal_pengiriman'); ?>'">
+                    <h3>Jadwal Pengiriman Pesanan</h3>
+                    <p>Kelola jadwal pengiriman pesanan</p>
+                </div>
             </div>
         </section>
     </main>

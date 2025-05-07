@@ -18,10 +18,17 @@ class Home extends CI_Controller
     public function index()
     { // nama method dari class Hello adalah index
         $page = "index.php/Home/index";
-        if($this->session->userdata('id_user')) {
+        if ($this->session->userdata('id_user')) {
             $this->session->set_userdata('location', $page);
         }
-        $this->load->view('homepage');
+        $data['produk_unggulan'] = []; // inisialisasi array
+        for ($i = 1; $i < 4; $i++) {
+            $produk = $this->Database_model->getProductById($i);
+            if (!empty($produk)) {
+                $data['produk_unggulan'][] = $produk;
+            }
+        }
+        $this->load->view('homepage', $data);
     }
 
     public function admin()
@@ -47,16 +54,16 @@ class Home extends CI_Controller
     {
         $id_user = $this->session->userdata('id_user');
         $data['user'] = $this->Database_model->getUserById($id_user); // CodeIgniter otomatis mengekstrak semua key dari array asosiatif $data menjadi variabel terpisah di view, misal $nama, $jenis_kelamin, dll. jika dibungkus dengan key 'user' atau nested array, nanti di view diakses dengan $user['nama']. 
-        if($data['user']) {
+        if ($data['user']) {
             // untuk meload view profil_page.php
             $this->load->view('profil_page', $data);
         } else {
             $this->load->view('homepage');
         }
-        
     }
 
-    public function updateProfil(){
+    public function updateProfil()
+    {
         $id_user = $this->session->userdata('id_user');
         $data = [
             'nama_lengkap' => $this->input->post('nama_lengkap', TRUE), // TRUE untuk XSS filtering(seperti di php native htmlspecialchars), menghindari sql injecction
@@ -74,14 +81,14 @@ class Home extends CI_Controller
         $this->upload->initialize($config); // reset config baru lagi, initialize() digunakan untuk mengatur ulang konfigurasi upload baru sebelum upload file berikutnya.
 
         // Hanya proses foto jika user upload
-        if(!empty($_FILES['foto']['name'])) { // Cek apakah user mengupload file dari input dengan type="file" bernama 'foto'
+        if (!empty($_FILES['foto']['name'])) { // Cek apakah user mengupload file dari input dengan type="file" bernama 'foto'
             // mengecek Proses upload file dengan nama input foto ke $config['upload_path']. jika berhasil akan true
-            if($this->upload->do_upload('foto')) {
-                $upload_data= $this->upload->data(); // Ambil informasi file hasil upload, termasuk namanya.
+            if ($this->upload->do_upload('foto')) {
+                $upload_data = $this->upload->data(); // Ambil informasi file hasil upload, termasuk namanya.
                 $data['foto'] = $upload_data['file_name']; // simpan nama file ke variabel $data dengan key 'foto' untuk disimpan di db 
             } else {
                 // beri feedback jika error dalam upload foto
-                echo json_encode ([
+                echo json_encode([
                     'status' => 'error',
                     'pesan' => 'Upload Foto Gagal'
                 ]);
@@ -93,7 +100,7 @@ class Home extends CI_Controller
         Database akan menyimpan string kosong, bukan NULL, dan tidak akan menggunakan nilai DEFAULT. */
 
         $result = $this->Database_model->updateUserById($id_user, $data);
-        if($result) {
+        if ($result) {
             echo json_encode([
                 'status' => 'success',
                 'pesan' => 'Profil Berhasil Diperbarui'
@@ -109,7 +116,7 @@ class Home extends CI_Controller
     public function produk()
     {
         $page = "index.php/Home/produk";
-        if($this->session->userdata('id_user')) {
+        if ($this->session->userdata('id_user')) {
             $this->session->set_userdata('location', $page);
         }
         $data['produk'] = $this->Database_model->getAllProduk();

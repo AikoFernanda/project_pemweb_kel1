@@ -51,44 +51,32 @@ header {
     background-color: #c0392b;
 }
 
-.welcome {
+welcome {
     margin: 40px 0 20px;
     text-align: center;
+    font-size: 24px;
+    font-weight: 500;
 }
 
-
-
-/* MAIN STYLE */
+/* MAIN */
 main.container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    margin: 40px auto;
-    /*jika isi elemen main terlalu lebar dan tidak muat dalam layar, maka akan muncul scroll horizontal.*/
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin: 50px auto;
+        /*jika isi elemen main terlalu lebar dan tidak muat dalam layar, maka akan muncul scroll horizontal.*/
     /* 
     overflow-x mengatur bagaimana konten yang meluap secara horizontal (sumbu X) akan ditangani oleh elemen tersebut. overflow-y untuk mengatu secara vertika (sumbu Y).
     auto: Akan menampilkan scroll bar jika diperlukan saja (jika konten benar-benar meluap). */
 }
 
-.tabel-wrapper {
-    max-height: 400px; /* batasi tinggi area tabel */
-    overflow-y: auto;  /* scroll vertikal kalau barisnya banyak */
-    overflow-x: auto;  /* jaga-jaga kalau tabelnya melebar */
-    border: 1px solid #ccc;
-    border-radius: 6px;
-
-    /*
-    overflow-x mengatur bagaimana konten yang meluap secara horizontal (sumbu X) akan ditangani oleh elemen tersebut. overflow-y untuk mengatu secara vertika (sumbu Y).
-    auto: Akan menampilkan scroll bar jika diperlukan saja (jika konten benar-benar meluap).
-    */
-}
-
 main h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 26px;
+    margin-bottom: 24px;
     font-weight: 600;
-    color: #333;
+    text-align: center;
+    color: #2c3e50;
 }
 
 main .btn-back {
@@ -98,96 +86,107 @@ main .btn-back {
     padding: 10px 16px;
     border-radius: 6px;
     text-decoration: none;
-    margin-bottom: 20px;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+    margin-bottom: 24px;
+    transition: 0.3s ease;
 }
 
 main .btn-back:hover {
-    background-color: #454545;
+    background-color: #545454;
+}
+
+.tabel-wrapper {
+    max-height: 450px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
 }
 
 main table {
     width: 100%;
     border-collapse: collapse;
-    /*garis antar sel akan menyatu jadi satu garis bersih, lebih rapi, dan elegan dibanding separate(default table), yang mana border table lebih tebal dari border tiap sel dalam table.*/
-    background-color: #fdfdfd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    /* 
-    Properti ini digunakan pada elemen tabel untuk mengontrol bagaimana garis (border) dari sel dan tabel digabungkan.
-    Nilai:
-    separate: (default) Setiap sel punya border masing-masing, dengan jarak antar border.
-    collapse: Semua border antar sel digabung menjadi satu garis. */
+    background-color: #fff;
 }
 
-main th,
-main td {
-    padding: 12px 16px;
-    border: 1px solid #ddd;
+main th, main td {
+    padding: 14px 18px;
+    border: 1px solid #eee;
     text-align: center;
-    /* Tengahin isi sel */
-    vertical-align: middle;
-    /* Tengahin secara vertikal */
+    font-size: 14px;
 }
 
 main thead {
-    background-color: #f8f8f8;
+    background-color: #f5f7f9;
     font-weight: 600;
+    color: #333;
 }
 
 main tbody tr:hover {
-    background-color: #f1f1f1;
-    /* mengubah background warna <tr> ketika cursor berada di <tr> tersebut */
-    /* pseudo-class CSS bernama :hover. Properti ini digunakan untuk menambahkan efek saat elemen disentuh oleh kursor. */
+    background-color: #f0f0f0;
 }
 
 main .add-data {
     display: flex;
-    justify-content: right;
-    margin-top: 20px;
+    justify-content: flex-end;
+    margin-top: 24px;
 }
 
+main .btn-add,
 main .btn-edit,
-main .btn-hapus,
-main .btn-add {
-    padding: 6px 12px;
+main .btn-hapus {
+    padding: 8px 14px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: 0.25s ease;
+    font-size: 14px;
 }
 
 main .btn-add {
-    background-color: #27ae60;
-    color: white;
-    height: 50px;
+    background-color: #2ecc71;
+    color: #fff;
     width: 200px;
-    border-radius: 15px;
+    height: 48px;
+    border-radius: 12px;
 }
 
 main .btn-add:hover {
-    background-color: #1e8449;
+    background-color: #27ae60;
+}
+
+main .btn-edit {
+    background-color: #3498db;
+    color: #fff;
+    margin-right: 6px;
+}
+
+main .btn-edit:hover {
+    background-color: #2980b9;
 }
 
 main .btn-hapus {
     background-color: #e74c3c;
-    color: white;
+    color: #fff;
 }
 
 main .btn-hapus:hover {
     background-color: #c0392b;
 }
 
-main .btn-edit {
-    background-color: #3498db;
-    color: white;
-    margin-right: 5px;
-}
 
-main .btn-edit:hover {
-    background-color: #2980b9;
-}
+    /*
+    overflow-x mengatur bagaimana konten yang meluap secara horizontal (sumbu X) akan ditangani oleh elemen tersebut. overflow-y untuk mengatu secara vertika (sumbu Y).
+    auto: Akan menampilkan scroll bar jika diperlukan saja (jika konten benar-benar meluap).
+    */
+
+    /*garis antar sel akan menyatu jadi satu garis bersih, lebih rapi, dan elegan dibanding separate(default table), yang mana border table lebih tebal dari border tiap sel dalam table.*/
+
+     /* 
+    Properti ini digunakan pada elemen tabel untuk mengontrol bagaimana garis (border) dari sel dan tabel digabungkan.
+    Nilai:
+    separate: (default) Setiap sel punya border masing-masing, dengan jarak antar border.
+    collapse: Semua border antar sel digabung menjadi satu garis. */
 
 /* FOOTER STYLE*/
 footer {

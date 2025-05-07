@@ -26,12 +26,6 @@ header {
     
 }
 
-/* .container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-} */
-
 .logo-header {
     display: flex;
     align-items: center;
@@ -65,34 +59,6 @@ header {
     text-decoration: underline;
     color: #007bff;
 }
-
-
-/* body {
-
-    font-family: sans-serif;
-    background: rgb(240, 240, 240);
-    padding: 20px;
-    
-} */
-
-
-/* .logo {
-    font-weight: bold;
-    font-size: 1.5rem;
-} */
-
-/* .nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #333;
-} */
-
-/* .search-container input {
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    width: 250px;
-} */
 
 .auth-buttons a {
     margin-left: 15px;
@@ -132,6 +98,44 @@ button {
     width: 100%;
     padding: 8px;
     margin: 10px 0;
+}
+
+form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #555;
+}
+
+form input {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    transition: border 0.3s;
+    background-color: #f9f9f9;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #fff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0056b3;
 }
 
 table {

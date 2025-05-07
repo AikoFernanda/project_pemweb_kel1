@@ -50,12 +50,12 @@ class Signup_login_control extends CI_Controller
                 $akun = $this->Database_model->getAkunByUsername($username_akun);
                 $user = $this->Database_model->getUserById($akun['id_akun']);
 
-                $this->session->set_userdata('id_akun', $id_akun);
+                $this->session->set_userdata('id_akun', $akun['id_akun']);
                 $this->session->set_userdata('id_user', $user['id_user']);
                 $this->session->set_userdata('username_akun', $username_akun);
-                $this->session->set_userdata('role', 'user');
+                $this->session->set_userdata('role', $akun['role']);
                 $this->session->set_userdata('logged_in', true);
-                $this->session->set_flashdata('login_success', 'Login berhasil! Selamat datang ' . $akun['username_akun'] . '!');
+                $this->session->set_flashdata('login_success', 'Login Berhasil! Selamat Datang ' . $akun['username_akun'] . '!');
                 redirect('Home/index'); // setara dengan header("Location: " . base_url('index.php/Home/index'));return;
                 return; // opsional, tapi best practice tambah return;
             } else if ($insertAkunSukses === 'duplicate') {
@@ -90,7 +90,7 @@ class Signup_login_control extends CI_Controller
             if ($_POST["username_akun"] === "admin" && $_POST["password_akun"] === "adminadmin") {
                 $this->session->set_userdata('username_akun', $username_akun); //$this->session: objek session di CodeIgniter (biasanya CI3).
                 $this->session->set_userdata('role', 'admin'); // set_userdata(): method untuk menyimpan data ke session sementara (selama browser aktif / sampai logout).
-                $this->session->set_userdata('logged_id', true); // Menyimpan data session dengan key 'logged_in' dan value true. Selama session masih aktif (belum logout atau expired), user akan dianggap sudah login.
+                $this->session->set_userdata('logged_in', true); // Menyimpan data session dengan key 'logged_in' dan value true. Selama session masih aktif (belum logout atau expired), user akan dianggap sudah login.
                 header("Location: " . base_url('index.php/Home/admin')); // Titik (.) di PHP adalah operator penggabung string (concatenation). Jika admin akan request ke controller untuk load halaman admin_page.php.
                 return; // Cara ambil set_userdata di view: if ($this->session->userdata('logged_in')). Bertahan selama session aktif, untuk tandai user sudah login.
 
