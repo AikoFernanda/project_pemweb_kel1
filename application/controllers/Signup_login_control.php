@@ -56,8 +56,13 @@ class Signup_login_control extends CI_Controller
                 $this->session->set_userdata('role', $akun['role']);
                 $this->session->set_userdata('logged_in', true);
                 $this->session->set_flashdata('login_success', 'Login Berhasil! Selamat Datang ' . $akun['username_akun'] . '!');
-                redirect('Home/index'); // setara dengan header("Location: " . base_url('index.php/Home/index'));return;
-                return; // opsional, tapi best practice tambah return;
+                if ($this->session->userdata('role') == 'user') {
+                    redirect('Home/index'); // setara dengan header("Location: " . base_url('index.php/Home/index'));return;
+                    return; // opsional, tapi best practice tambah return;
+                } else {
+                    redirect('Home/admin'); // setara dengan header("Location: " . base_url('index.php/Home/index'));return;
+                    return; // opsional, tapi best practice tambah return;
+                }
             } else if ($insertAkunSukses === 'duplicate') {
                 $this->session->set_flashdata('signup_error', 'Username atau Email sudah digunakan.');
                 redirect('Signup_login_control/signup');

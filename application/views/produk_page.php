@@ -30,7 +30,7 @@
                 <a href="<?= base_url('index.php/Home/index'); ?>">Home</a>
                 <a href="#katalog-produk">Produk</a>
                 <a href="#">Layanan</a>
-                <a href="#">Tentang Kami</a>
+                <a href="#footer">Tentang Kami</a>
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="profil">
@@ -94,7 +94,7 @@
                 <div class="promo-container">
                     <div class="promo-card">
                         <div class="promo-img">
-                            <img src="<?= base_url('assets/img/produk/ASUS B1402 CBA.jpg');?>" alt="Promo 1">
+                            <img src="<?= base_url('assets/img/produk/ASUS B1402 CBA.jpg'); ?>" alt="Promo 1">
                         </div>
                         <div class="promo-content">
                             <span class="promo-badge">Diskon 10%</span>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="promo-card">
                         <div class="promo-img">
-                            <img src="<?= base_url('assets/img/kerja6.jpeg');?>" alt="Promo 2">
+                            <img src="<?= base_url('assets/img/kerja6.jpeg'); ?>" alt="Promo 2">
                         </div>
                         <div class="promo-content">
                             <span class="promo-badge">Cashback</span>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="promo-card">
                         <div class="promo-img">
-                            <img src="<?= base_url('assets/img/kerja5.jpeg');?>" alt="Promo 3">
+                            <img src="<?= base_url('assets/img/kerja5.jpeg'); ?>" alt="Promo 3">
                         </div>
                         <div class="promo-content">
                             <span class="promo-badge">Gratis Pemasangan</span>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="promo-card">
                         <div class="promo-img">
-                            <img src="<?= base_url('assets/img/upload_foto_profil/default.png');?>" alt="Promo 3">
+                            <img src="<?= base_url('assets/img/upload_foto_profil/default.png'); ?>" alt="Promo 3">
                         </div>
                         <div class="promo-content">
                             <span class="promo-badge">Coming Soon</span>
@@ -178,68 +178,72 @@
                         </a>
                     <?php endforeach; ?>
                 </div>
+
+                <!--ModalLogin-->
             </section>
+            <div id="login-modal" class="modal">
+                <div class="login-content">
+                    <span class="close" onclick="toggleLoginModal()">&times;</span> <!--membuat elemen <span> dengan class 'close', <span> adalah elemen inline (biasanya untuk teks pendek). &timens ini adalah HTML entity(seperti &copy, dsb.) untuk simbol silang (×). Jadi di layar akan muncul tanda silang, sering digunakan sebagai tombol “close”.-->
+                    <h2>Login</h2>
+                    <form action="<?= base_url('index.php/Signup_login_control/login'); ?>" method="POST">
+                        <label for="username">Username:</label>
+                        <input id="username" type="text" name="username_akun" required>
+                        <label for="password">Password:</label>
+                        <input id="password" type="password" name="password_akun" required>
+                        <button type="submit" name="submit">Login</button>
+                    </form>
+                </div>
+            </div>
     </main>
 
     <!-- FOOTER -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Tentang Kami</h3>
-                    <p>CV. Mulia Langgeng Mufakat</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+        <section id="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>Tentang Kami</h3>
+                        <p>CV. Mulia Langgeng Mufakat</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Kategori Produk</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Laptop & Notebook</a></li>
+                            <li><a href="#">Printer</a></li>
+                            <li><a href="#">AC</a></li>
+                            <li><a href="#">Aksesoris</a></li>
+                            <li><a href="#">Lainnya</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Informasi</h3>
+                        <ul class="footer-links">
+                            <li><a href="<?= base_url('index.php/Home/tentangKami'); ?>">Tentang Kami</a></li>
+                            <li><a href="#">Cara Pembelian</a></li>
+                            <li><a href="#">Kebijakan Privasi</a></li>
+                            <li><a href="#">Syarat & Ketentuan</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Kontak Kami</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Jl. Poskeskel, Desa Mulyojati Kec. Metro Barat Kota Metro</p>
+                        <p><i class="fas fa-phone"></i> +62 823-7459-1985</p>
+                        <p><i class="fas fa-envelope"></i> mulamufakat@gmail.com</p>
                     </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Kategori Produk</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Laptop & Notebook</a></li>
-                        <li><a href="#">Printer</a></li>
-                        <li><a href="#">AC</a></li>
-                        <li><a href="#">Aksesoris</a></li>
-                        <li><a href="#">Lainnya</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Informasi</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Tentang Kami</a></li>
-                        <li><a href="#">Cara Pembelian</a></li>
-                        <li><a href="#">Kebijakan Privasi</a></li>
-                        <li><a href="#">Syarat & Ketentuan</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Kontak Kami</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Jl. Poskeskel, Desa Mulyojati Kec. Metro Barat Kota Metro</p>
-                    <p><i class="fas fa-phone"></i> +62 823-7459-1985</p>
-                    <p><i class="fas fa-envelope"></i> mulamufakat@gmail.com</p>
+                <div class="copyright">
+                    &copy; 2025 CV. Mulia Langgeng Mufakat — All rights reserved.
                 </div>
             </div>
-            <div class="copyright">
-                &copy; 2025 CV. Mulia Langgeng Mufakat — All rights reserved.
-            </div>
-        </div>
+        </section>
     </footer>
-    <div id="login-modal" class="modal">
-            <div class="login-content">
-                <span class="close" onclick="toggleLoginModal()">&times;</span> <!--membuat elemen <span> dengan class 'close', <span> adalah elemen inline (biasanya untuk teks pendek). &timens ini adalah HTML entity(seperti &copy, dsb.) untuk simbol silang (×). Jadi di layar akan muncul tanda silang, sering digunakan sebagai tombol “close”.-->
-                <h2>Login</h2>
-                <form action="<?= base_url('index.php/Signup_login_control/login'); ?>" method="POST">
-                    <label for="username">Username:</label>
-                    <input id="username" type="text" name="username_akun" required>
-                    <label for="password">Password:</label>
-                    <input id="password" type="password" name="password_akun" required>
-                    <button type="submit" name="submit">Login</button>
-                </form>
-            </div>
-        </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const base_url = "<?= base_url(); ?>";

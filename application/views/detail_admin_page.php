@@ -243,6 +243,7 @@ if ($sesi !== "admin") {
                                             <button type="submit" class="btn-edit" name="edit">Edit</button>
                                         </form>
                                         <button type="button" class="btn-hapus" name="hapus" data-id="<?= $t['id_transaksi']; ?>">Hapus</button>
+                                        <button type="button" class="btn-details" name="detail" data-id="<?= $t['id_transaksi']; ?>">Details</button>
                                     </td>
                                 </tr>
                                 <?php $i += 1 ?>

@@ -136,18 +136,26 @@ class Database_model extends CI_Model
         $totalHarga = 0;
         // loop untuk memasukkan tiap element produk yang sesuai dalam array $produkForShow
         foreach ($tabelKeranjang as $k) {
+            $hargaSatuanKeranjang = $k['subtotal'] / $k['jumlah'];
             // Ambil data produk berdasarkan id_produk
             $tabelProduk = $this->getProductById($k['id_produk']);
+            $hargaSatuanProduk = $tabelProduk['harga'] - $tabelProduk['harga'] * $tabelProduk['persentase_diskon'] / 100;
             // Tambahkan data produk ke dalam array assosiatif $produkForShow. Untuk mengembalikan array of array kita perlu menggunakan [] untuk menambahkan data produk ke dalam array.
-            $produkForShow[] = [
-                "id_produk" => $tabelProduk['id_produk'],
-                "gambar" => $tabelProduk['gambar'],
-                "nama_produk" => $tabelProduk['nama_produk'],
-                "kategori" => $tabelProduk['kategori'],
-                "jumlah" => $k['jumlah'],
-                "subtotal" => $k['subtotal']
-            ];
-            $totalHarga += $k['subtotal'];
+            if ($hargaSatuanKeranjang == $hargaSatuanProduk) {
+                $produkForShow[] = [
+                    "id_produk" => $tabelProduk['id_produk'],
+                    "gambar" => $tabelProduk['gambar'],
+                    "nama_produk" => $tabelProduk['nama_produk'],
+                    "kategori" => $tabelProduk['kategori'],
+                    "jumlah" => $k['jumlah'],
+                    "subtotal" => $k['subtotal']
+                ];
+                $totalHarga += $k['subtotal'];
+            } else {
+                // Jika harga produk tidak valid, hapus item dari keranjang
+                $this->deleteCartById($k['id_keranjang']);
+            }
+
         }
         // Kembalikan array produk yang akan ditampilkan di keranjang
         return [
@@ -367,6 +375,15 @@ class Database_model extends CI_Model
         }
     }
 
+    public function getTransactionDetailByIdTransaction($id_transaksi) {
+        $result = $this->db->where('id_transaksi', $id_transaksi)->get('detail_transaksi')->result_array();
+        if($result) {
+            return $result;
+        } else {
+            return [];
+        }
+    }
+
     // INSERT A DATA //
     public function insertDataPengiriman($data)
     {
@@ -432,6 +449,15 @@ class Database_model extends CI_Model
         }
     }
 
+    public function getTransactionByIdUser($id_user) {
+        $result = $this->db->where('id_user', $id_user)->get('transaksi');
+        if($result->num_rows() > 0) {
+            return $result->result_array();
+        } else {
+            return [];
+        }
+    }
+
     public function getTransactionDetailById($id_detail_transaksi)
     {
         $this->db->where('id_detail_transaksi', $id_detail_transaksi);
@@ -449,6 +475,15 @@ class Database_model extends CI_Model
         $this->db->where('id_jadwal', $id_jadwal);
         $result = $this->db->get('jadwal_pengiriman');
         if ($result->num_rows() > 0) {
+            return $result->row_array();
+        } else {
+            return [];
+        }
+    }
+
+    public function getDeliveryByIdTransaction($id_transaksi) {
+        $result = $this->db->where('id_transaksi', $id_transaksi)->get('jadwal_pengiriman');
+        if($result->num_rows() > 0) {
             return $result->row_array();
         } else {
             return [];
@@ -599,7 +634,8 @@ class Database_model extends CI_Model
                 return "success";
             } else {
                 return "error";
-            }$user = $this->db->where('id_akun', $data['id_akun'])->get('user')->row_array();
+            }
+            $user = $this->db->where('id_akun', $data['id_akun'])->get('user')->row_array();
         } else {
             return "notFound";
         }

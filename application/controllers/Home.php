@@ -54,11 +54,45 @@ class Home extends CI_Controller
     {
         $id_user = $this->session->userdata('id_user');
         $data['user'] = $this->Database_model->getUserById($id_user); // CodeIgniter otomatis mengekstrak semua key dari array asosiatif $data menjadi variabel terpisah di view, misal $nama, $jenis_kelamin, dll. jika dibungkus dengan key 'user' atau nested array, nanti di view diakses dengan $user['nama']. 
-        if ($data['user']) {
+        if ($data['user'] !== []) {
             // untuk meload view profil_page.php
             $this->load->view('profil_page', $data);
         } else {
             $this->load->view('homepage');
+        }
+    }
+
+    public function loadTab()
+    {
+        $tab = $this->input->post('tab');
+        $id_user = $this->session->userdata('id_user');
+
+        switch ($tab) {
+            case 'edit':
+                $data['user'] = $this->Database_model->getUserById($id_user);
+                $this->load->view('partials/profile_page/edit_profil', $data);
+                break;
+            case 'pesanan':
+                $transaksi['pesanan'] = $this->Database_model->getTransactionByIdUser($id_user);
+                $data['pesanan'] = [];
+                foreach ($transaksi['pesanan'] as $t) {
+                    $pengiriman = $this->Database_model->getDeliveryByIdTransaction($t['id_transaksi']);
+                    $data['pesanan'][] = [
+                        'id_transaksi' => $t['id_transaksi'],
+                        'kode_pemesanan' => $t['kode_pemesanan'],
+                        'total_transaksi' => $t['total_transaksi'],
+                        'tanggal_transaksi' => $t['tanggal_transaksi'],
+                        'status_pengiriman' => $pengiriman['status_pengiriman']
+                    ];
+                }
+                $this->load->view('partials/profile_page/pesanan_profil', $data);
+                break;
+            case 'pengaturan':
+                $this->load->view('partials/profile_page/pengaturan_profil');
+                break;
+            default:
+                echo "Tab tidak ditemukan.";
+                break;
         }
     }
 
@@ -113,6 +147,25 @@ class Home extends CI_Controller
         }
     }
 
+    public function detailPesanan()
+    {
+        $id_detail_transaksi = $this->input->get('id', TRUE);
+        $detail_transaksi['detail'] = $this->Database_model->getTransactionDetailByIdTransaction($id_detail_transaksi);
+        $data["detail_transaksi"] = []; // menggunakan array ([]) untuk menampung semuanya/lebih dari satu row atau array multidimensi
+        foreach ($detail_transaksi['detail'] as $d) {
+            $produk = $this->Database_model->getProductById($d['id_produk']);
+
+            // menggunakan array ([]) untuk array multidimensi
+            $data['detail_transaksi'][] = [
+                'nama_produk' => $produk['nama_produk'],
+                'jumlah' => $d['jumlah'],
+                'harga' => $d['subtotal'] / $d['jumlah'],
+                'subtotal' => $d['subtotal']
+            ];
+        }
+        $this->load->view('detail_pesanan', $data);
+    }
+
     public function produk()
     {
         $page = "index.php/Home/produk";
@@ -121,5 +174,10 @@ class Home extends CI_Controller
         }
         $data['produk'] = $this->Database_model->getAllProduk();
         $this->load->view('produk_page', $data); // laod view produk dengan passing data dari $data ke view
+    }
+
+    public function tentangKami()
+    {
+        $this->load->view('tentang_kami_page');
     }
 }

@@ -129,8 +129,9 @@ if ($sesi !== "admin") {
                 <input id="no_hp_pemesan" type="tel" name="no_hp_pemesan" value="<?= $jadwal_pengiriman['no_hp_pemesan']; ?>" pattern="\d{9,12}" maxlength="12" title="Masukkan nomor telepon dengan benar" required>
                 <label for="status_pengiriman">Status Pengiriman</label>
                 <select id="status_pengiriman" name="status_pengiriman">
-                    <option value="Belum Dikirim" <?= ($jadwal_pengiriman['status_pengiriman'] === "Belum Dikirim") ? 'selected' : ''; ?>>Belum Dikirim</option>
-                    <option value="Sudah Dikirim" <?= ($jadwal_pengiriman['status_pengiriman'] === "Sudah Dikirim") ? 'selected' : ''; ?>>Sudah Dikirim</option>
+                    <option value="Diproses" <?= ($jadwal_pengiriman['status_pengiriman'] === "Diproses") ? 'selected' : ''; ?>>Diproses</option>
+                    <option value="Dikirim" <?= ($jadwal_pengiriman['status_pengiriman'] === "Dikirim") ? 'selected' : ''; ?>>Dikirim</option>
+                    <option value="Diterima" <?= ($jadwal_pengiriman['status_pengiriman'] === "Diterima") ? 'selected' : ''; ?>>Diterima</option>
                 </select>
                 <label for="tanggal_pengiriman">Tanggal Pengiriman</label>
                 <input id="tanggal_pengiriman" type="datetime-local" name="tanggal_pengiriman" value="<?= $jadwal_pengiriman['tanggal_pengiriman'];?>" >

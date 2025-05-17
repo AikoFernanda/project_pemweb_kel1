@@ -12,7 +12,7 @@ if ($sesi !== "user") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Page</title>
+    <title>Profil - CV. MULIA LANGGENG MUFAKAT</title>
 
     <!--Link css-->
     <link rel="stylesheet" href="<?= base_url('assets/css/style_profil_page.css?v=' . time()) ?>">
@@ -34,7 +34,7 @@ if ($sesi !== "user") {
                 <h1>CV. MULIA LANGGENG MUFAKAT</h1>
             </div>
             <nav>
-                <a href="<?= base_url('index.php/Home/index')?>">Home</a>
+                <a href="<?= base_url('index.php/Home/index') ?>">Home</a>
                 <a href="<?= base_url('index.php/Home/produk'); ?>">Produk</a>
                 <a href="#">Layanan</a>
                 <a href="#footer">Tentang Kami</a>
@@ -46,51 +46,20 @@ if ($sesi !== "user") {
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="profile-box">
-                <img src="<?= base_url('assets/img/upload_foto_profil/' . $user['foto'])?>" alt="Foto Profil">
-                <div class="username"><?= $user['nama_lengkap'];?></div>
-                <!-- <div class="email"><?= $user['email'];?></div> -->
+                <img src="<?= base_url('assets/img/upload_foto_profil/' . $user['foto']) ?>" alt="Foto Profil">
+                <div class="username"><?= $user['nama_lengkap']; ?></div>
+                <!-- <div class="email"><?= $user['email']; ?></div> -->
             </div>
             <ul class="menu-links">
-                <li><a href="#">Edit Profil</a></li>
-                <li><a href="#">Pesanan</a></li>
-                <li><a href="#">Pengaturan</a></li>
+                <li><a href="#" class="tab-link active" data-tab="edit"><i class="fas fa-user"></i><span>Edit Profil</span></a></li>
+                <li><a href="#" class="tab-link" data-tab="pesanan"><i class="fas fa-box"></i><span>Pesanan</span></a></li>
+                <li><a href="#" class="tab-link" data-tab="pengaturan"><i class="fas fa-cog"></i><span>Pengaturan</span></a></li>
             </ul>
         </aside>
 
         <!-- Form Area -->
-        <section class="profile-content">
-            <h2>Profil Saya</h2>
-            <p>Kelola informasi profil Anda untuk mengontrol dan mengamankan akun</p>
-            <form id="formProfil" class="profile-form" action="<?= base_url('index.php/Home/updateProfil')?>" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="nama_lengkap">Nama Lengkap</label>
-                    <input id="nama_lengkap" type="text" name="nama_lengkap" value="<?= $user['nama_lengkap']?>">
-                </div>
-                <div class="form-group">
-                    <label for="no_hp">No. Telepon</label>
-                    <input id="no_hp" type="tel" name="no_hp" value="<?= $user['no_hp'];?>">
-                </div>
-                <div class="form-group">
-                    <label for="tanggal_lahir">Tanggal Lahir</label>
-                    <input id="tanggal_lahir" type="date" name="tanggal_lahir" value="<?= $user['tanggal_lahir'];?>">
-                </div>
-                <div class="form-group">
-                    <label for="alamat">Alamat</label>
-                    <input id="alamat" type="text" name="alamat" value="<?= $user['alamat'];?>">
-                </div>
-                <div class="form-group">
-                    <label>Jenis Kelamin</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="jenis_kelamin" value="L" <?= $user['jenis_kelamin'] === 'L' ? 'checked' : ''?>> Laki-laki</label> <!--Gunakan checked untuk radio button (bukan selected, itu buat <option>), dan jangan lupa echo-->
-                        <label><input type="radio" name="jenis_kelamin" value="P" <?= $user['jenis_kelamin'] === 'P' ? 'checked' : ''?>> Perempuan</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Upload Foto: (jpeg/jpg/png)</label>
-                    <input type="file" name="foto">
-                </div>
-                <button type="submit" class="btn-submit">Simpan Perubahan</button>
-            </form>
+        <section id="dynamic-content" class="profile-content">
+            <?php $this->load->view('partials/profile_page/edit_profil', ['user' => $user]); ?>
         </section>
     </main>
     <footer>
@@ -144,7 +113,11 @@ if ($sesi !== "user") {
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--link js-->
-    <script src="<?= base_url('assets/js/update_profil.js?v=' . time())?>"></script>
+    <script src="<?= base_url('assets/js/update_profil.js?v=' . time()) ?>"></script>
+    <script>
+        const $loadTab = "<?= base_url('index.php/Home/loadTab'); ?>";
+    </script>
+    <script src="<?= base_url('assets/js/dynamic_profile.js?v=' . time()) ?>"></script>
 </body>
 
 </html>

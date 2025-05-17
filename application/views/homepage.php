@@ -27,7 +27,7 @@
                 <a href="#">Home</a>
                 <a href="<?= base_url('index.php/Home/produk'); ?>">Produk</a>
                 <a href="#">Layanan</a>
-                <a href="#footer">Tentang Kami</a>
+                <a href="#profil">Tentang Kami</a>
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="login-register">
@@ -194,13 +194,13 @@
             </div>
         </section>
         <!-- PROFIL COMPANY -->
-        <section class="profil">
+        <section id="profil" class="profil">
             <h2>Sekilas Tentang Kami</h2>
             <p>
                 CV. Mulia Langgeng Mufakat adalah perusahaan yang bergerak di bidang pengadaan barang dan jasa, khususnya alat elektronik dan teknologi.
                 Dengan komitmen terhadap kualitas dan kepercayaan, kami hadir sebagai mitra andal untuk memenuhi kebutuhan instansi dan industri di seluruh Indonesia.
             </p>
-            <a href="#footer-about" class="more-link">Baca Selengkapnya</a>
+            <a href="<?= base_url('index.php/Home/tentangKami');?>" class="more-link">Baca Selengkapnya</a>
         </section>
         </section>
     </main>
@@ -232,7 +232,7 @@
                     <div class="footer-column">
                         <h3>Informasi</h3>
                         <ul class="footer-links">
-                            <li><a href="#">Tentang Kami</a></li>
+                            <li><a href="<?= base_url('index.php/Home/index')?>">Tentang Kami</a></li>
                             <li><a href="#">Cara Pembelian</a></li>
                             <li><a href="#">Kebijakan Privasi</a></li>
                             <li><a href="#">Syarat & Ketentuan</a></li>
@@ -252,7 +252,7 @@
             </div>
     </footer>
 
-    <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>" defer></script> <!--.time() berfungsi agar file JS-nya otomatis ke-refresh saat develop (seperti css),  untuk cache-busting CSS & JS biasanya digunakan umum dalam praktik di kalangan developer agar perubahan langsung kelihatan.
+    <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>"></script> <!--.time() berfungsi agar file JS-nya otomatis ke-refresh saat develop (seperti css),  untuk cache-busting CSS & JS biasanya digunakan umum dalam praktik di kalangan developer agar perubahan langsung kelihatan.
                                                                                          Dengan defer, browser akan load script setelah halaman selesai dimuat. -->
 </body>
 

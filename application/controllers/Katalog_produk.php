@@ -144,6 +144,18 @@ class Katalog_produk extends CI_Controller
     {
         $id_user = $this->session->userdata('id_user');
         $keranjang = $this->Database_model->getProdukForShowInKeranjang($id_user);
+        foreach($keranjang['produk'] as $k) {
+            $data_produk = $this->Database_model->getProductByid($k['id_produk']);
+            $nama_produk = $data_produk['nama_produk'];
+            // cek apakah setiap barang yang dibeli tidak melebihi stok, jika true return dan transaksi dibatalkan
+            if($k['jumlah'] > $data_produk['stok']) {
+                echo json_encode([
+                    'status_transaksi' => 'error',
+                    'pesan' => "Jumlah $nama_produk Melebihi Stok Produk."
+                ]);
+                return;
+            }
+        }
         $nama_pemesan = $this->input->post('nama_pemesan');
         $alamat_tujuan = $this->input->post('alamat_tujuan');
         $no_hp_pemesan = $this->input->post('no_hp_pemesan');
