@@ -186,8 +186,10 @@ class Signup_login_control extends CI_Controller
 
     public function deleteAccount() {
         $id_user = $this->session->userdata('id_user');
+        $id_akun = $this->session->userdata('id_akun');
         $result = $this->Database_model->deleteUserById($id_user);
-        if($result) {
+        $result2 = $this->Database_model->deleteAkunById($id_akun);
+        if($result && $result2) {
             echo json_encode([
                 'status' => 'success',
                 'pesan' => 'Akun Berhasil Dihapus'

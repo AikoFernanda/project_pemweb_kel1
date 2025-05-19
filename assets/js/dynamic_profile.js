@@ -100,7 +100,7 @@ $(document).ready(function () {
                                 title: 'Berhasil!',
                                 text: response.pesan,
                                 timer: 2000,
-                                showButtonText: false
+                                showConfirmButton: false
                             }).then(() => {
                                 window.location.href = $logout; // redirect setelah akun dihapus
                             });
