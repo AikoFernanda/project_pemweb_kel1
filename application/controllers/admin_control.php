@@ -4,6 +4,7 @@
  * @property Database_model $Database_model
  * @property CI_Session $session
  * @property CI_Input $input
+ * @property CI_Upload $upload // Memuat library upload CodeIgniter
  */
 
 class Admin_control extends CI_Controller
@@ -150,11 +151,11 @@ class Admin_control extends CI_Controller
                 );
                 $this->load->view('edit_admin_page.php', $jadwal_pengiriman);
                 break;
-                // T adalah huruf literal untuk memisahkan tanggal dan jam pada input datetime-local di HTML. 
-                // Karena dalam PHP date() fungsi T biasanya berarti timezone, kamu perlu escape dengan backslash (\) agar dianggap sebagai huruf biasa. misal 2025-05-05T14:30 (format yang dibutuhkan oleh <input type="datetime-local">)
-                // $raw = "2025-05-05 14:30:00"; // dari database
-                // $timestamp = strtotime($raw); // jadi angka: 1746455400 (contoh)
-                // $formatted = date('Y-m-d\TH:i', $timestamp); // hasil: 2025-05-05T14:30
+            // T adalah huruf literal untuk memisahkan tanggal dan jam pada input datetime-local di HTML. 
+            // Karena dalam PHP date() fungsi T biasanya berarti timezone, kamu perlu escape dengan backslash (\) agar dianggap sebagai huruf biasa. misal 2025-05-05T14:30 (format yang dibutuhkan oleh <input type="datetime-local">)
+            // $raw = "2025-05-05 14:30:00"; // dari database
+            // $timestamp = strtotime($raw); // jadi angka: 1746455400 (contoh)
+            // $formatted = date('Y-m-d\TH:i', $timestamp); // hasil: 2025-05-05T14:30
             default:
                 echo 'error';
         }
@@ -254,10 +255,43 @@ class Admin_control extends CI_Controller
                     'kategori' => $this->input->post('kategori'),
                     'stok' => $this->input->post('stok'),
                     'harga' => $this->input->post('harga'),
-                    'presentase_diskon' => $this->input->post('presentase_diskon'),
-                    'gambar' => $this->input->post('gambar'),
+                    'persentase_diskon' => $this->input->post('presentase_diskon'),
                     'deskripsi' => $this->input->post('deskripsi')
                 ];
+                $config['upload_path'] = './assets/img/produk/';
+                $config['allowed_types'] = 'jpeg|png|jpg';
+                $config['max_size'] = 2048; //2mb
+                $config['file_name'] = url_title($this->input->post('nama_produk'), '-', true) . '_' . time(); // url_title untuk sanitasi nama file 
+
+                // Pastikan library upload sudah dimuat
+                if (!isset($this->upload)) {
+                    $this->load->library('upload', $config);
+                } else {
+                    $this->upload->initialize($config); // reset config baru lagi, initialize() digunakan untuk mengatur ulang konfigurasi upload baru sebelum upload file berikutnya.
+                }
+
+                // Hanya proses foto jika user upload
+                if (!empty($_FILES['foto']['name'])) {
+                    // mengecek Proses upload file dengan nama input foto ke $config['upload_path']. jika berhasil akan true
+                    if ($this->upload->do_upload('foto')) {
+                        // Ambil informasi file hasil upload, termasuk namanya.
+                        $upload_data = $this->upload->data();
+                        // simpan nama file ke variabel $data dengan key 'foto' untuk disimpan di db 
+                        $data['gambar'] = $upload_data['file_name'];
+                    } else {
+                        echo json_encode([
+                            'status' => 'error',
+                            'pesan' => 'Upload foto gagal'
+                        ]);
+                        return;
+                    }
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'pesan' => 'Foto produk wajib diupload'
+                    ]);
+                    return;
+                }
                 $result = $this->Database_model->insertProduct($data);
                 if ($result === 'success') {
                     echo json_encode([

@@ -43,23 +43,7 @@
                     <option value="1">Aktif</option>
                     <option value="0">Nonaktif</option>
                 </select>
-
-            <?php elseif ($this->session->userdata('admin_page_location') === 'produk') : ?>
-                <label for=" nama_produk">Nama Produk</label>
-                <input id="nama_produk" type="text" name="nama_produk" required>
-                <label for="kategori">Kategori</label>
-                <input id="kategori" type="text" name="kategori" required>
-                <label for="stok">Stok</label>
-                <input id="stok" type="number" name="stok" required>
-                <label for="harga">Harga</label>
-                <input id="harga" type="number" name="harga" required>
-                <label for="presentase_diskon">Presentase Diskon</label>
-                <input id="presentase_diskon" type="number" name="presentase_diskon" required>
-                <label for="gambar">Gambar</label>
-                <input id="gambar" type="text" name="gambar" required>
-                <label for="deskripsi">Deskripsi</label>
-                <input id="deskripsi" type="text" name="deskripsi" required>
-
+                <button type="submit" class="btn-submit">Simpan</button>
             <?php elseif ($this->session->userdata('admin_page_location') === 'user') : ?>
                 <label for="id_akun">Id Akun</label>
                 <input id="id_akun" type="number" name="id_akun" required>
@@ -78,7 +62,7 @@
                 <input id="no_hp" name="no_hp" type="tel" pattern="\d{9,12}" maxlength="12" title="Masukkan nomor telepon dengan benar" required>
                 <label for="tanggal_lahir">Tanggal Lahir</label>
                 <input id="tanggal_lahir" name="tanggal_lahir" type="date" required>
-
+                <button type="submit" class="btn-submit">Simpan</button>
             <?php elseif ($this->session->userdata('admin_page_location') === 'keranjang') : ?>
                 <label for="id_user">Id User</label>
                 <input id="id_user" name="id_user" type="text" required>
@@ -88,7 +72,7 @@
                 <input id="jumlah" name="jumlah" type="number" required>
                 <label for="subtotal">Subtotal</label>
                 <input id="subtotal" name="subtotal" type="number" required>
-
+                <button type="submit" class="btn-submit">Simpan</button>
             <?php elseif ($this->session->userdata('admin_page_location') === 'transaksi') : ?>
                 <label for="kode_pemesanan">Kode Pemesanan</label>
                 <input id="kode_pemesanan" name="kode_pemesanan" type="text" required>
@@ -102,7 +86,7 @@
                     <option value="Pending">Pending</option>
                     <option value="Gagal">Gagal</option>
                 </select>
-
+                <button type="submit" class="btn-submit">Simpan</button>
             <?php elseif ($this->session->userdata('admin_page_location') === 'detail_transaksi') : ?>
                 <label for="id_transaksi">Id Transaksi</label>
                 <input id="id_transaksi" name="id_transaksi" type="number" required>
@@ -112,7 +96,7 @@
                 <input id="jumlah" name="jumlah" type="number" required>
                 <label for="subtotal">Subtotal</label>
                 <input id="subtotal" name="subtotal" type="number" required>
-
+                <button type="submit" class="btn-submit">Simpan</button>
             <?php elseif ($this->session->userdata('admin_page_location') === 'jadwal_pengiriman') : ?>
                 <label for="id_transaksi">Id Transaksi</label>
                 <input id="id_transaksi" type="number" name="id_transaksi" required>
@@ -129,10 +113,30 @@
                 </select>
                 <label for="tanggal_pengiriman">Tanggal Pengiriman</label>
                 <input id="tanggal_pengiriman" type="datetime-local" name="tanggal_pengiriman">
+                <button type="submit" class="btn-submit">Simpan</button>
             <?php endif; ?>
-            <button type="submit" class="btn-submit">Simpan</button>
         </form>
+        <?php if ($this->session->userdata('admin_page_location') === 'produk') : ?>
+            <form id="form-add-product" class="profile-form" action="<?= base_url('index.php/Admin_control/dataAdd'); ?>" method="POST" enctype="multipart/form-data">
+                <label for="nama_produk">Nama Produk</label>
+                <input id="nama_produk" type="text" name="nama_produk" required>
+                <label for="kategori">Kategori</label>
+                <input id="kategori" type="text" name="kategori" required>
+                <label for="stok">Stok</label>
+                <input id="stok" type="number" name="stok" required>
+                <label for="harga">Harga</label>
+                <input id="harga" type="number" name="harga" required>
+                <label for="presentase_diskon">Presentase Diskon</label>
+                <input id="presentase_diskon" type="number" name="presentase_diskon" required>
+                <label for="deskripsi">Deskripsi</label>
+                <input id="deskripsi" type="text" name="deskripsi" required>
+                <label>Upload Foto: <small>max.2MB (jpeg/jpg/png)</small></label>
+                <input type="file" name="foto" id="foto" accept=".jpg,.jpeg,.png" required>
+                <button type="submit" class="btn-submit">Simpan</button>
+            </form>
+        <?php endif; ?>
     </main>
+
     <footer>
         <div class="container">
             <div class="footer-content">

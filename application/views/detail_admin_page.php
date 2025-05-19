@@ -19,7 +19,6 @@ if ($sesi !== "admin") {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     <!-- ikon user, Font Awesome (paling umum & gampang). Tambahin link CDN di <head> HTML:-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
 
 <body>
@@ -357,10 +356,10 @@ if ($sesi !== "admin") {
             <div class="add-data">
                 <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Produk</button>
             </div>
-        <?php elseif ($this->session->userdata('admin_page_location') === 'user') : ?>
+        <!-- <'?php elseif ($this->session->userdata('admin_page_location') === 'user') : ?>
             <div class="add-data">
                 <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah User</button>
-            </div>
+            </div> -->
             <!-- <'?php elseif ($this->session->userdata('admin_page_location') === 'keranjang') : ?>
             <div class="add-data">
                 <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Keranjang</button>
