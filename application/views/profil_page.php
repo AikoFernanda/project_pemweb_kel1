@@ -24,8 +24,6 @@ if ($sesi !== "user") {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"> <!--import font poppins dari google font, dengan ketebalan 400(normal) dan 600(semi-bold)-->
 </head>
 
-</head>
-
 <body>
     <header>
         <div class="container header-wrapper">
@@ -115,7 +113,10 @@ if ($sesi !== "user") {
     <!--link js-->
     <script src="<?= base_url('assets/js/update_profil.js?v=' . time()) ?>"></script>
     <script>
-        const $loadTab = "<?= base_url('index.php/Home/loadTab'); ?>";
+        const $changePassword = "<?= base_url('index.php/Signup_login_control/changePassword') ?>";
+        const $deleteAccount = "<?= base_url('index.php/Signup_login_control/deleteAccount') ?>";
+        const $logout = "<?= base_url('index.php/Signup_login_control/logout') ?>";
+        const $loadTab = "<?= base_url('index.php/Home/loadTab') ?>";
     </script>
     <script src="<?= base_url('assets/js/dynamic_profile.js?v=' . time()) ?>"></script>
 </body>

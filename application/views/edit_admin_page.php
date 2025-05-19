@@ -37,19 +37,22 @@ if ($sesi !== "admin") {
         <form id="form-update" method="POST" action="<?= base_url('index.php/admin_control/dataUpdate'); ?>">
             <?php if ($this->session->userdata('admin_page_location') === 'akun') : ?>
                 <input type="hidden" name="id_akun" value="<?= $akun['id_akun']; ?>">
-                <label for="email">Email</label>
+                <!-- <label for="email">Email</label>
                 <input id="email" name="email" type="email" value="<?= $akun['email']; ?>" required>
                 <label for="username">Username Akun</label>
                 <input id="username" name="username_akun" type="text" value="<?= $akun['username_akun']; ?>" required>
                 <label for="password">Password Akun</label>
-                <input id="password" name="password_akun" type="password" value="<?= $akun['password_akun']; ?>" required>
+                <input id="password" name="password_akun" type="password" value="<?= $akun['password_akun']; ?>" required> -->
                 <label for="role">Role</label>
                 <select name="role" id="role">
                     <option value="user" <?= ($akun['role'] == 'user') ? 'selected' : '' ?>>User</option>
                     <option value="admin" <?= ($akun['role'] == 'admin') ? 'selected' : '' ?>>Admin</option>
                 </select>
                 <label for="status_akun">Status Akun</label>
-                <input id="status_akun" name="status_akun" type="text" value="<?= $akun['status_akun']; ?>" required>
+                <select id="status_akun" name="status_akun" required>
+                    <option value="1" <?= ($akun['status_akun'] == 1) ? 'selected' : '' ?>>1</option>
+                    <option value="0" <?= ($akun['status_akun'] == 0) ? 'selected' : '' ?>>0</option>
+                </select>
             <?php elseif ($this->session->userdata('admin_page_location') === 'produk') : ?>
                 <input type="hidden" name="id_produk" value="<?= $produk['id_produk']; ?>">
                 <label for="nama_produk">Nama Produk</label>
@@ -66,7 +69,7 @@ if ($sesi !== "admin") {
                 <input id="gambar" name="gambar" type="text" value="<?= $produk['gambar']; ?>" required>
                 <label for="deskripsi">Deskripsi</label>
                 <input id="deskripsi" name="deskripsi" type="text" value="<?= $produk['deskripsi']; ?>" required>
-            <?php elseif ($this->session->userdata('admin_page_location') === 'user') : ?> 
+            <?php elseif ($this->session->userdata('admin_page_location') === 'user') : ?>
                 <input type="hidden" name="id_user" value="<?= $user['id_user']; ?>">
                 <label for="nama_lengkap">Nama Lengkap</label>
                 <input type="text" name="nama_lengkap" value="<?= $user['nama_lengkap']; ?>" required>
@@ -95,12 +98,12 @@ if ($sesi !== "admin") {
                 <input id="subtotal" name="subtotal" type="number" value="<?= $keranjang['subtotal']; ?>" required>
             <?php elseif ($this->session->userdata('admin_page_location') === 'transaksi') : ?>
                 <input type="hidden" name="id_transaksi" value="<?= $transaksi['id_transaksi']; ?>">
-                <label for="kode_pemesanan">Kode Pemesanan</label>
+                <!-- <label for="kode_pemesanan">Kode Pemesanan</label>
                 <input id="kode_pemesanan" name="kode_pemesanan" type="text" value="<?= $transaksi['kode_pemesanan']; ?>" required>
                 <label for="id_user">id_user</label>
                 <input id="id_user" name="id_user" type="number" value="<?= $transaksi['id_user']; ?>" required>
                 <label for="total_transaksi">Total Transaksi</label>
-                <input id="total_transaksi" name="total_transaksi" type="number" value="<?= $transaksi['total_transaksi']; ?>" required>
+                <input id="total_transaksi" name="total_transaksi" type="number" value="<?= $transaksi['total_transaksi']; ?>" required> -->
                 <label for="status_transaksi">Status Transaksi</label>
                 <select id="status_transaksi" name="status_transaksi">
                     <option value="Lunas" <?= ($transaksi['status_transaksi'] === "Lunas") ? 'selected' : '' ?>>Lunas</option>
@@ -108,7 +111,7 @@ if ($sesi !== "admin") {
                     <option value="Gagal" <?= ($transaksi['status_transaksi'] === "Gagal") ? 'selected' : '' ?>>Gagal</option>
                 </select>
             <?php elseif ($this->session->userdata('admin_page_location') === 'detail_transaksi') : ?>
-                <input type="hidden" name="id_detail_transaksi" value="<?= $detail_transaksi['id_detail_transaksi']; ?>">
+                <!-- <input type="hidden" name="id_detail_transaksi" value="<?= $detail_transaksi['id_detail_transaksi']; ?>">
                 <label for="id_transaksi">Id Transaksi</label>
                 <input id="id_transaksi" name="id_transaksi" type="number" value="<?= $detail_transaksi['id_transaksi']; ?>" required>
                 <label for="id_produk">Id Produk</label>
@@ -116,11 +119,11 @@ if ($sesi !== "admin") {
                 <label for="jumlah">Jumlah</label>
                 <input id="jumlah" name="jumlah" type="number" value="<?= $detail_transaksi['jumlah']; ?>" required>
                 <label for="subtotal">Subtotal</label>
-                <input id="subtotal" name="subtotal" type="number" value="<?= $detail_transaksi['subtotal']; ?>" required>
+                <input id="subtotal" name="subtotal" type="number" value="<?= $detail_transaksi['subtotal']; ?>" required> -->
             <?php elseif ($this->session->userdata('admin_page_location') === 'jadwal_pengiriman') : ?>
                 <input type="hidden" name="id_jadwal" value="<?= $jadwal_pengiriman['id_jadwal'] ?>">
-                <label for="id_transaksi">Id Transaksi</label>
-                <input id="id_transaksi" type="number" name="id_transaksi" value="<?= $jadwal_pengiriman['id_transaksi']; ?>" required>
+                <!-- <label for="id_transaksi">Id Transaksi</label>
+                <input id="id_transaksi" type="number" name="id_transaksi" value="<?= $jadwal_pengiriman['id_transaksi']; ?>" required> -->
                 <label for="nama_pemesan">Nama Pemesan</label>
                 <input id="nama_pemesan" type="text" name="nama_pemesan" value="<?= $jadwal_pengiriman['nama_pemesan']; ?>" required>
                 <label for="alamat_tujuan">Alamat Tujuan</label>
@@ -134,7 +137,7 @@ if ($sesi !== "admin") {
                     <option value="Diterima" <?= ($jadwal_pengiriman['status_pengiriman'] === "Diterima") ? 'selected' : ''; ?>>Diterima</option>
                 </select>
                 <label for="tanggal_pengiriman">Tanggal Pengiriman</label>
-                <input id="tanggal_pengiriman" type="datetime-local" name="tanggal_pengiriman" value="<?= $jadwal_pengiriman['tanggal_pengiriman'];?>" >
+                <input id="tanggal_pengiriman" type="datetime-local" name="tanggal_pengiriman" value="<?= $jadwal_pengiriman['tanggal_pengiriman']; ?>">
             <?php endif; ?>
             <button type="submit" class="btn-submit">Ubah</button>
         </form>

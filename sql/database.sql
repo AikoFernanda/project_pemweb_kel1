@@ -5,7 +5,7 @@ create table akun
     username_akun  varchar(100) not null unique,
     password_akun varchar(255) not null,
     role varchar(30) default 'user',
-    status_akun boolean default 1,
+    status_akun ENUM('1','0') default 1,
     tanggal_daftar timestamp default current_timestamp
 );
 
@@ -13,6 +13,7 @@ CREATE TABLE `user` (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     id_akun INT NOT NULL,
     nama_lengkap VARCHAR(100),
+    jenis_kelamin ENUM('L', 'P') NOT NULL,
     alamat TEXT,
     foto VARCHAR(50) DEFAULT 'default.jpg' 
     no_hp VARCHAR(20),

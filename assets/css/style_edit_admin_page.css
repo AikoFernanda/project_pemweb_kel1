@@ -100,7 +100,7 @@ main h1 {
 
 main .btn-back {
     display: inline-block;
-    background-color: #3498db;
+    background-color: #7c7c7c;
     color: white;
     padding: 10px 16px;
     border-radius: 6px;
@@ -111,7 +111,7 @@ main .btn-back {
 }
 
 main .btn-back:hover {
-    background-color: #2980b9;
+    background-color: #545454;
 }
 
 form label {

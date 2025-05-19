@@ -67,10 +67,10 @@ header {
     text-decoration: underline;
 }
 
-.loginRegister {
+.login-register {
     display: flex;
     /* default flex, ketika sudah login atau daftar maka set display: none*/
-    gap: 10px;
+    gap: 15px;
 }
 
 /* Tombol Login */

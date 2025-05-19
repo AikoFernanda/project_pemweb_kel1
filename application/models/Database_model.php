@@ -490,13 +490,17 @@ class Database_model extends CI_Model
         }
     }
 
-    // UPDATE DATA PARTIAL //
-    public function updateAkunById($id_akun, $data)
+    public function updateAccountPasswordById($id_akun, $data) {
+        return $this->db->where('id_akun', $id_akun)->update('akun', $data);
+    }
+
+    // UPDATE DATA PARTIAL FOR ADMIN//
+    public function updateAccountById($id_akun, $data)
     {
         return $this->db->where('id_akun', $id_akun)->update('akun', [
-            'email' => $data['email'],
-            'username_akun' => $data['username_akun'],
-            'password_akun' => $data['password_akun'],
+            // 'email' => $data['email'],
+            // 'username_akun' => $data['username_akun'],
+            // 'password_akun' => $data['password_akun'],
             'role' => $data['role'],
             'status_akun' => $data['status_akun']
         ]);
@@ -546,9 +550,9 @@ class Database_model extends CI_Model
     public function updateTransactionById($id_transaksi, $data)
     {
         return $this->db->where('id_transaksi', $id_transaksi)->update('transaksi', [
-            'kode_pemesanan' => $data['kode_pemesanan'],
-            'id_user' => $data['id_user'],
-            'total_transaksi' => $data['total_transaksi'],
+            // 'kode_pemesanan' => $data['kode_pemesanan'],
+            // 'id_user' => $data['id_user'],
+            // 'total_transaksi' => $data['total_transaksi'],
             'status_transaksi' => $data['status_transaksi']
         ]);
     }
@@ -566,7 +570,7 @@ class Database_model extends CI_Model
     public function updateDeliverykById($id_jadwal, $data)
     {
         return $this->db->where('id_jadwal', $id_jadwal)->update('jadwal_pengiriman', [
-            'id_transaksi' => $data['id_transaksi'],
+            // 'id_transaksi' => $data['id_transaksi'],
             'nama_pemesan' => $data['nama_pemesan'],
             'alamat_tujuan' => $data['alamat_tujuan'],
             'no_hp_pemesan' => $data['no_hp_pemesan'],

@@ -3,6 +3,7 @@
 /**
  * @property Database_model $Database_model
  * @property CI_Session $session
+ * @property CI_Input $input
  */
 // Masih butuh PHPDoc @property kalau mau warning hilang dari VS Code. Autoloading tidak otomatis dikenali oleh Intelephense. Bukan error runtime, tapi warning dari Intelephense di VS Code. Artinya si extension belum tahu bahwa $this->$Database_model dan $this->session itu property yang valid di CodeIgniter. Tambahkan PHPDoc annotation supaya Intelephense bisa ngerti bahwa $this->session itu berasal dari library bawaan CodeIgniter.
 // jika tidak pakai PHPDoc maka akan error:
@@ -111,8 +112,8 @@ class Signup_login_control extends CI_Controller
 
                 // login user terdaftar di database
             } else if ($akun = $this->Database_model->getAkunByUsername($username_akun)) {
-                if (password_verify($password_akun, $akun['password_akun'])) {
-                    // Gunakan password_verify() saat login	Untuk membandingkan password user dengan hash di database. Jika password cocok, maka jalankan di bawah ini
+                // Gunakan password_verify() saat login	Untuk membandingkan password user dengan hash di database. Jika password cocok, maka jalankan di bawah ini
+                if (password_verify($password_akun, $akun['password_akun']) && $akun['status_akun'] == '1') {
                     $user = $this->Database_model->getUserById($akun['id_akun']);
                     // set_userdata adalah fungsi untuk menyimpan data ke dalam session di CodeIgniter.
                     $this->session->set_userdata('id_akun', $akun['id_akun']);
@@ -120,10 +121,19 @@ class Signup_login_control extends CI_Controller
                     $this->session->set_userdata('username_akun', $username_akun);
                     $this->session->set_userdata('role', $akun['role']);
                     $this->session->set_userdata('logged_in', true);
-                    $this->session->set_flashdata('login_success', 'Login Berhasil! Selamat Datang ' . $akun['username_akun'] . '!');
-                    redirect('Home/index'); // setara dengan header("Location: " . base_url('index.php/Home/index'));return;
+                    $this->session->set_flashdata('login_success', 'Login berhasil, Selamat datang ' . $akun['username_akun'] . '!');
+                    if ($akun['role'] === 'admin' ) {
+                        redirect('Home/admin'); // untuk user dengan role admin arahkan ke halaman admin
+                        return;
+                    } else {
+                        redirect('Home/index'); // setara dengan header("Location: " . base_url('index.php/Home/index'));return;
+                        return;
+                    }
+                } elseif(password_verify($password_akun, $akun['password_akun']) && $akun['status_akun'] == '0') {
+                    $this->session->set_flashdata('login_error', 'Akun telah nonaktif, Hubungi layanan kami.');
+                    redirect('Home/index');
                     return;
-                } else {
+                }else {
                     // flashdata untuk notif error
                     $this->session->set_flashdata('login_error', 'Username atau password salah!'); // Menyimpan data flashdata dengan key 'login_error' dan value 'Username atau password salah!'.
                     redirect('Home/index'); // tetap di halaman beranda
@@ -152,6 +162,42 @@ class Signup_login_control extends CI_Controller
         return;
 
         // $this->session->sess_destroy(); Fungsi ini digunakan untuk menghapus seluruh data session milik user saat ini. Semua data yang sebelumnya dsimpan lewat set_userdata() (misal: logged_in, user_id, role, dll) akan hilang/dihapus. Biasanya ini dipakai saat logout, supaya user tidak lagi dianggap login.
+    }
+
+    public function changePassword() {
+        $id_akun = $this->session->userdata('id_akun');
+        $new_password = password_hash($this->input->post('newPassword'), PASSWORD_DEFAULT); // ini akan menggunakan algoritma bcrypt secara default.
+        $data = [
+            'password_akun' => $new_password,
+        ];
+        $result = $this->Database_model->updateAccountPasswordById($id_akun, $data);
+        if($result) {
+            echo json_encode([
+                'status' => 'success',
+                'pesan' => 'Password Berhasil diubah'
+            ]);
+        } else {
+            echo json_encode ([
+                'status' => 'error',
+                'pesan' => 'Password Gagal diubah'
+            ]);
+        }
+    }
+
+    public function deleteAccount() {
+        $id_user = $this->session->userdata('id_user');
+        $result = $this->Database_model->deleteUserById($id_user);
+        if($result) {
+            echo json_encode([
+                'status' => 'success',
+                'pesan' => 'Akun Berhasil Dihapus'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'pesan' => 'Akun Gagal Dihapus'
+            ]);
+        }
     }
 }
 

@@ -51,6 +51,13 @@ class Admin_control extends CI_Controller
         }
     }
 
+    public function detail_transaction()
+    {
+        $id_transaksi = $this->input->get('id');
+        $data['detail_transaksi'] = $this->Database_model->getTransactionDetailByIdTransaction($id_transaksi);
+        $this->load->view('detail_transaksi_admin_page', $data);
+    }
+
     public function dataDelete()
     {
         $location = $this->session->userdata('admin_page_location');
@@ -142,6 +149,7 @@ class Admin_control extends CI_Controller
                     strtotime($jadwal_pengiriman['jadwal_pengiriman']['tanggal_pengiriman']) // merubah dari format db type datetime menjadi format input type datetime-local, misal 2025-05-05T14:30.
                 );
                 $this->load->view('edit_admin_page.php', $jadwal_pengiriman);
+                break;
                 // T adalah huruf literal untuk memisahkan tanggal dan jam pada input datetime-local di HTML. 
                 // Karena dalam PHP date() fungsi T biasanya berarti timezone, kamu perlu escape dengan backslash (\) agar dianggap sebagai huruf biasa. misal 2025-05-05T14:30 (format yang dibutuhkan oleh <input type="datetime-local">)
                 // $raw = "2025-05-05 14:30:00"; // dari database
@@ -160,7 +168,7 @@ class Admin_control extends CI_Controller
         switch ($location) {
             case 'akun':
                 $id = $postData['id_akun'];
-                $result = $this->Database_model->updateAkunById($id, $postData);
+                $result = $this->Database_model->updateAccountById($id, $postData);
                 break;
             // Lakukan yang sama untuk case lainnya dan sesuaikan field
             case 'produk':
@@ -208,7 +216,7 @@ class Admin_control extends CI_Controller
 
     public function loadViewAddAdminPage()
     {
-        $this->load->view('add_admin_page');
+        $this->load->view('admin_add_page');
     }
 
     public function dataAdd()
@@ -289,12 +297,12 @@ class Admin_control extends CI_Controller
                         'status' => 'notFound',
                         'pesan' => 'Id-akun Tidak Ditemukan!'
                     ]);
-                } elseif($result === 'found') {
+                } elseif ($result === 'found') {
                     echo json_encode([
                         'status' => 'error',
                         'pesan' => 'User Telah Tersedia!'
                     ]);
-                }else {
+                } else {
                     echo json_encode([
                         'status' => 'error',
                         'pesan' => 'Data Gagal Ditambahkan!'

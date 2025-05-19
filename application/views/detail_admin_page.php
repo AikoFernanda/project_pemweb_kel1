@@ -33,9 +33,23 @@ if ($sesi !== "admin") {
         <a href="<?= base_url('index.php/Home/admin') ?>" class="btn-back">
             <i class="fas fa-arrow-left"></i> Kembali<!--Untuk ikon panah ke kiri-->
         </a>
+        <?php if (($this->session->userdata('admin_page_location')) === 'akun') : ?>
+            <h1>Data Akun</h1>
+        <?php elseif (($this->session->userdata('admin_page_location')) === 'produk') : ?>
+            <h1>Data Produk</h1>
+        <?php elseif (($this->session->userdata('admin_page_location')) === 'user') : ?>
+            <h1>Data Pengguna</h1>
+        <?php elseif (($this->session->userdata('admin_page_location')) === 'keranjang') : ?>
+            <h1>Data Keranjang</h1>
+        <?php elseif (($this->session->userdata('admin_page_location')) === 'transaksi') : ?>
+            <h1>Data Transaksi</h1>
+        <?php elseif (($this->session->userdata('admin_page_location')) === 'detail_transaksi') : ?>
+            <h1>Data Detail Transaksi</h1>
+        <?php elseif (($this->session->userdata('admin_page_location')) === 'jadwal_pengiriman') : ?>
+            <h1>Data Jadwal Pengiriman</h1>
+        <?php endif; ?>
         <div class="tabel-wrapper">
             <?php if (($this->session->userdata('admin_page_location')) === 'akun') : ?>
-                <h1>Data Akun</h1>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
                         <th>Nomor</th>
@@ -79,7 +93,6 @@ if ($sesi !== "admin") {
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'produk'): ?>
-                <h1>Data Produk</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -127,7 +140,6 @@ if ($sesi !== "admin") {
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'user'): ?>
-                <h1>Data User</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -171,7 +183,6 @@ if ($sesi !== "admin") {
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'keranjang'): ?>
-                <h1>Data Keranjang</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -196,10 +207,10 @@ if ($sesi !== "admin") {
                                     <td><?= $k['subtotal']; ?></td>
                                     <td><?= $k['update_at']; ?></td>
                                     <td>
-                                        <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
+                                        <!-- <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
                                             <input type="hidden" name="id_keranjang" value="<?= $k['id_keranjang']; ?>">
                                             <button type="submit" class="btn-edit" name="edit">Edit</button>
-                                        </form>
+                                        </form> -->
                                         <button type="button" class="btn-hapus" name="hapus" data-id="<?= $k['id_keranjang']; ?>">Hapus</button>
                                     </td>
                                 </tr>
@@ -213,7 +224,6 @@ if ($sesi !== "admin") {
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'transaksi'): ?>
-                <h1>Data Transaksi</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -234,7 +244,7 @@ if ($sesi !== "admin") {
                                     <td><?= $t['id_transaksi']; ?></td>
                                     <td><?= $t['kode_pemesanan']; ?></td>
                                     <td><?= $t['id_user']; ?></td>
-                                    <td><?= $t['total_transaksi']; ?></td>
+                                    <td><?= number_format($t['total_transaksi'], 0, ',', '.'); ?></td>
                                     <td><?= $t['status_transaksi']; ?></td>
                                     <td><?= $t['tanggal_transaksi']; ?></td>
                                     <td>
@@ -243,7 +253,7 @@ if ($sesi !== "admin") {
                                             <button type="submit" class="btn-edit" name="edit">Edit</button>
                                         </form>
                                         <button type="button" class="btn-hapus" name="hapus" data-id="<?= $t['id_transaksi']; ?>">Hapus</button>
-                                        <button type="button" class="btn-details" name="detail" data-id="<?= $t['id_transaksi']; ?>">Details</button>
+                                        <button type="button" class="btn-detail" name="detail" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_transaction?id=' . $t['id_transaksi']); ?>'">Detail</button>
                                     </td>
                                 </tr>
                                 <?php $i += 1 ?>
@@ -256,7 +266,6 @@ if ($sesi !== "admin") {
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'detail_transaksi'): ?>
-                <h1>Data Detail Transaksi</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -281,7 +290,7 @@ if ($sesi !== "admin") {
                                     <td>
                                         <form action="<?= base_url('index.php/admin_control/loadEditAdminPage'); ?>" method="POST">
                                             <input type="hidden" name="id_detail_transaksi" value="<?= $d['id_detail_transaksi']; ?>">
-                                            <button type="submit" class="btn-edit" name="edit">Edit</button>
+                                            <!-- <button type="submit" class="btn-edit" name="edit">Edit</button> -->
                                         </form>
                                         <button type="button" class="btn-hapus" name="hapus" data-id="<?= $d['id_detail_transaksi']; ?>">Hapus</button>
                                     </td>
@@ -296,7 +305,6 @@ if ($sesi !== "admin") {
                     </tbody>
                 </table>
             <?php elseif ($this->session->userdata('admin_page_location') === 'jadwal_pengiriman') : ?>
-                <h1>Data Jadwal Pengiriman</h1>
                 <?php $i = 1 ?>
                 <table border="1px" cellpadding="10px" cellspacing="0">
                     <thead>
@@ -353,18 +361,18 @@ if ($sesi !== "admin") {
             <div class="add-data">
                 <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah User</button>
             </div>
-        <?php elseif ($this->session->userdata('admin_page_location') === 'keranjang') : ?>
+            <!-- <'?php elseif ($this->session->userdata('admin_page_location') === 'keranjang') : ?>
             <div class="add-data">
                 <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Keranjang</button>
-            </div>
-        <?php elseif ($this->session->userdata('admin_page_location') === 'transaksi') : ?>
+            </div> -->
+            <!-- <'?php elseif ($this->session->userdata('admin_page_location') === 'transaksi') : ?>
             <div class="add-data">
                 <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Transaksi</button>
-            </div>
-        <?php elseif ($this->session->userdata('admin_page_location') === 'detail_transaksi') : ?>
+            </div> -->
+            <!-- <'?php elseif ($this->session->userdata('admin_page_location') === 'detail_transaksi') : ?>
             <div class="add-data">
                 <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Detail Transaksi</button>
-            </div>
+            </div> -->
         <?php elseif ($this->session->userdata('admin_page_location') === 'jadwal_pengiriman') : ?>
             <div class="add-data">
                 <button type="button" class="btn-add" name="add" onclick="window.location.href='<?= base_url('index.php/Admin_control/loadViewAddAdminPage'); ?>'">+ Tambah Jadwal Pengiriman</button>
@@ -425,7 +433,7 @@ if ($sesi !== "admin") {
         console.log("Lokasi sekarang:", admin_page_location);
     </script>
     <!--link file js-->
-    <script src="<?= base_url('assets/js/delete_admin.js?v=' . time()); ?>"></script> 
+    <script src="<?= base_url('assets/js/delete_admin.js?v=' . time()); ?>"></script>
 </body>
 
 </html>

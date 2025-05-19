@@ -36,14 +36,14 @@ $(document).ready(function () {
                             });
                         }
                     },
-                    error: function (xhr, status, error) {
+                    error: function () {
                         Swal.fire({
                             icon: 'error',
                             title: 'Kesalahan Server',
                             text: 'Terjadi kesalahan saat mengirim data.',
                             confirmButtonText: 'Tutup'
                         });
-                        console.error("AJAX Error:", xhr.responseText);
+                        // console.error("AJAX Error:", xhr.responseText);
                     }
                 });
             }

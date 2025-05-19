@@ -1,3 +1,11 @@
+<?php
+$sesi = $this->session->userdata('role');
+if ($sesi !== "user") {
+    redirect('Home/index');
+    return;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -11,29 +11,32 @@
 <body>
     <div class="container">
         <div class="btn-back">
-            <button type="button" onclick="window.location.href='<?= base_url('index.php/Home/profil'); ?>'">← Kembali</button>
+            <button type="button" onclick="window.location.href='<?= base_url('index.php/Admin_control/detail_admin_page?admin_page_location=' . $this->session->userdata('admin_page_location'));?>'">← Kembali</button>
         </div>
         <h2>Detail Pesanan</h2>
         <table>
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Nama Produk</th>
+                    <th>Id Detail Transaksi</th>
+                    <th>Id Transaksi</th>
+                    <th>Id Produk</th>
                     <th>Jumlah</th>
-                    <th>Harga</th>
                     <th>Subtotal</th>
                 </tr>
             </thead>
             <tbody>
-                <?php $i = 1; ?>
+                <?php $i = 0; ?>
                 <?php foreach($detail_transaksi as $d): ?>
                 <tr>
-                    <td><?= $i++; ?></td>
-                    <td><?= $d['nama_produk']; ?></td>
-                    <td><?= $d['jumlah']; ?></td>
-                    <td>Rp <?= number_format($d['harga'], 0, ',', '.'); ?></td>
-                    <td>Rp <?= number_format($d['subtotal'], 0, ',', '.'); ?></td>
+                    <td><?= $i+1; ?></td>
+                    <td><?= $d['id_detail_transaksi']; ?></td>
+                    <td><?= $d['id_transaksi']; ?></td>
+                    <td><?= $d['id_produk'];?></td>
+                    <td><?= $d['jumlah'];?></td>
+                    <td><?= number_format($d['subtotal'], 0, ',', '.');?></td>
                 </tr>
+                <?php $i++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
