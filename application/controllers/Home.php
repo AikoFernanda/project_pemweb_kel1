@@ -180,4 +180,30 @@ class Home extends CI_Controller
     {
         $this->load->view('tentang_kami_page');
     }
+
+    public function kebijakanPrivasi()
+    {
+        $this->load->view('kebijakan_privasi');
+    }
+
+    public function faq()
+    {
+        $this->load->view('faq');
+    }
+
+    public function syaratKetentuan()
+    {
+        $this->load->view('syarat_ketentuan');
+    }
+
+    public function caraPembelian()
+    {
+        $this->load->view('cara_pembelian');
+    }
+
+     public function layanan()
+    {
+        $this->load->view('layanan');
+    }
+    
 }

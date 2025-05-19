@@ -29,8 +29,8 @@
             <div class="navigasi-header">
                 <a href="<?= base_url('index.php/Home/index'); ?>">Home</a>
                 <a href="#katalog-produk">Produk</a>
-                <a href="#">Layanan</a>
-                <a href="#footer">Tentang Kami</a>
+                <a href="<?= base_url('index.php/Home/layanan'); ?>">Layanan</a>
+                <a href="<?= base_url('index.php/Home/tentangKami'); ?>">Tentang Kami</a>
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="profil">
@@ -225,10 +225,10 @@
                         <h3>Informasi</h3>
                         <ul class="footer-links">
                             <li><a href="<?= base_url('index.php/Home/tentangKami'); ?>">Tentang Kami</a></li>
-                            <li><a href="#">Cara Pembelian</a></li>
-                            <li><a href="#">Kebijakan Privasi</a></li>
-                            <li><a href="#">Syarat & Ketentuan</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="<?= base_url('index.php/Home/caraPembelian'); ?>">Cara Pembelian</a></li>
+                            <li><a href="<?= base_url('index.php/Home/kebijakanPrivasi'); ?>">Kebijakan Privasi</a></li>
+                            <li><a href="<?= base_url('index.php/Home/syaratKetentuan'); ?>">Syarat & Ketentuan</a></li>
+                            <li><a href="<?= base_url('index.php/Home/faq'); ?>">FAQ</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">

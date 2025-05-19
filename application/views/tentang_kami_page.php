@@ -24,8 +24,8 @@
             <div class="navigasi-header">
                 <a href="<?= base_url('index.php/Home/index') ?>">Home</a>
                 <a href="<?= base_url('index.php/Home/produk'); ?>">Produk</a>
-                <a href="#">Layanan</a>
-                <a href="#footer">Tentang Kami</a>
+                <a href="<?= base_url('index.php/Home/layanan'); ?>">Layanan</a>
+                <a href="<?= base_url('index.php/Home/tentangKami'); ?>">Tentang Kami</a>
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="login-register">
@@ -45,12 +45,14 @@
 
         </div>
     </header>
+<main>
 
     <section class="container" style="margin-top: 60px;">
-        <h1 style="font-size: 50px; margin-bottom: 20px; text-align: center;">Tentang Kami</h1>
+        <img src="<?= base_url('assets/img/tentang_kami.png'); ?>" alt="tentang kami" class="faq-image"/>
+        <h1 style="font-size: 47px; margin-bottom: 20px; text-align: center;">Tentang Kami</h1>
         <p style="font-size: 18px; color: #555; line-height: 1.8;">
 
-            CV. Multi Langgeng Mufakat adalah perusahaan yang berdiri secara resmi pada tanggal 14 September 2022 dan berkedudukan di Kota Metro, Provinsi Lampung, tepatnya di Jalan Poskeskel, Kelurahan Mulyojati, Kecamatan Metro Barat. Kami merupakan perusahaan berbadan hukum perseroan komanditer (CV) yang didirikan oleh lima orang pendiri dengan semangat kolaborasi dan profesionalisme.
+           <b> CV. Multi Langgeng Mufakat</b> adalah perusahaan yang berdiri secara resmi pada tanggal 14 September 2022 dan berkedudukan di Kota Metro, Provinsi Lampung, tepatnya di Jalan Poskeskel, Kelurahan Mulyojati, Kecamatan Metro Barat. Kami merupakan perusahaan berbadan hukum perseroan komanditer (CV) yang didirikan oleh lima orang pendiri dengan semangat kolaborasi dan profesionalisme.
 
             Perusahaan ini bergerak di berbagai bidang usaha yang luas dan strategis, antara lain:
 
@@ -80,20 +82,20 @@
 
             Kami menjunjung tinggi nilai transparansi, kerjasama yang solid, serta pelayanan profesional demi mendukung pembangunan dan penyediaan solusi di berbagai sektor.
         </p>
-        <h1 style="font-size: 50px; margin-bottom: 20px; margin-top:70px; text-align: center;">Visi & Misi</h1>
+        <h1 style="font-size: 47px; margin-bottom: 20px; margin-top:70px; text-align: center;">Visi & Misi</h1>
         <section class="values-section">
             <div class="value-box">
-                <img src="imgx.jpg" alt="Focus on Consumer">
+                <img src="<?= base_url('assets/img/visi1.png'); ?>" alt="focus on customers" class="faq-image"/>
                 <h3>Focus on Consumer</h3>
                 <p>Pengguna kami adalah prioritas utama dan kami selalu berinovasi untuk memenuhi kebutuhan mereka</p>
             </div>
             <div class="value-box">
-                <img src="imgx.jpg" alt="Growth Mindset">
+                <img src="<?= base_url('assets/img/visi2.png'); ?>" alt="Growth mindset" class="faq-image"/>
                 <h3>Growth Mindset</h3>
                 <p>Berani menerima tantangan dan melihat masalah sebagai peluang untuk memulai hal-hal baru</p>
             </div>
             <div class="value-box">
-                <img src="imgx.jpg" alt="Make it Happen">
+                <img src="<?= base_url('assets/img/visi1.png'); ?>" alt="Make it happen" class="faq-image"/>
                 <h3>Make it Happen, Make it Better</h3>
                 <p>Membangun dan meningkatkan kinerja secara terus menerus.</p>
             </div>
@@ -102,7 +104,7 @@
 
 
             <div class="map-wrapper">
-                <h2 style="margin-top: 40px; font-size: 50px;">Alamat Kami</h2>
+                <h2 style="margin-top: 40px; font-size: 47px;">Alamat Kami</h2>
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d63582.35596447843!2d105.26255183014196!3d-5.120256942499336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1s%20Jl.%20Poskeskel%2C%20Desa%20Mulyojati%20Kec.%20Metro%20Barat%20Kota%20Metro!5e0!3m2!1sen!2sid!4v1746100400276!5m2!1sen!2sid"
                     allowfullscreen=""
@@ -116,7 +118,7 @@
 
 
     </section>
-
+            </main>
     <footer>
         <section id="footer">
             <div class="container">
@@ -144,11 +146,11 @@
                     <div class="footer-column">
                         <h3>Informasi</h3>
                         <ul class="footer-links">
-                            <li><a href="#">Tentang Kami</a></li>
-                            <li><a href="#">Cara Pembelian</a></li>
-                            <li><a href="#">Kebijakan Privasi</a></li>
-                            <li><a href="#">Syarat & Ketentuan</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="tentangKami">Tentang Kami</a></li>
+                            <li><a href="caraPembelian">Cara Pembelian</a></li>
+                            <li><a href="kebijakanPrivasi">Kebijakan Privasi</a></li>
+                            <li><a href="syaratKetentuan">Syarat & Ketentuan</a></li>
+                            <li><a href="faq">FAQ</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
