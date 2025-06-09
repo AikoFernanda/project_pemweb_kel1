@@ -99,6 +99,8 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 24px;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+
 }
 
 /* CARD STYLE */
@@ -111,6 +113,7 @@ main {
     cursor: pointer;
     transition: 0.25s ease;
     border: 1px solid transparent;
+    
 }
 
 .card:hover {
@@ -132,77 +135,69 @@ main {
 
 /* FOOTER */
 footer {
-    background-color: #343a40;
-    color: #fff;
-    padding: 40px 20px 20px;
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
     margin-top: 40px;
 }
 
 .footer-content {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
     justify-content: space-between;
 }
 
 .footer-column {
-    flex: 1 1 220px;
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 15px;
 }
 
 .footer-column h3 {
     font-size: 16px;
     margin-bottom: 15px;
-    font-weight: 600;
-    color: #f8f9fa;
+    text-decoration: none;
 }
 
-.footer-column p,
-.footer-links a {
+.footer-column p {
     color: #ccc;
-    font-size: 14px;
+    margin-bottom: 10px;
 }
 
 .footer-links {
     list-style: none;
-    padding: 0;
 }
 
 .footer-links li {
     margin-bottom: 8px;
 }
 
-.footer-links a:hover {
-    color: #fff;
-    text-decoration: underline;
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
 }
 
 .social-icons {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .social-icons a {
-    width: 32px;
-    height: 32px;
-    background-color: #495057;
     display: flex;
-    align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    color: #fff;
-    transition: background-color 0.3s;
-}
-
-.social-icons a:hover {
-    background-color: #6c757d;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: #444;
+    color: white;
 }
 
 .copyright {
     text-align: center;
-    border-top: 1px solid #444;
-    margin-top: 30px;
     padding-top: 15px;
-    font-size: 13px;
-    color: #aaa;
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    color: #ccc;
+    font-size: 12px;
 }

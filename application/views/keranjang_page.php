@@ -34,8 +34,8 @@ if ($sesi !== "user") {
             <div class="navigasi-header">
                 <a href="<?= base_url('index.php/Home/index'); ?>">Home</a>
                 <a href="#katalog-produk">Produk</a>
-                <a href="#">Layanan</a>
-                <a href="#">Tentang Kami</a>
+                <a href="<?= base_url('index.php/Home/layanan'); ?>">Layanan</a>
+                <a href="<?= base_url('index.php/Home/tentangKami'); ?>">Tentang Kami</a>
             </div>
         </div>
     </header>
@@ -61,7 +61,7 @@ if ($sesi !== "user") {
                 <?php if ($produk) : ?>
                     <?php foreach ($produk as $p) : ?>
                         <tr>
-                            <td><?= $i+1 ?></td>
+                            <td><?= $i + 1 ?></td>
                             <td><img src="<?= base_url('assets/img/produk/' . $p['gambar']); ?>" alt="<?= $p['nama_produk'] ?>" width="100"></td>
                             <td><?= $p['nama_produk'] ?></td>
                             <td><?= $p['kategori'] ?></td>
@@ -69,7 +69,7 @@ if ($sesi !== "user") {
                             <td><?= 'Rp ' . number_format($p['subtotal'], 0, ',', '.') ?></td>
                             <td>
                                 <form class="delete-keranjang" action="<?= base_url('index.php/Katalog_produk/deleteKeranjang') ?>" method="POST"> <!--form untuk post value dari key id_produk ke controller untuk dihapus datanya di database dengan model-->
-                                    <input type="hidden" name="id_produk" value="<?= $p['id_produk'];?>">
+                                    <input type="hidden" name="id_produk" value="<?= $p['id_produk']; ?>">
                                     <button type="submit" class="btn-hapus">Hapus</button>
                                 </form> <!--jangan gunakan id pada form, karena form ini diloop oleh foreach. Jadi banyak form dengan id yang sama, sementara id harus unik tidak boleh sama. id="delete-keranjang" ganti jadi class="delete-keranjang"-->
                             </td>
@@ -86,8 +86,8 @@ if ($sesi !== "user") {
         <div class="checkout">
             <div class="checkout-content">
                 <h2 id="total-price">Total: Rp <?= number_format($totalHarga, 0, ',', '.'); ?></h2>
-                <form action="<?= base_url('index.php/Katalog_produk/checkout');?>" method="POST">
-                <button type="submit" name="btn-checkout" class="btn-checkout">Checkout Sekarang</button>
+                <form action="<?= base_url('index.php/Katalog_produk/checkout'); ?>" method="POST">
+                    <button type="submit" name="btn-checkout" class="btn-checkout">Checkout Sekarang</button>
                 </form>
             </div>
         </div>
@@ -139,8 +139,8 @@ if ($sesi !== "user") {
             </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- wajib ada jQuery untuk AJAX-->
-    <script src="<?= base_url('assets/js/delete_cart.js?v=' . time());?>"></script>
-    <script src="<?= base_url('assets/js/checkout_cart.js?v=' . time());?>"></script>
+    <script src="<?= base_url('assets/js/delete_cart.js?v=' . time()); ?>"></script>
+    <script src="<?= base_url('assets/js/checkout_cart.js?v=' . time()); ?>"></script>
 </body>
 
 </html>

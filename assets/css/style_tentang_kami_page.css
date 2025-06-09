@@ -91,6 +91,29 @@
         transform: translateY(-2px);
     }
 
+    /* Profil */
+    .ikon-profil,
+    .ikon-keranjang {
+        text-decoration: none;
+        color: black;
+        /* Menghilangkan underline */
+    }
+
+    .ikon-profil:hover {
+        color: #007bff;
+    }
+
+    .ikon-keranjang:hover {
+        color: #007bff;
+        ;
+        /* Menambahkan warna ketika hover */
+    }
+
+    i {
+        font-size: 24px;
+        /* Menentukan ukuran ikon */
+    }
+
     /* Tombol Signup */
     .btn-signup {
         background: linear-gradient(to right, #28A745, #218838);
@@ -356,9 +379,10 @@
     }
 
     .faq-image {
-    display: block;
-    margin: 40px auto; /* auto akan pusatkan horizontal */
-    max-width: 250px;  /* agar tidak terlalu besar */
-    height: auto;
-  }
-
+        display: block;
+        margin: 40px auto;
+        /* auto akan pusatkan horizontal */
+        max-width: 250px;
+        /* agar tidak terlalu besar */
+        height: auto;
+    }

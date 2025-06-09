@@ -27,8 +27,8 @@
             <div class="navigasi-header">
                 <a href="<?= base_url('index.php/Home/index'); ?>">Home</a>
                 <a href="#katalog-produk">Produk</a>
-                <a href="#">Layanan</a>
-                <a href="#">Tentang Kami</a>
+                <a href="<?= base_url('index.php/Home/layanan');?>">Layanan</a>
+                <a href="<?= base_url('index.php/Home/tentangKami');?>">Tentang Kami</a>
             </div>
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="login-register">
@@ -48,6 +48,20 @@
         </div>
     </header>
     <main>
+        <!-- MODAL LOGIN -->
+    <div id="login-modal" class="modal">
+            <div class="login-content">
+                <span class="close" onclick="toggleLoginModal()">&times;</span> <!--membuat elemen <span> dengan class 'close', <span> adalah elemen inline (biasanya untuk teks pendek). &timens ini adalah HTML entity(seperti &copy, dsb.) untuk simbol silang (×). Jadi di layar akan muncul tanda silang, sering digunakan sebagai tombol “close”.-->
+                <h2>Login</h2>
+                <form action="<?= base_url('index.php/Signup_login_control/login'); ?>" method="POST">
+                    <label for="username">Username:</label>
+                    <input id="username" type="text" name="username_akun" required>
+                    <label for="password">Password:</label>
+                    <input id="password" type="password" name="password_akun" required>
+                    <button type="submit" name="submit">Login</button>
+                </form>
+            </div>
+        </div>
         <div class="container">
             <a href="<?= base_url('index.php/Home/produk') ?>" class="btn-back">
                 <i class="fas fa-arrow-left"></i> Kembali <!--Untuk ikon panah ke kiri-->
@@ -155,11 +169,11 @@
                     <div class="footer-column">
                         <h3>Informasi</h3>
                         <ul class="footer-links">
-                            <li><a href="#">Tentang Kami</a></li>
-                            <li><a href="#">Cara Pembelian</a></li>
-                            <li><a href="#">Kebijakan Privasi</a></li>
-                            <li><a href="#">Syarat & Ketentuan</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="<?= base_url('index.php/Home/tentangKami')?>">Tentang Kami</a></li>
+                            <li><a href="<?= base_url('index.php/Home/caraPembelian')?>">Cara Pembelian</a></li>
+                            <li><a href="<?= base_url('index.php/Home/kebijakanPrivasi')?>">Kebijakan Privasi</a></li>
+                            <li><a href="<?= base_url('index.php/Home/syaratKetentuan')?>">Syarat & Ketentuan</a></li>
+                            <li><a href="<?= base_url('index.php/Home/faq')?>">FAQ</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
@@ -183,7 +197,7 @@
 
     <script src="<?= base_url('assets/js/cart_quantity_product.js?v=' . time()); ?>"></script>
     <script src="<?= base_url('assets/js/add_cart.js?v=' . time()) ?>"></script>
-    <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>" defer></script> <!--.time() berfungsi agar file JS-nya otomatis ke-refresh saat develop (seperti css),  untuk cache-busting CSS & JS biasanya digunakan umum dalam praktik di kalangan developer agar perubahan langsung kelihatan.
+   <script src="<?= base_url('assets/js/login.js?v=' . time()); ?>"></script> <!--.time() berfungsi agar file JS-nya otomatis ke-refresh saat develop (seperti css),  untuk cache-busting CSS & JS biasanya digunakan umum dalam praktik di kalangan developer agar perubahan langsung kelihatan.
                                                                                          Dengan defer, browser akan load script setelah halaman selesai dimuat. -->
 </body>
 

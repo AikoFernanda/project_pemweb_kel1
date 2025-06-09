@@ -34,8 +34,8 @@ if ($sesi !== "user") {
             <nav>
                 <a href="<?= base_url('index.php/Home/index') ?>">Home</a>
                 <a href="<?= base_url('index.php/Home/produk'); ?>">Produk</a>
-                <a href="#">Layanan</a>
-                <a href="#footer">Tentang Kami</a>
+                <a href="<?= base_url('index.php/Home/layanan'); ?>">Layanan</a>
+                <a href="<?= base_url('index.php/Home/tentangKami'); ?>">Tentang Kami</a>
             </nav>
             <button class="logout" onclick="location.href='<?= base_url('index.php/Signup_login_control/logout'); ?>'">Logout</button>
         </div>
@@ -87,11 +87,11 @@ if ($sesi !== "user") {
                     <div class="footer-column">
                         <h3>Informasi</h3>
                         <ul class="footer-links">
-                            <li><a href="#">Tentang Kami</a></li>
-                            <li><a href="#">Cara Pembelian</a></li>
-                            <li><a href="#">Kebijakan Privasi</a></li>
-                            <li><a href="#">Syarat & Ketentuan</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="<?= base_url('index.php/Home/tentangKami')?>">Tentang Kami</a></li>
+                            <li><a href="<?= base_url('index.php/Home/caraPembelian')?>">Cara Pembelian</a></li>
+                            <li><a href="<?= base_url('index.php/Home/kebijakanPrivasi')?>">Kebijakan Privasi</a></li>
+                            <li><a href="<?= base_url('index.php/Home/syaratKetentuan')?>">Syarat & Ketentuan</a></li>
+                            <li><a href="<?= base_url('index.php/Home/faq')?>">FAQ</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">

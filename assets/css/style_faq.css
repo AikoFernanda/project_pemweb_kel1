@@ -165,6 +165,28 @@ header {
     transform: translateY(-2px);
 }
 
+/* Profil */
+.ikon-profil,
+.ikon-keranjang {
+    text-decoration: none;
+    color: black;
+    /* Menghilangkan underline */
+}
+
+.ikon-profil:hover {
+    color: #007bff;
+}
+
+.ikon-keranjang:hover {
+    color: #007bff;
+    ;
+    /* Menambahkan warna ketika hover */
+}
+
+i {
+    font-size: 24px;
+    /* Menentukan ukuran ikon */
+}
 
 .values-section {
     display: flex;
